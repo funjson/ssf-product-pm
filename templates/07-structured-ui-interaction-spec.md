@@ -1,6 +1,15 @@
-# 06 结构化 UI/交互规格
+# 07 结构化 UI/交互规格
 
 > 本文档回答“每个页面里有什么、组件如何展示、用户如何交互、状态如何变化”。它是 AI 原型生成、前端实现和 UI 测试的事实源。
+
+**强制规则**：每个 `SCR-xxx` 页面都必须完整重复“页面 UI 规格模板”的全部小节。即使某个页面暂无表单、权限差异或特殊状态，也必须保留对应小节并写明“无 / 暂无 / 待确认”。
+
+**反偷懒规则**：
+
+- 不允许把多个页面合并成“SCR-006 至 SCR-012 关键组件”之类的总表。
+- 不允许只详细描述前几个页面，后续页面用摘要替代。
+- 如果页面数量超过 6 个，必须分批生成或 repair-run 补齐，而不是压缩结构。
+- 生成完成后必须自检每个 `SCR` 是否都包含 2.1 至 2.9 的完整小节。
 
 ## 0. 文档元信息
 
@@ -13,6 +22,7 @@
 | version | v0.1 |
 | base_ui_ia | UI-IA-001 |
 | base_feature_spec | FEATURE-SPEC-001 |
+| base_product_architecture | PRODUCT-ARCH-001 |
 | generated_at |  |
 
 ## 1. 全局 UI 约束
@@ -46,6 +56,7 @@
 | screen_name |  |
 | screen_goal |  |
 | related_features | FEAT-xxx |
+| related_modules | MOD-xxx |
 | target_roles | ROLE-xxx |
 | entry_points |  |
 | exit_points |  |

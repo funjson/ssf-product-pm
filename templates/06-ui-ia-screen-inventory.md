@@ -1,4 +1,4 @@
-# 05 UI 信息架构与页面清单
+# 06 UI 信息架构与页面清单
 
 > 本文档回答“系统有哪些页面、页面如何组织、页面服务哪些功能”。它是结构化 UI/交互规格和原型生成的基础。
 
@@ -12,6 +12,7 @@
 | instance_id | SPI-xxx |
 | version | v0.1 |
 | base_prd | PRD-001 |
+| base_product_architecture | PRODUCT-ARCH-001 |
 | base_feature_spec | FEATURE-SPEC-001 |
 | generated_at |  |
 

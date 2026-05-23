@@ -24,26 +24,30 @@ description: Generate AI-ready product design documents for an end-to-end AI sof
 3. 支持完整流程、续跑流程、单文档执行、跳阶段执行和变更执行，但必须显式标记缺失的上游输入。
 4. 不输出需求池、优先级矩阵、MVP Roadmap、下一期规划，除非用户明确要求。
 5. 项目基本描述、用户现场调研、市场调研、竞品分析合并为一个“产品调研与洞察报告”，作为需求分析和 PRD 的输入。
-6. 需求分析先于 PRD。PRD 提供产品总上下文，但不承载全部功能细节。
-7. 功能任务规格文档是主执行文档；每个功能任务必须完整包含流程、规则、验收标准和测试关注点。
-8. UI 信息架构、结构化 UI/交互规格、原型生成 Prompt 与 UI 标注说明可以独立成文档，但必须通过统一 ID 体系互相关联。
-9. 原型不是唯一事实源。结构化 UI 规格和 UI 标注才是前端 AI 与测试 AI 的可靠输入。
-10. 产品基线与变更说明必须保留，用于解决需求变更时 AI 不知道旧系统状态的问题。
-11. 所有文档必须显式写出：文档目标、适用范围、下游消费者、生成说明、正文内容、待确认问题。
-12. 不要把架构设计、数据库设计、接口细节提前写死。PM 阶段只提供业务事实、业务边界、业务规则和产品约束。
+6. Intake 是公共入口能力，不作为产品版本文档；重新生成、覆盖、续跑、跳阶段和变更前必须先执行 intake gate。
+7. 需求分析先于 PRD。PRD 提供产品总上下文，但不承载全部功能细节。
+8. PRD 之后必须有产品架构设计，用于把需求归纳到产品模块，再进入功能任务规格。
+9. 功能任务规格文档是主执行文档；每个功能任务必须完整包含流程、规则、验收标准和测试关注点。
+10. UI 信息架构、结构化 UI/交互规格、原型生成 Prompt 与 UI 标注说明可以独立成文档，但必须通过统一 ID 体系互相关联。
+11. 原型不是唯一事实源。结构化 UI 规格和 UI 标注才是前端 AI 与测试 AI 的可靠输入。
+12. 产品基线与变更说明必须保留，用于解决需求变更时 AI 不知道旧系统状态的问题。
+13. 所有文档必须显式写出：文档目标、适用范围、下游消费者、生成说明、正文内容、待确认问题。
+14. 不要把技术架构设计、数据库设计、接口细节提前写死。PM 阶段只提供业务事实、产品模块、业务边界、业务规则和产品约束。
 
 ## 3. 输出文档清单
 
-按当前阶段，默认生成以下 8 类文档：
+按当前阶段，默认生成以下 9 类产品版本文档；`00-intake.md` 是公共入口模板，不计入产品版本文档数量：
 
+- Intake 信息收集模板：`templates/00-intake.md`
 1. 产品调研与洞察报告：`templates/01-product-research-insight.md`
 2. 需求分析说明：`templates/02-requirement-analysis.md`
 3. PRD 产品需求文档：`templates/03-prd.md`
-4. 功能任务规格文档：`templates/04-feature-task-spec.md`
-5. UI 信息架构与页面清单：`templates/05-ui-ia-screen-inventory.md`
-6. 结构化 UI/交互规格：`templates/06-structured-ui-interaction-spec.md`
-7. 原型生成 Prompt 与 UI 标注说明：`templates/07-prototype-prompt-ui-annotation.md`
-8. 产品基线与变更说明：`templates/08-product-baseline-change.md`
+4. 产品架构设计：`templates/04-product-architecture.md`
+5. 功能任务规格文档：`templates/05-feature-task-spec.md`
+6. UI 信息架构与页面清单：`templates/06-ui-ia-screen-inventory.md`
+7. 结构化 UI/交互规格：`templates/07-structured-ui-interaction-spec.md`
+8. 原型生成 Prompt 与 UI 标注说明：`templates/08-prototype-prompt-ui-annotation.md`
+9. 产品基线与变更说明：`templates/09-product-baseline-change.md`
 
 辅助参考：
 
@@ -65,7 +69,33 @@ description: Generate AI-ready product design documents for an end-to-end AI sof
 - `change-run`：基于已有产品基线修改已有规格。
 - `repair-run`：修复已有文档结构、编号、追踪关系或缺失内容。
 
-### Step 2：解析目标实例
+### Step 2：执行 Intake Gate
+
+遇到以下情况时，必须先执行 intake，不得直接写文件：
+
+- 用户说“重新生成 / 重做 / 覆盖 / 再来一版 / 重新跑一遍”。
+- 当前工作区已有实例，但用户输入可能是另一件事。
+- 用户要求跳过上游阶段直接生成后续文档。
+- 用户要求修改已有规格或基于旧版本变更。
+- 用户要求生成文件，但产品名称、目标用户、业务领域、输出范围不清。
+
+Intake 使用 `templates/00-intake.md`。当需要落盘时，写入：
+
+```text
+ssf-workspace/instances/<instance-id>/intake.md
+```
+
+Intake 不区分产品版本，不写入 `v0.1 / v0.2` 产品基线；它只记录本次运行的输入、决策和写入策略。
+
+重新生成时必须让用户或当前上下文明确选择：
+
+1. 新建独立实例。
+2. 基于当前实例生成新版本并走 `change-run`。
+3. 修复当前实例并走 `repair-run`。
+4. 覆盖当前实例。覆盖必须二次确认。
+5. 只讨论，不落盘。
+
+### Step 3：解析目标实例
 
 如果用户要求生成或修改文件，必须先检查当前工作目录是否存在：
 
@@ -94,19 +124,21 @@ ssf-workspace/
       manifest.md
       product-spec/
         README.md
+        intake.md
         01-research-insight.md
         02-requirement-analysis.md
         03-prd.md
-        04-feature-task-spec.md
-        05-ui-ia-screen-inventory.md
-        06-structured-ui-interaction-spec.md
-        07-prototype-prompt-ui-annotation.md
-        08-product-baseline-change.md
+        04-product-architecture.md
+        05-feature-task-spec.md
+        06-ui-ia-screen-inventory.md
+        07-structured-ui-interaction-spec.md
+        08-prototype-prompt-ui-annotation.md
+        09-product-baseline-change.md
 ```
 
 `index.md` 是全局实例索引，必须用于判断新旧流程；`manifest.md` 是单实例状态文件，必须用于判断文档状态和续跑入口。
 
-### Step 3：收集必要输入
+### Step 4：收集必要输入
 
 只有在缺失信息会导致输出明显错误、覆盖风险或实例归属不清时才提问。优先基于已有上下文做合理假设，并在文档中写入“假设与待确认问题”。
 
@@ -121,7 +153,7 @@ ssf-workspace/
 | 产品形态 | App / Web / SaaS / 后台 / 小程序 / 插件 / IoT / 其他 |
 | 当前阶段 | 只有想法 / 已有用户调研 / 已有原型 / 已有旧系统 / 已有代码 / 已有部分规格 |
 | 用户调研状态 | 已有客户访谈 / 已有现场观察 / 已有客服销售反馈 / 需要先生成调研提纲 / 暂无 / 其他 |
-| 输出范围 | 完整 8 份文档 / 调研与洞察 / 需求分析 / PRD / 功能任务 / UI 规格 / 原型 Prompt / 变更说明 |
+| 输出范围 | 完整 9 份产品版本文档 / 调研与洞察 / 需求分析 / PRD / 产品架构 / 功能任务 / UI 规格 / 原型 Prompt / 变更说明 |
 
 必须尽量获取或推断：
 
@@ -133,7 +165,7 @@ ssf-workspace/
 - 是否已有旧版本、旧原型、旧系统或已有代码。
 - 当前输出目标：调研、PRD、功能规格、UI 规格、变更说明等。
 
-### Step 4：按模板生成
+### Step 5：按模板生成
 
 严格使用对应模板结构，不要自由发挥成传统散文式 PRD。
 
@@ -142,11 +174,12 @@ ssf-workspace/
 1. 产品调研与洞察报告
 2. 需求分析说明
 3. PRD 产品需求文档
-4. 功能任务规格文档
-5. UI 信息架构与页面清单
-6. 结构化 UI/交互规格
-7. 原型生成 Prompt 与 UI 标注说明
-8. 产品基线与变更说明
+4. 产品架构设计
+5. 功能任务规格文档
+6. UI 信息架构与页面清单
+7. 结构化 UI/交互规格
+8. 原型生成 Prompt 与 UI 标注说明
+9. 产品基线与变更说明
 
 如果用户跳过某个阶段直接生成后续文档，必须在目标文档中写明：
 
@@ -155,7 +188,21 @@ ssf-workspace/
 - 本次基于哪些假设生成。
 - 哪些内容待确认后需要回填上游文档。
 
-### Step 5：保证跨文档追踪
+产品架构设计规则：
+
+- 新项目必须生成 `04-product-architecture.md`，再生成 `05-feature-task-spec.md`。
+- 功能迭代必须先读取已有 `PRODUCT-ARCH-001`，判断新增、修改、废弃哪些模块。
+- 如果用户跳过产品架构直接要求功能任务，必须在功能任务中把 `related_module` 写为“待补齐”，并创建待确认问题。
+- 产品架构是产品模块设计，不是技术架构；不得写数据库表、接口路径、缓存、消息队列或部署方案。
+
+功能任务与 UI 同构规则：
+
+- 生成功能任务规格时，先生成 FEAT 总览，再逐个 FEAT 完整展开，不得摘要化后续 FEAT。
+- 生成结构化 UI 规格时，先生成 SCR 总览，再逐个 SCR 完整展开，不得用多个页面合并总表替代。
+- 如果 FEAT 或 SCR 数量较多导致输出过长，应分批生成或使用 repair-run 继续补齐，而不是压缩结构。
+- 若发现任一 FEAT 或 SCR 缺少模板要求的小节，本次输出不合格，必须立即 repair-run。
+
+### Step 6：保证跨文档追踪
 
 每个关键对象都必须使用稳定 ID：
 
@@ -166,6 +213,9 @@ ssf-workspace/
 - `NEED-xxx`：归纳后的用户需求
 - `PRD-xxx`：产品目标 / 范围项
 - `REQ-xxx`：需求分析项
+- `CAP-xxx`：产品能力
+- `MOD-xxx`：产品模块
+- `OBJ-xxx`：核心业务对象
 - `FEAT-xxx`：功能任务
 - `FLOW-xxx`：流程
 - `BR-xxx`：业务规则
@@ -176,20 +226,22 @@ ssf-workspace/
 
 不得只写自然语言描述而不建立 ID 关联。
 
-### Step 6：更新索引、Manifest 和基线
+### Step 7：更新索引、Manifest 和基线
 
 每次生成或修改文件后，必须同步更新：
 
 - `ssf-workspace/index.md`：实例状态、最近更新时间、摘要。
 - `ssf-workspace/instances/<instance-id>/manifest.md`：文档状态、运行记录、待确认问题。
-- `08-product-baseline-change.md`：当属于变更时，追加 `CHG-xxx`，记录变更前、变更后、影响范围和回归关注点。
+- `09-product-baseline-change.md`：当属于变更时，追加 `CHG-xxx`，记录变更前、变更后、影响范围和回归关注点。
 
-### Step 7：输出质量检查
+### Step 8：输出质量检查
 
 生成结束前必须检查：
 
 - 是否存在未解释的产品目标。
 - 功能是否有流程、规则和验收标准。
+- 需求是否归入产品模块。
+- 功能任务是否关联产品模块。
 - UI 页面是否能追溯到功能。
 - UI 组件是否能追溯到页面、功能、规则或验收标准。
 - 验收标准是否可测试。
@@ -210,14 +262,16 @@ ssf-workspace/
       manifest.md
       product-spec/
         README.md
+        intake.md
         01-research-insight.md
         02-requirement-analysis.md
         03-prd.md
-        04-feature-task-spec.md
-        05-ui-ia-screen-inventory.md
-        06-structured-ui-interaction-spec.md
-        07-prototype-prompt-ui-annotation.md
-        08-product-baseline-change.md
+        04-product-architecture.md
+        05-feature-task-spec.md
+        06-ui-ia-screen-inventory.md
+        07-structured-ui-interaction-spec.md
+        08-prototype-prompt-ui-annotation.md
+        09-product-baseline-change.md
 ```
 
 若用户只要求“先讨论/规划”，不要直接生成完整文档，只输出结构、判断和建议。
@@ -233,3 +287,6 @@ ssf-workspace/
 - 不要在未读取 `ssf-workspace/index.md` 的情况下覆盖已有实例。
 - 不要把两个明显无关的产品或事项写进同一个实例。
 - 不要在 `change-run` 中只改目标文档而不更新 `manifest.md` 和基线变更说明。
+- 不要在用户请求“重新生成”时跳过 intake gate。
+- 不要省略产品架构层，直接把平铺 REQ 转成平铺 FEAT。
+- 不要在功能任务和 UI 规格中用总表压缩多个 FEAT 或 SCR 的完整结构。

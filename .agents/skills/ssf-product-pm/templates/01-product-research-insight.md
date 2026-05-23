@@ -14,7 +14,7 @@
 | product_name |  |
 | generated_at |  |
 | input_sources | 用户描述 / 客户现场记录 / 访谈记录 / 客服销售反馈 / 竞品资料 / 市场资料 / 业务资料 |
-| target_output | 为需求分析、PRD、功能任务和 UI 规格提供输入 |
+| target_output | 为需求分析、PRD、产品架构、功能任务和 UI 规格提供输入 |
 
 ## 1. 项目基本描述
 

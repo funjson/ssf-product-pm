@@ -4,24 +4,34 @@
 
 ## 文档清单
 
+公共入口能力：
+
+- Intake 信息收集模板：`templates/00-intake.md`
+
+产品版本文档：
+
 1. 产品调研与洞察报告
 2. 需求分析说明
 3. PRD 产品需求文档
-4. 功能任务规格文档
-5. UI 信息架构与页面清单
-6. 结构化 UI/交互规格
-7. 原型生成 Prompt 与 UI 标注说明
-8. 产品基线与变更说明
+4. 产品架构设计
+5. 功能任务规格文档
+6. UI 信息架构与页面清单
+7. 结构化 UI/交互规格
+8. 原型生成 Prompt 与 UI 标注说明
+9. 产品基线与变更说明
 
 ## 核心设计
 
 - 不做传统需求管理、排期、Roadmap、下一期规划。
 - 使用 `ssf-workspace/index.md` 管理多个彼此隔离的产品设计实例，避免新事项覆盖旧事项。
 - 支持完整生成、续跑、跳阶段、单文档生成和变更修改。
-- 产品设计顺序是“调研与洞察 → 需求分析 → PRD → 功能任务规格”。
+- 用户要求重新生成、覆盖、跳阶段或变更时，先执行 intake gate。
+- 产品设计顺序是“调研与洞察 → 需求分析 → PRD → 产品架构 → 功能任务规格”。
 - 调研文档必须包含项目基本描述和用户现场/访谈需求证据。
+- 产品架构把需求归纳到产品模块，再进入功能任务。
 - 以功能任务为 AI Coding 的主输入单元。
 - 每个功能任务必须保持相同结构；无内容时显式写“无 / 暂无 / 待确认”。
+- 每个 UI 页面必须保持相同结构；不得把多个页面合并成压缩总表。
 - 流程、规则、验收标准合并到功能任务规格中。
 - UI 相关文档独立，但通过 `screen_id`、`component_id`、`feature_id`、`rule_id`、`ac_id` 关联。
 - 原型不是事实源；结构化 UI 规格和 UI 标注是事实源。
@@ -35,14 +45,16 @@ ssf-product-pm/
   AGENTS.md
   README.md
   templates/
+    00-intake.md
     01-product-research-insight.md
     02-requirement-analysis.md
     03-prd.md
-    04-feature-task-spec.md
-    05-ui-ia-screen-inventory.md
-    06-structured-ui-interaction-spec.md
-    07-prototype-prompt-ui-annotation.md
-    08-product-baseline-change.md
+    04-product-architecture.md
+    05-feature-task-spec.md
+    06-ui-ia-screen-inventory.md
+    07-structured-ui-interaction-spec.md
+    08-prototype-prompt-ui-annotation.md
+    09-product-baseline-change.md
     workspace-readme.md
     workspace-index.md
     instances-readme.md
@@ -77,16 +89,18 @@ ssf-workspace/
     README.md
     SPI-xxx/
       manifest.md
+      intake.md
       product-spec/
         README.md
         01-research-insight.md
         02-requirement-analysis.md
         03-prd.md
-        04-feature-task-spec.md
-        05-ui-ia-screen-inventory.md
-        06-structured-ui-interaction-spec.md
-        07-prototype-prompt-ui-annotation.md
-        08-product-baseline-change.md
+        04-product-architecture.md
+        05-feature-task-spec.md
+        06-ui-ia-screen-inventory.md
+        07-structured-ui-interaction-spec.md
+        08-prototype-prompt-ui-annotation.md
+        09-product-baseline-change.md
 ```
 
 Agent 每次写入前必须读取 `ssf-workspace/index.md`，判断目标实例；如果当前请求与已有实例不是同一件事，默认不覆盖。

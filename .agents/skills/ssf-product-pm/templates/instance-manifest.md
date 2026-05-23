@@ -32,14 +32,16 @@
 
 | 文档 | 路径 | 状态 | 最近更新时间 | 说明 |
 |---|---|---|---|---|
-| 01 产品调研与洞察报告 | product-spec/01-research-insight.md | missing / draft / ready / confirmed |  |  |
-| 02 需求分析说明 | product-spec/02-requirement-analysis.md | missing / draft / ready / confirmed |  |  |
-| 03 PRD 产品需求文档 | product-spec/03-prd.md | missing / draft / ready / confirmed |  |  |
-| 04 功能任务规格文档 | product-spec/04-feature-task-spec.md | missing / draft / ready / confirmed |  |  |
-| 05 UI 信息架构与页面清单 | product-spec/05-ui-ia-screen-inventory.md | missing / draft / ready / confirmed |  |  |
-| 06 结构化 UI/交互规格 | product-spec/06-structured-ui-interaction-spec.md | missing / draft / ready / confirmed |  |  |
-| 07 原型生成 Prompt 与 UI 标注说明 | product-spec/07-prototype-prompt-ui-annotation.md | missing / draft / ready / confirmed |  |  |
-| 08 产品基线与变更说明 | product-spec/08-product-baseline-change.md | missing / draft / ready / confirmed |  |  |
+| Intake 信息收集 | intake.md | missing / completed / skipped_with_reason |  | 公共入口能力，不计入产品版本 |
+| 01 产品调研与洞察报告 | product-spec/01-research-insight.md | missing / draft / ready_for_review / confirmed |  |  |
+| 02 需求分析说明 | product-spec/02-requirement-analysis.md | missing / draft / ready_for_review / confirmed |  |  |
+| 03 PRD 产品需求文档 | product-spec/03-prd.md | missing / draft / ready_for_review / confirmed |  |  |
+| 04 产品架构设计 | product-spec/04-product-architecture.md | missing / draft / ready_for_review / confirmed |  |  |
+| 05 功能任务规格文档 | product-spec/05-feature-task-spec.md | missing / draft / ready_for_review / confirmed |  |  |
+| 06 UI 信息架构与页面清单 | product-spec/06-ui-ia-screen-inventory.md | missing / draft / ready_for_review / confirmed |  |  |
+| 07 结构化 UI/交互规格 | product-spec/07-structured-ui-interaction-spec.md | missing / draft / ready_for_review / confirmed |  |  |
+| 08 原型生成 Prompt 与 UI 标注说明 | product-spec/08-prototype-prompt-ui-annotation.md | missing / draft / ready_for_review / confirmed |  |  |
+| 09 产品基线与变更说明 | product-spec/09-product-baseline-change.md | missing / draft / ready_for_review / confirmed |  |  |
 
 ## 4. 运行记录
 

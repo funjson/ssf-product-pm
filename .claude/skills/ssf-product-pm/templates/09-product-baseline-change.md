@@ -1,4 +1,4 @@
-# 08 产品基线与变更说明
+# 09 产品基线与变更说明
 
 > 本文档解决需求变更时 AI 不知道旧系统是什么的问题。它记录当前产品基线、关键决策、已确认规格和每次变更的影响范围。
 
@@ -11,7 +11,7 @@
 | document_id | BASELINE-CHANGE-001 |
 | instance_id | SPI-xxx |
 | current_version | v0.1 |
-| related_documents | REQ-ANALYSIS-001 / PRD-001 / FEATURE-SPEC-001 / UI-IA-001 / UI-SPEC-001 / PROTOTYPE-ANNOTATION-001 |
+| related_documents | REQ-ANALYSIS-001 / PRD-001 / PRODUCT-ARCH-001 / FEATURE-SPEC-001 / UI-IA-001 / UI-SPEC-001 / PROTOTYPE-ANNOTATION-001 |
 | generated_at |  |
 
 ## 1. 当前产品基线摘要
@@ -24,35 +24,44 @@
 | 目标用户 |  |
 | 核心目标 |  |
 | 核心能力 |  |
+| 产品模块 |  |
 | 核心页面 |  |
 | 核心流程 |  |
 | 关键业务规则 |  |
 
-## 2. 已确认功能基线
+## 2. 已确认产品架构基线
+
+**生成说明**：列出已确认或待确认的产品模块，避免后续变更时模块边界漂移。
+
+| module_id | 模块名称 | 当前状态 | 关联需求 | 关联功能任务 |
+|---|---|---|---|---|
+| MOD-001 |  | draft / ready_for_review / confirmed / deprecated / changing | REQ-xxx | FEAT-xxx |
+
+## 3. 已确认功能基线
 
 **生成说明**：列出已确认的功能任务，避免 AI 在后续变更中误删或重复生成。
 
 | feature_id | 功能名称 | 当前状态 | 关联页面 | 关键规则 | 关键验收 |
 |---|---|---|---|---|---|
-| FEAT-001 |  | 已确认 / 废弃 / 变更中 | SCR-xxx | BR-xxx | AC-xxx |
+| FEAT-001 |  | draft / ready_for_review / confirmed / deprecated / changing | SCR-xxx | BR-xxx | AC-xxx |
 
-## 3. 已确认页面基线
+## 4. 已确认页面基线
 
 **生成说明**：记录已确认页面和页面职责，防止变更时 AI 新增重复页面。
 
 | screen_id | 页面名称 | 页面职责 | 关联功能 | 当前状态 |
 |---|---|---|---|---|
-| SCR-001 |  |  | FEAT-xxx | 已确认 / 废弃 / 变更中 |
+| SCR-001 |  |  | FEAT-xxx | draft / ready_for_review / confirmed / deprecated / changing |
 
-## 4. 已确认业务规则基线
+## 5. 已确认业务规则基线
 
 **生成说明**：记录稳定规则，避免 AI 修改功能时破坏既有业务约束。
 
 | rule_id | 规则名称 | 规则内容 | 关联功能 | 当前状态 |
 |---|---|---|---|---|
-| BR-001 |  |  | FEAT-xxx | 已确认 / 废弃 / 变更中 |
+| BR-001 |  |  | FEAT-xxx | draft / ready_for_review / confirmed / deprecated / changing |
 
-## 5. 关键决策日志
+## 6. 关键决策日志
 
 **生成说明**：记录为什么这么设计，防止后续 AI 推翻历史决策或重复讨论。
 
@@ -60,7 +69,7 @@
 |---|---|---|---|---|---|
 | DEC-001 |  |  |  | FEAT-xxx / SCR-xxx |  |
 
-## 6. 废弃设计清单
+## 7. 废弃设计清单
 
 **生成说明**：明确哪些内容已经废弃，防止 AI 在后续任务中重新启用。
 
@@ -70,13 +79,13 @@
 
 ---
 
-## 7. 变更说明模板
+## 8. 变更说明模板
 
 > 每次变更重复使用本模板。
 
 # CHG-xxx 变更名称
 
-## 7.1 变更元信息
+## 8.1 变更元信息
 
 | 字段 | 内容 |
 |---|---|
@@ -87,34 +96,36 @@
 | change_reason |  |
 | requester |  |
 
-## 7.2 变更前
+## 8.2 变更前
 
 **生成说明**：必须明确旧系统是什么，不能只写“修改为”。
 
 - 原功能：FEAT-xxx
+- 原模块：MOD-xxx
 - 原页面：SCR-xxx
 - 原规则：BR-xxx
 - 原验收：AC-xxx
 - 原行为描述：
 
-## 7.3 变更后
+## 8.3 变更后
 
 **生成说明**：明确新的产品行为、页面表现、规则和验收变化。
 
 - 新功能行为：
+- 新产品模块：
 - 新页面表现：
 - 新业务规则：
 - 新验收标准：
 
-## 7.4 影响范围分析
+## 8.4 影响范围分析
 
 **生成说明**：这是变更文档核心，告诉后续 AI 哪些文档和功能要同步修改。
 
 | affected_type | affected_id | 影响说明 | 需要修改的内容 |
 |---|---|---|---|
-| PRD / FEATURE / FLOW / RULE / SCREEN / COMPONENT / AC / TEST |  |  |  |
+| PRD / PRODUCT_ARCH / MODULE / FEATURE / FLOW / RULE / SCREEN / COMPONENT / AC / TEST |  |  |  |
 
-## 7.5 回归关注点
+## 8.5 回归关注点
 
 **生成说明**：给测试 AI 使用，说明变更后哪些旧能力必须重新验证。
 
@@ -122,7 +133,7 @@
 |---|---|---|---|
 | REG-001 | FEAT-xxx / SCR-xxx |  | AC-xxx |
 
-## 7.6 待确认问题
+## 8.6 待确认问题
 
 | question_id | 问题 | 影响范围 | 建议处理 |
 |---|---|---|---|
