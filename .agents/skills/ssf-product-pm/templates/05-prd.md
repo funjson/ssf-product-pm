@@ -1,10 +1,10 @@
-# 03 PRD 产品需求文档
+# 05 PRD 产品需求文档
 
-> PRD 是产品总上下文文档，不承载所有细粒度流程、规则和验收细节。PRD 之后应进入《产品架构设计》，再进入《功能任务规格文档》。
+> PRD 是产品总上下文文档，不承载所有细粒度流程、规则和验收细节。PRD 在产品架构之后生成，用于把已确认的分析结论和产品模块结构整理为产品级上下文。
 
 ## 0. 文档元信息
 
-**生成说明**：确保 PRD 可追踪到调研输入、需求分析和版本基线。PRD 在需求分析之后生成，为产品架构设计提供目标、范围和约束输入。
+**生成说明**：确保 PRD 可追踪到分析输入、需求分析、产品架构和版本基线。PRD 不直接替代产品架构，也不直接展开所有功能任务。
 
 | 字段 | 内容 |
 |---|---|
@@ -12,10 +12,14 @@
 | instance_id | SPI-xxx |
 | version | v0.1 |
 | product_name |  |
+| base_analysis_input | ANALYSIS-INPUT-001 |
 | base_research | RESEARCH-001 |
 | base_requirement_analysis | REQ-ANALYSIS-001 |
+| base_product_architecture | PRODUCT-ARCH-001 |
 | related_baseline | BASELINE-001 |
 | generated_at |  |
+| review_gate | prd-auto-review |
+| review_status | draft / ready_for_review / needs_rework |
 
 ## 1. 产品背景
 
@@ -74,7 +78,7 @@
 
 ## 6. 核心能力概览
 
-**生成说明**：这里只列能力总览，不展开每个功能的流程、规则、验收。能力会在产品架构设计中进一步归纳为产品模块。
+**生成说明**：这里只列已在产品架构中确认的能力总览，不展开每个功能的流程、规则、验收。
 
 | capability_id | 能力名称 | 目标 | 对应功能任务 |
 |---|---|---|---|

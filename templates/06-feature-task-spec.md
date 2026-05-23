@@ -1,4 +1,4 @@
-# 05 功能任务规格文档
+# 06 功能任务规格文档
 
 > 本文档是 PM 阶段的主执行文档。流程、规则、验收标准都应合并到每个功能任务中，方便架构师 AI、研发 AI、测试 AI 以功能为单位消费。
 
@@ -20,18 +20,20 @@
 | document_id | FEATURE-SPEC-001 |
 | instance_id | SPI-xxx |
 | version | v0.1 |
-| base_prd | PRD-001 |
 | base_requirement_analysis | REQ-ANALYSIS-001 |
 | base_product_architecture | PRODUCT-ARCH-001 |
+| base_prd | PRD-001 |
 | generated_at |  |
+| review_gate | feature-spec-auto-review |
+| review_status | draft / ready_for_review / needs_rework |
 
 ## 1. 功能任务总览
 
 **生成说明**：提供所有功能任务的目录，方便后续 AI 选择单个任务执行。
 
-| feature_id | 功能任务名称 | 功能目标 | 关联 PRD 目标 | 关联页面 | 状态 |
-|---|---|---|---|---|---|
-| FEAT-001 |  |  | GOAL-xxx | SCR-xxx | 已定义 / 待确认 |
+| feature_id | 功能任务名称 | 功能目标 | 归属模块 | 关联 PRD 目标 | 关联页面 | 状态 |
+|---|---|---|---|---|---|---|
+| FEAT-001 |  |  | MOD-xxx | GOAL-xxx | SCR-xxx | 已定义 / 待确认 |
 
 ---
 

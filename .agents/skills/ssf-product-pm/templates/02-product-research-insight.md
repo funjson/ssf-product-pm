@@ -1,6 +1,6 @@
-# 01 产品调研与洞察报告
+# 02 产品调研与洞察报告
 
-> 本文档把项目基本描述、用户现场/访谈调研、市场调研和竞品分析合并为一个证据入口。它不是研发 AI 的直接执行规格，而是需求分析、PRD、功能任务和 UI 方向的上游依据。
+> 本文档把市场调研、竞品分析、客户现场调研和用户访谈材料合并为一个证据入口。它不是研发 AI 的直接执行规格，而是需求分析和后续设计的上游依据。
 
 ## 0. 文档元信息
 
@@ -11,10 +11,13 @@
 | document_id | RESEARCH-001 |
 | instance_id | SPI-xxx |
 | version | v0.1 |
+| base_analysis_input | ANALYSIS-INPUT-001 |
 | product_name |  |
 | generated_at |  |
 | input_sources | 用户描述 / 客户现场记录 / 访谈记录 / 客服销售反馈 / 竞品资料 / 市场资料 / 业务资料 |
-| target_output | 为需求分析、PRD、产品架构、功能任务和 UI 规格提供输入 |
+| target_output | 为需求分析、产品架构、PRD、功能任务和 UI 规格提供输入 |
+| review_gate | analysis-human-review |
+| review_status | draft / ready_for_review / approved / rejected / needs_rework |
 
 ## 1. 项目基本描述
 

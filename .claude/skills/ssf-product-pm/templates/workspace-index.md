@@ -9,13 +9,13 @@
 | workspace_id | SSW-001 |
 | created_at |  |
 | updated_at |  |
-| index_version | v0.1 |
+| index_version | v0.2 |
 
 ## 2. 实例列表
 
-| instance_id | 实例名称 | 产品 / 项目名称 | 任务类型 | 当前状态 | 最近更新时间 | 摘要 | 路径 |
-|---|---|---|---|---|---|---|---|
-| SPI-001 |  |  | 新系统 / 功能迭代 / 变更 / 单文档 / 其他 | in_progress / paused / completed / archived |  |  | ssf-workspace/instances/SPI-001 |
+| instance_id | 实例名称 | 产品 / 项目名称 | 任务类型 | 当前阶段 | 当前状态 | 阻塞 Review Gate | 最近更新时间 | 摘要 | 路径 |
+|---|---|---|---|---|---|---|---|---|---|
+| SPI-001 |  |  | 新系统 / 功能迭代 / 变更 / 单文档 / 其他 | intake / analysis / design / completed | in_progress / paused / completed / archived | analysis-human-review / product-architecture-human-review / 无 |  |  | ssf-workspace/instances/SPI-001 |
 
 ## 3. 判断规则
 
@@ -24,6 +24,7 @@
 - 若用户明确说“重新生成、覆盖、再来一版、跳过某阶段、基于变更修改”，先执行 intake gate。
 - 若用户输入的产品名称、业务领域、目标用户和核心目标与最近实例不一致，不得覆盖最近实例。
 - 若无法判断是否同一实例，先列出候选实例并请用户确认。
+- 若实例阻塞在人工评审节点，不得默认继续后续阶段。
 
 ## 4. 最近活动
 

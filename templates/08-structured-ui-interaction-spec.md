@@ -1,4 +1,4 @@
-# 07 结构化 UI/交互规格
+# 08 结构化 UI/交互规格
 
 > 本文档回答“每个页面里有什么、组件如何展示、用户如何交互、状态如何变化”。它是 AI 原型生成、前端实现和 UI 测试的事实源。
 
@@ -24,6 +24,8 @@
 | base_feature_spec | FEATURE-SPEC-001 |
 | base_product_architecture | PRODUCT-ARCH-001 |
 | generated_at |  |
+| review_gate | ui-spec-auto-review |
+| review_status | draft / ready_for_review / needs_rework |
 
 ## 1. 全局 UI 约束
 

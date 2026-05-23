@@ -1,4 +1,4 @@
-# 08 原型生成 Prompt 与 UI 标注说明
+# 09 原型生成 Prompt 与 UI 标注说明
 
 > 本文档连接结构化 UI 规格和 AI 原型工具，同时把原型中的视觉元素与需求、规则、验收标准绑定，解决“前端 AI 看不懂原型图”的问题。
 
@@ -15,6 +15,8 @@
 | base_ui_spec | UI-SPEC-001 |
 | base_product_architecture | PRODUCT-ARCH-001 |
 | generated_at |  |
+| review_gate | prototype-auto-review |
+| review_status | draft / ready_for_review / needs_rework |
 
 ## 1. 原型生成总约束
 

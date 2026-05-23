@@ -1,33 +1,27 @@
 # ssf-product-pm Qoder Rule
 
-## Apply When
-
-Use this rule when the user asks to generate, modify, or review product design documents for an AI-driven software development workflow, including PRD, feature task specs, UI specs, prototype prompts, UI annotations, baseline, or change specs.
-
-## Instructions
+Use this rule when generating, modifying, or reviewing product analysis and product design documents for an AI-driven software development workflow.
 
 Read and follow:
 
 - `SKILL.md`
-- `templates/`
-- `references/id-conventions.md`
 - `references/workflow.md`
+- `references/action-commands.md`
+- `references/template-index.md`
+- `references/review-gates.md`
+- `references/id-conventions.md`
 - `references/quality-checklist.md`
+- `templates/`
 
-## Core Rules
+Core rules:
 
-- Do not create traditional demand management artifacts such as backlog, priority matrix, MVP roadmap, or next release plan unless explicitly requested.
-- Before writing files, read `ssf-workspace/index.md` when it exists and resolve the target instance; do not overwrite unrelated instances.
-- Run intake gate before regenerating, overwriting, skipping stages, or changing an existing instance.
-- Combine project description, field/user research, market research, and competitive analysis into one research insight document.
-- Generate requirement analysis before PRD.
-- Use the PRD as product-level context only.
-- Generate product architecture after PRD and before feature task specs.
-- Use feature task specs as the main execution unit.
-- Put flows, rules, permissions, acceptance criteria, and testing focus into feature task specs.
-- Every feature task must keep the same full structure; write "none / TBD" instead of omitting sections.
-- Every UI screen must keep the same full structure; do not merge multiple screens into a compressed summary table.
-- Keep UI IA, structured UI spec, and prototype prompt + UI annotation separate but linked by IDs.
-- Use stable IDs: SPI, INTAKE, SRC, RAW, NEED, INS, GOAL, REQ, CAP, MOD, OBJ, FEAT, FLOW, BR, SCR, CMP, AC, CHG.
-- Treat structured UI spec and UI annotation as source of truth for frontend AI, not prototype images alone.
-- Use product baseline and change spec for all requirement change scenarios.
+- Analysis includes information collection, research insight, and requirement analysis.
+- Analysis review is human-interactive and must stop for user confirmation.
+- Design starts with product architecture.
+- Product architecture review is human-interactive and must stop for user confirmation.
+- PRD, feature specs, UI specs, prototype annotations, and baseline use auto review gates.
+- Before writing files, read `ssf-workspace/index.md`; do not overwrite unrelated instances.
+- Run intake gate for regeneration, overwrite, skip-stage, change, or unclear instance requests.
+- Every FEAT and SCR must keep the same full structure.
+- Use stable IDs: SPI, INTAKE, IQ, FACT, ASM, SRC, RAW, NEED, INS, GOAL, REQ, CAP, MOD, OBJ, FEAT, FLOW, BR, SCR, CMP, AC, CHG.
+- Do not write database, API path, cache, queue, deployment, or other technical implementation details in PM documents.

@@ -1,4 +1,4 @@
-# 06 UI 信息架构与页面清单
+# 07 UI 信息架构与页面清单
 
 > 本文档回答“系统有哪些页面、页面如何组织、页面服务哪些功能”。它是结构化 UI/交互规格和原型生成的基础。
 
@@ -15,6 +15,8 @@
 | base_product_architecture | PRODUCT-ARCH-001 |
 | base_feature_spec | FEATURE-SPEC-001 |
 | generated_at |  |
+| review_gate | ui-ia-auto-review |
+| review_status | draft / ready_for_review / needs_rework |
 
 ## 1. UI 设计目标
 
@@ -41,9 +43,9 @@ APP / WEB ROOT
 
 **生成说明**：每个页面必须说明页面目标、入口、出口和关联功能。
 
-| screen_id | 页面名称 | 页面目标 | 关联功能 | 入口 | 出口 | 访问角色 | 页面状态 |
-|---|---|---|---|---|---|---|---|
-| SCR-001 |  |  | FEAT-xxx |  |  | ROLE-xxx | 正常 / 空态 / 加载 / 错误 / 无权限 |
+| screen_id | 页面名称 | 页面目标 | 关联模块 | 关联功能 | 入口 | 出口 | 访问角色 | 页面状态 |
+|---|---|---|---|---|---|---|---|---|
+| SCR-001 |  |  | MOD-xxx | FEAT-xxx |  |  | ROLE-xxx | 正常 / 空态 / 加载 / 错误 / 无权限 |
 
 ## 4. 导航与跳转关系
 
@@ -57,9 +59,9 @@ APP / WEB ROOT
 
 **生成说明**：保证每个页面都能追溯到功能任务，避免无需求页面。
 
-| screen_id | feature_id | 页面承担的功能职责 | 备注 |
-|---|---|---|---|
-| SCR-001 | FEAT-xxx |  |  |
+| screen_id | module_id | feature_id | 页面承担的功能职责 | 备注 |
+|---|---|---|---|---|
+| SCR-001 | MOD-xxx | FEAT-xxx |  |  |
 
 ## 6. 页面状态要求
 

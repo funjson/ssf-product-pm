@@ -1,19 +1,22 @@
-# 02 需求分析说明
+# 03 需求分析说明
 
-> 本文档解释“调研洞察、用户现场需求和业务问题如何转化为需求”。它位于 PRD 之前，主要服务产品经理 AI 和架构师 AI 对需求来源、推导逻辑、假设边界和需求取舍的理解。
+> 本文档解释“分析输入、调研洞察、用户现场需求和业务问题如何转化为需求”。它是分析阶段的最后一个产品事实文档，后续设计必须先经过产品架构。
 
 ## 0. 文档元信息
 
-**生成说明**：标记本需求分析基于哪些调研结论、用户需求输入和项目背景。本文档先于 PRD 生成，不应依赖 PRD 目标。
+**生成说明**：标记本需求分析基于哪些分析输入、调研结论、用户需求输入和项目背景。本文档不应依赖 PRD 目标。
 
 | 字段 | 内容 |
 |---|---|
 | document_id | REQ-ANALYSIS-001 |
 | instance_id | SPI-xxx |
 | version | v0.1 |
+| base_analysis_input | ANALYSIS-INPUT-001 |
 | base_research | RESEARCH-001 |
-| target_prd | PRD-001 将基于本文档生成 |
+| target_product_architecture | PRODUCT-ARCH-001 将基于本文档生成 |
 | generated_at |  |
+| review_gate | analysis-human-review |
+| review_status | draft / ready_for_review / approved / rejected / needs_rework |
 
 ## 1. 分析目标
 
@@ -71,9 +74,9 @@
 |---|---|---|---|
 | RISK-001 |  | REQ-xxx |  |
 
-## 8. 进入 PRD、产品架构与功能任务规格的需求清单
+## 8. 进入产品架构、PRD 与功能任务规格的需求清单
 
-**生成说明**：把分析结果映射到后续 PRD 目标、产品模块和功能任务。不是需求池，不做优先级管理。
+**生成说明**：把分析结果映射到后续产品模块、PRD 目标和功能任务。不是需求池，不做优先级管理。
 
 | req_id | 建议 PRD 目标 | 建议产品模块 | 功能任务 ID | 功能任务名称 | 说明 |
 |---|---|---|---|---|---|

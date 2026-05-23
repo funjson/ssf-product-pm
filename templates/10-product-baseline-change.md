@@ -1,4 +1,4 @@
-# 09 产品基线与变更说明
+# 10 产品基线与变更说明
 
 > 本文档解决需求变更时 AI 不知道旧系统是什么的问题。它记录当前产品基线、关键决策、已确认规格和每次变更的影响范围。
 
@@ -13,6 +13,8 @@
 | current_version | v0.1 |
 | related_documents | REQ-ANALYSIS-001 / PRD-001 / PRODUCT-ARCH-001 / FEATURE-SPEC-001 / UI-IA-001 / UI-SPEC-001 / PROTOTYPE-ANNOTATION-001 |
 | generated_at |  |
+| review_gate | baseline-auto-review |
+| review_status | draft / ready_for_review / needs_rework |
 
 ## 1. 当前产品基线摘要
 
@@ -29,37 +31,37 @@
 | 核心流程 |  |
 | 关键业务规则 |  |
 
-## 2. 已确认产品架构基线
+## 2. 产品架构基线
 
-**生成说明**：列出已确认或待确认的产品模块，避免后续变更时模块边界漂移。
+**生成说明**：列出当前产品模块状态，避免后续变更时模块边界漂移。未经用户确认不得写 `approved`。
 
 | module_id | 模块名称 | 当前状态 | 关联需求 | 关联功能任务 |
 |---|---|---|---|---|
-| MOD-001 |  | draft / ready_for_review / confirmed / deprecated / changing | REQ-xxx | FEAT-xxx |
+| MOD-001 |  | draft / ready_for_review / approved / deprecated / changing | REQ-xxx | FEAT-xxx |
 
-## 3. 已确认功能基线
+## 3. 功能基线
 
-**生成说明**：列出已确认的功能任务，避免 AI 在后续变更中误删或重复生成。
+**生成说明**：列出当前功能任务状态，避免 AI 在后续变更中误删或重复生成。未经用户确认不得写 `approved`。
 
 | feature_id | 功能名称 | 当前状态 | 关联页面 | 关键规则 | 关键验收 |
 |---|---|---|---|---|---|
-| FEAT-001 |  | draft / ready_for_review / confirmed / deprecated / changing | SCR-xxx | BR-xxx | AC-xxx |
+| FEAT-001 |  | draft / ready_for_review / approved / deprecated / changing | SCR-xxx | BR-xxx | AC-xxx |
 
-## 4. 已确认页面基线
+## 4. 页面基线
 
-**生成说明**：记录已确认页面和页面职责，防止变更时 AI 新增重复页面。
+**生成说明**：记录当前页面和页面职责，防止变更时 AI 新增重复页面。未经用户确认不得写 `approved`。
 
 | screen_id | 页面名称 | 页面职责 | 关联功能 | 当前状态 |
 |---|---|---|---|---|
-| SCR-001 |  |  | FEAT-xxx | draft / ready_for_review / confirmed / deprecated / changing |
+| SCR-001 |  |  | FEAT-xxx | draft / ready_for_review / approved / deprecated / changing |
 
-## 5. 已确认业务规则基线
+## 5. 业务规则基线
 
-**生成说明**：记录稳定规则，避免 AI 修改功能时破坏既有业务约束。
+**生成说明**：记录当前规则，避免 AI 修改功能时破坏既有业务约束。未经用户确认不得写 `approved`。
 
 | rule_id | 规则名称 | 规则内容 | 关联功能 | 当前状态 |
 |---|---|---|---|---|
-| BR-001 |  |  | FEAT-xxx | draft / ready_for_review / confirmed / deprecated / changing |
+| BR-001 |  |  | FEAT-xxx | draft / ready_for_review / approved / deprecated / changing |
 
 ## 6. 关键决策日志
 

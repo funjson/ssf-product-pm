@@ -1,34 +1,27 @@
 # ssf-product-pm Trae Project Rules
 
-This project uses `ssf-product-pm` for product design outputs in an AI-driven software development workflow.
+This project uses `ssf-product-pm` for product analysis and product design outputs in an AI-driven software development workflow.
 
-## Use When
-
-Use these rules when generating product research, PRD, requirement analysis, feature task specs, UI IA, structured UI interaction specs, prototype prompts, UI annotations, product baselines, or change specs.
-
-## Source of Truth
-
-Follow these files:
+Follow:
 
 - `SKILL.md`
-- `templates/`
-- `references/id-conventions.md`
 - `references/workflow.md`
+- `references/action-commands.md`
+- `references/template-index.md`
+- `references/review-gates.md`
+- `references/id-conventions.md`
 - `references/quality-checklist.md`
+- `templates/`
 
-## Rules
+Rules:
 
-1. Do not output backlog management, priority matrix, MVP roadmap, or next-phase planning unless explicitly requested.
-2. Before writing files, read `ssf-workspace/index.md` when it exists and resolve the target instance; do not overwrite unrelated instances.
-3. Run intake gate before regenerating, overwriting, skipping stages, or changing an existing instance.
-4. Combine project description, field/user research, market research, and competitive analysis into one research insight document.
-5. Generate requirement analysis before PRD.
-6. PRD should provide product-level context, not all feature-level details.
-7. Generate product architecture after PRD and before feature task specs.
-8. Feature task spec is the main execution document. Flow, rules, permissions, acceptance criteria, and testing focus belong inside each feature task.
-9. Every feature task must keep the same full structure; write "none / TBD" instead of omitting sections.
-10. Every UI screen must keep the same full structure; do not merge multiple screens into a compressed summary table.
-11. UI IA, structured UI/interaction spec, and prototype prompt + UI annotation are separate documents but must be linked by stable IDs.
-12. Use structured UI spec and UI annotation as the source of truth for frontend implementation, not prototype images alone.
-13. Use product baseline and change spec to preserve context across requirement changes.
-14. Do not write architecture implementation details in PM documents.
+1. Split work into Analysis and Design.
+2. Analysis includes information collection, market/competitor/customer research, and requirement analysis.
+3. Analysis review is a human review gate and must interrupt the flow.
+4. Design starts with product architecture.
+5. Product architecture review is a human review gate and must interrupt the flow.
+6. Other design reviews are automatic self-check gates; failed checks require repair-run.
+7. Before writing files, read `ssf-workspace/index.md` and resolve the target instance.
+8. Run intake gate before regeneration, overwrite, skip-stage, or change requests.
+9. Keep every FEAT and SCR structurally complete; do not compress later items into summary tables.
+10. Do not write technical implementation details in PM documents.
