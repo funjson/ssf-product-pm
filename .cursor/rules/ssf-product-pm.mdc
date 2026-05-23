@@ -1,0 +1,28 @@
+---
+description: Use ssf-product-pm when generating AI-ready product design documents, PRDs, feature task specs, UI specs, prototype prompts, UI annotations, product baselines, or change specs for AI-driven software development.
+globs:
+  - "**/*.md"
+alwaysApply: false
+---
+
+# ssf-product-pm Cursor Rule
+
+When the user asks for product design outputs, PRD, feature specs, UI specs, prototype prompts, UI annotations, or product baseline/change documents, follow the repository Skill at:
+
+- `SKILL.md`
+- `templates/`
+- `references/`
+
+Rules:
+
+1. Do not generate traditional backlog management, priority matrices, MVP roadmaps, or next-phase plans unless explicitly requested.
+2. Before writing files, read `ssf-workspace/index.md` when it exists and resolve the target instance; do not overwrite unrelated instances.
+3. Merge project description, field/user research, market research, and competitive analysis into one research insight document.
+4. Generate requirement analysis before PRD.
+5. Use PRD only for product-level context.
+6. Use feature task specs as the main execution unit for architecture AI, coding AI, and testing AI.
+7. Every feature task must keep the same full structure; write "none / TBD" instead of omitting sections.
+8. Keep UI IA, structured UI interaction spec, and prototype prompt + UI annotation as separate documents connected by IDs.
+9. Treat structured UI specs and UI annotations as the source of truth, not prototype images alone.
+10. Use product baseline and change spec for all change scenarios.
+11. Follow `references/id-conventions.md` and `references/quality-checklist.md`.
