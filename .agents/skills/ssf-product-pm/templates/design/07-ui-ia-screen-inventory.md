@@ -1,0 +1,88 @@
+# 07 UI 信息架构与页面清单
+
+> 本文档回答“系统有哪些页面、页面如何组织、页面服务哪些功能”。它是结构化 UI/交互规格和原型生成的基础。
+
+## 0. 文档元信息
+
+**生成说明**：标记本 UI 信息架构基于哪些 PRD 和功能任务。
+
+| 字段 | 内容 |
+|---|---|
+| document_id | UI-IA-001 |
+| instance_id | SPI-xxx |
+| version | v0.1 |
+| base_prd | PRD-001 |
+| base_product_architecture | PRODUCT-ARCH-001 |
+| base_feature_spec | FEATURE-SPEC-001 |
+| generated_at |  |
+| review_gate | ui-ia-auto-review |
+| review_status | draft / ready_for_review / needs_rework |
+
+## 1. UI 设计目标
+
+**生成说明**：说明 UI 设计要支持哪些产品目标和用户任务，不写纯审美描述。
+
+- 支持的产品目标：GOAL-xxx
+- 支持的核心任务：FEAT-xxx
+- 主要用户角色：ROLE-xxx
+- 体验原则：简洁 / 高效 / 可解释 / 可信任 / 低干扰 / 其他
+
+## 2. 页面树 / 信息架构
+
+**生成说明**：定义页面层级和导航结构。页面 ID 后续会被 UI 规格、原型 Prompt、UI 标注、测试用例复用。
+
+```text
+APP / WEB ROOT
+├── SCR-001 页面名称
+│   ├── SCR-001-01 子页面
+│   └── SCR-001-02 子页面
+└── SCR-002 页面名称
+```
+
+## 3. 页面清单
+
+**生成说明**：每个页面必须说明页面目标、入口、出口和关联功能。
+
+| screen_id | 页面名称 | 页面目标 | 关联模块 | 关联功能 | 入口 | 出口 | 访问角色 | 页面状态 |
+|---|---|---|---|---|---|---|---|---|
+| SCR-001 |  |  | MOD-xxx | FEAT-xxx |  |  | ROLE-xxx | 正常 / 空态 / 加载 / 错误 / 无权限 |
+
+## 4. 导航与跳转关系
+
+**生成说明**：描述页面之间的流转关系，支撑前端路由和 E2E 测试。
+
+| nav_id | 来源页面 | 触发动作 | 目标页面 | 条件 | 关联功能 |
+|---|---|---|---|---|---|
+| NAV-001 | SCR-001 | 点击某按钮 | SCR-002 |  | FEAT-xxx |
+
+## 5. 页面与功能映射
+
+**生成说明**：保证每个页面都能追溯到功能任务，避免无需求页面。
+
+| screen_id | module_id | feature_id | 页面承担的功能职责 | 备注 |
+|---|---|---|---|---|
+| SCR-001 | MOD-xxx | FEAT-xxx |  |  |
+
+## 6. 页面状态要求
+
+**生成说明**：页面状态是前端 AI 和测试 AI 极容易遗漏的内容，必须显式列出。
+
+| screen_id | 状态类型 | 触发条件 | 展示要求 | 用户可执行动作 |
+|---|---|---|---|---|
+| SCR-001 | 正常 / 空态 / 加载 / 错误 / 无权限 / 禁用 |  |  |  |
+
+## 7. 待确认问题
+
+| question_id | 问题 | 影响页面 | 建议处理 |
+|---|---|---|---|
+| Q-001 |  | SCR-xxx |  |
+
+## 8. UI IA Auto Review
+
+**生成说明**：必须使用 `CHECK-UIIA-xxx`，并与 `manifest.md` 的自动检查记录保持一致。不得使用裸编号 `CHECK-001`。
+
+| check_id | 检查项 | 结果 | 问题 | 修复动作 |
+|---|---|---|---|---|
+| CHECK-UIIA-001 | 页面是否来自功能任务 | pass / fail / pending |  | 无 / repair-run |
+| CHECK-UIIA-002 | 页面是否关联产品模块 | pass / fail / pending |  | 无 / repair-run |
+| CHECK-UIIA-003 | 是否覆盖导航和主要页面状态 | pass / fail / pending |  | 无 / repair-run |

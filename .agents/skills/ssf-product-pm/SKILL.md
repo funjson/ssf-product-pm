@@ -13,16 +13,15 @@ description: Generate AI-ready product analysis and product design documents for
 
 ## 2. 配置文件读取顺序
 
-执行任务前，不要只凭 `SKILL.md` 里的记忆生成。必须按需读取以下配置文件：
+执行任务前，不要只凭 `SKILL.md` 里的记忆生成。必须按分层读取配置：
 
-1. 主工作流：`references/workflow.md`
-2. 动作指令：`references/action-commands.md`
-3. 模板索引：`references/template-index.md`
-4. 评审门禁：`references/review-gates.md`
-5. ID 规范：`references/id-conventions.md`
-6. 质量检查：`references/quality-checklist.md`
+1. 运行协议：`core/workflow.md`、`core/runtime-protocol.md`、`core/state-protocol.md`
+2. 注册表：`registries/actions.md`、`registries/documents.md`、`registries/gates.md`、`registries/templates.md`
+3. 当前节点规则：按执行阶段读取 `flows/analysis/`、`flows/design/`、`flows/change/` 或 `flows/repair/`
+4. 详细规则：`references/review-gates.md`、`references/id-conventions.md`、`references/quality-checklist.md`、`references/repair-run.md`
+5. 输出模板：只从 `templates/common/`、`templates/analysis/`、`templates/design/`、`templates/state/` 读取
 
-模板只从 `templates/` 读取。当前模板清单以 `references/template-index.md` 为准。
+`references/` 保留详细规则与兼容说明；运行时优先使用 `core/`、`flows/` 和 `registries/` 进行判断。
 
 ## 3. 核心原则
 
@@ -36,28 +35,31 @@ description: Generate AI-ready product analysis and product design documents for
 8. 局部变更不得默认全量重跑，应先判断影响范围。
 9. 每个关键对象必须使用稳定 ID，保证跨文档追踪。
 10. PM 阶段不写数据库表、接口路径、缓存、消息队列、部署方案等技术实现细节。
+11. `index.md` 和 `manifest.md` 是流程判断依据；不得只更新正文文档而不更新过程资产。
+12. 人工评审通过必须有 `APR-xxx` 人工确认记录；自动评审通过只代表自检查通过。
+13. 产品架构局部变更但不改变模块边界时，必须记录 `ARCH-DELTA-xxx` 并执行 `product-architecture-delta-review`。
 
 ## 4. 默认文档树
 
 公共入口能力：
 
-- `templates/00-intake.md`：运行入口，不属于产品版本文档。
+- `templates/common/00-intake.md`：运行入口，不属于产品版本文档。
 
 Analysis 分析阶段：
 
-1. `templates/01-analysis-input.md`：分析输入与信息收集
-2. `templates/02-product-research-insight.md`：产品调研与洞察
-3. `templates/03-requirement-analysis.md`：需求分析
+1. `flows/analysis/01-information-collection.md` + `templates/analysis/01-analysis-input.md`
+2. `flows/analysis/02-research-insight.md` + `templates/analysis/02-product-research-insight.md`
+3. `flows/analysis/03-requirement-analysis.md` + `templates/analysis/03-requirement-analysis.md`
 
 Design 设计阶段：
 
-4. `templates/04-product-architecture.md`：产品架构设计
-5. `templates/05-prd.md`：PRD 产品需求文档
-6. `templates/06-feature-task-spec.md`：功能任务规格
-7. `templates/07-ui-ia-screen-inventory.md`：UI 信息架构与页面清单
-8. `templates/08-structured-ui-interaction-spec.md`：结构化 UI/交互规格
-9. `templates/09-prototype-prompt-ui-annotation.md`：原型生成 Prompt 与 UI 标注
-10. `templates/10-product-baseline-change.md`：产品基线与变更说明
+4. `flows/design/04-product-architecture.md` + `templates/design/04-product-architecture.md`
+5. `flows/design/05-prd.md` + `templates/design/05-prd.md`
+6. `flows/design/06-feature-task-spec.md` + `templates/design/06-feature-task-spec.md`
+7. `flows/design/07-ui-ia-screen-inventory.md` + `templates/design/07-ui-ia-screen-inventory.md`
+8. `flows/design/08-structured-ui-spec.md` + `templates/design/08-structured-ui-interaction-spec.md`
+9. `flows/design/09-prototype-annotation.md` + `templates/design/09-prototype-prompt-ui-annotation.md`
+10. `flows/design/10-baseline-change.md` + `templates/design/10-product-baseline-change.md`
 
 默认输出目录：
 
@@ -88,13 +90,16 @@ ssf-workspace/
 
 当用户要求生成、修改、重新生成、续跑、跳阶段或变更产品文档时：
 
-1. 读取 `references/action-commands.md` 判断执行模式。
+1. 读取 `registries/actions.md` 和 `references/action-commands.md` 判断执行模式。
 2. 如果要落盘，先读取 `ssf-workspace/index.md`；不存在时创建工作区。
 3. 读取或创建目标实例的 `manifest.md`。
-4. 高风险指令先执行 `templates/00-intake.md`，记录写入策略。
-5. 按 `references/template-index.md` 找到阶段模板。
-6. 按 `references/review-gates.md` 执行对应 review gate。
+4. 高风险指令先执行 `templates/common/00-intake.md`，记录写入策略。
+5. 按 `registries/documents.md` 找到节点协议、阶段模板和 Review Gate。
+6. 读取对应 `flows/` 节点规则，再按 `references/review-gates.md` 执行 review gate。
 7. 结束前更新 `index.md`、`manifest.md` 和必要的基线/变更说明。
+8. 如果执行 `repair-run`，必须读取 `references/repair-run.md`，并按其中的完成判定逐项自查。
+
+`manifest.md` 必须记录 `current_phase`、`active_gate`、`blocked`、`current_blocker`、`next_allowed_actions`、Review Gate 状态、人工确认记录和自动检查记录。
 
 高风险指令包括：重新生成、重做、覆盖、删除旧的、再来一版、跳阶段、基于旧版本变更、用户输入明显像另一个产品。
 
@@ -139,6 +144,12 @@ Design 阶段必须先做产品架构，再做 PRD、功能任务、UI 和基线
 
 自动检查失败时，不得压缩或忽略问题，必须进入 `repair-run`。
 
+change-run 修改产品架构时：
+
+- 如果新增、删除、合并、拆分模块，或改变模块职责边界，必须进入 `product-architecture-human-review`。
+- 如果只是在既有模块内补充对象、规则、决策或说明，必须记录 `ARCH-DELTA-xxx`，执行 `product-architecture-delta-review`，并同步 `manifest.md` 与 `10-product-baseline-change.md`。
+- 不得用旧 `APR-xxx` 直接覆盖解释新增加的产品架构内容。
+
 ## 8. 同构与追踪规则
 
 功能任务与 UI 是高风险输出，必须防止模型偷懒：
@@ -171,6 +182,8 @@ draft / ready_for_review / needs_rework
 ```
 
 宿主系统支持按钮/表单时，用决策列表；不支持时，用清晰选项和“其他：____”文本入口。
+
+人工评审通过时，必须把用户原话写入 `manifest.md` 的人工确认记录，并生成 `APR-xxx`。没有 `APR-xxx` 时，不得把 `analysis-human-review` 或 `product-architecture-human-review` 写成 `approved`。
 
 ## 10. 禁止事项
 

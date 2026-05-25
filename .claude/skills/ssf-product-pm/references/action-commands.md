@@ -12,7 +12,7 @@
 | flow-run | 只跑某个阶段 | 检查该阶段依赖，允许跳阶段但必须标记缺失输入 |
 | doc-run | 只生成或修改某个文档 | 检查目标实例和上游依赖，只更新相关文档与 manifest |
 | change-run | 基于已有版本修改、迭代、追加需求 | 读取基线与产品架构，判断影响范围后局部更新 |
-| repair-run | 补齐、修复、重新检查、格式不完整 | 不改变产品事实，修复结构、追踪和缺失小节 |
+| repair-run | 补齐、修复、重新检查、格式不完整 | 不改变产品事实，按 `references/repair-run.md` 修复结构、追踪、状态、证据和模板一致性 |
 | discuss-only | 只讨论、不落盘 | 不写文件，可给流程建议 |
 
 ## 2. 高风险指令
@@ -53,4 +53,34 @@
 更新 manifest 与 baseline change
 ```
 
-如果变化影响 `MOD / CAP / OBJ`，必须进入 `product-architecture-human-review`。
+### 4.1 产品架构影响判断
+
+变更影响产品架构时，不是一律重新人工评审，必须先判断影响层级：
+
+| 影响类型 | 示例 | 处理方式 |
+|---|---|---|
+| 模块边界变化 | 新增/删除/合并/拆分 MOD，改变模块职责或上下游边界 | 必须进入 `product-architecture-human-review`，中断等待用户确认 |
+| 架构局部补充 | 在既有 MOD 内补充 OBJ 属性、规则描述、决策记录，不改变模块边界 | 执行 `product-architecture-delta-review`，记录 `ARCH-DELTA-xxx`，不复用旧 APR 解释新增内容 |
+| 功能内规则变化 | 只影响 FEAT/BR/AC，不影响 CAP/MOD/OBJ | 执行 `change-run-local-review`，不更新产品架构 |
+| UI 表达变化 | 只影响 SCR/CMP/ANN | 执行对应 UI auto review，不更新产品架构 |
+
+产品架构文档发生任何内容变更时，必须满足：
+
+1. 在 `04-product-architecture.md` 写入 `ARCH-DELTA-xxx`。
+2. 在 `manifest.md` 写入 `product-architecture-delta-review` 或 `product-architecture-human-review`。
+3. 在 `10-product-baseline-change.md` 的变更影响范围中说明是否改变模块边界。
+4. 不得只沿用旧 `APR-xxx`，让新架构内容看起来像旧人工确认的一部分。
+
+## 5. repair-run 硬规则
+
+repair-run 不是局部润色，而是结构一致性修复。执行 repair-run 时必须读取 `references/repair-run.md`。
+
+必须优先修复：
+
+1. `ssf-workspace/index.md` 是否使用新版完整实例列表表头。
+2. `manifest.md` 是否记录 Review Gate、blocked、next_allowed_actions 和证据。
+3. `10-product-baseline-change.md` 是否有 `previous_version` 和版本历史。
+4. 正文文档检查 ID 是否与 manifest 一致，且没有裸 `CHECK-001`。
+5. ARCH-DELTA、CHG、CHECK、FEAT、SCR、AC 是否能互相追踪。
+
+如果这些硬规则没有通过，不得把 repair-run 写成 complete。

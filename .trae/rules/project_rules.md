@@ -5,12 +5,16 @@ This project uses `ssf-product-pm` for product analysis and product design outpu
 Follow:
 
 - `SKILL.md`
+- `core/`
+- `flows/`
+- `registries/`
 - `references/workflow.md`
 - `references/action-commands.md`
 - `references/template-index.md`
 - `references/review-gates.md`
 - `references/id-conventions.md`
 - `references/quality-checklist.md`
+- `references/repair-run.md`
 - `templates/`
 
 Rules:
@@ -25,3 +29,5 @@ Rules:
 8. Run intake gate before regeneration, overwrite, skip-stage, or change requests.
 9. Keep every FEAT and SCR structurally complete; do not compress later items into summary tables.
 10. Do not write technical implementation details in PM documents.
+11. Stage and sub-stage rules live in `flows/`; templates only define output structure.
+12. repair-run must satisfy `references/repair-run.md`.

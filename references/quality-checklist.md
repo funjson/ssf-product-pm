@@ -9,12 +9,16 @@
 | 是否避免覆盖 | 新事项与旧实例不一致时新建实例或请求确认 |
 | 是否更新实例状态 | 生成或修改文件后更新 `index.md` 和实例 `manifest.md` |
 | 是否读取工作流配置 | 执行前读取 workflow、action-commands、template-index、review-gates |
+| 是否记录流程阻塞点 | `index.md` 和 `manifest.md` 记录当前阶段、active_gate、blocked、next_allowed_actions |
+| 人工确认是否有证据 | 人工 Review Gate 写 approved 时必须引用 `APR-xxx` |
+| 自动检查是否可追踪 | 自动 Review Gate 写 pass/fail 时必须有 `CHECK-xxx` 或自动检查记录 |
 | 是否有文档目标 | 每个文档开头说明用途和下游消费者 |
 | 是否有版本信息 | 每个文档包含 document_id、version、generated_at |
 | 是否使用统一 ID | 关键对象都有稳定 ID |
 | 是否有待确认问题 | 信息不足处明确标注，不把假设当事实 |
 | 是否避免技术越界 | PM 文档不提前写死架构实现 |
 | 是否正确设置状态 | 未经用户确认不得写 approved / confirmed |
+| repair-run 是否完整 | 若为 repair-run，必须通过 `references/repair-run.md` 的 CHECK-REPAIR-001 至 CHECK-REPAIR-005 |
 
 ## 2. 分析输入检查
 
@@ -58,6 +62,8 @@
 | 是否有映射关系 | REQ -> MOD -> FEAT 追踪完整 |
 | 是否有 Mermaid 图 | 至少包含产品模块图和用户任务流/模块协作图两个 Mermaid 代码块 |
 | 是否有架构决策选项 | 说明模块划分策略，并给出用户可确认/修改的决策项 |
+| 是否有产品架构决策表 | 有 `ARCH-DEC-xxx`，包含当前建议、可选动作、用户选择、影响范围 |
+| 架构局部变更是否有 Delta | change-run 修改产品架构但不改模块边界时，有 `ARCH-DELTA-xxx` 和 `product-architecture-delta-review` |
 | 是否触发人工评审 | 产品架构结束后必须进入 product-architecture-human-review |
 | 是否避免技术越界 | 不写接口、数据库、缓存、队列、部署 |
 
@@ -109,3 +115,17 @@
 | 是否写变更后 | 明确新行为、新页面、新规则、新验收 |
 | 是否有影响范围 | 标记受影响的功能、页面、组件、规则、验收 |
 | 是否有回归关注点 | 给测试 AI 明确回归范围 |
+| 版本是否一致 | `current_version` 等于最新 `target_version`，文档状态说明不保留旧版本误导 |
+| 检查 ID 是否统一 | 正文和 manifest 使用同一组 `CHECK-CHG-xxx-xxx` / `CHECK-BASE-xxx` ID |
+
+## 10. repair-run 检查
+
+| 检查项 | 通过标准 |
+|---|---|
+| index 是否迁移新版结构 | `index.md` 使用 `templates/state/workspace-index.md` 的完整实例列表表头，不使用旧版短表 |
+| index_version 是否乱增 | `index_version` 表示模板结构版本，不得自行改成无来源的 v0.8/v0.9 |
+| manifest 是否有证据链 | Review Gate 状态、人工确认记录、自动检查记录能互相引用 |
+| baseline 是否有版本链 | 有 `current_version`、`previous_version`、`## 2. 版本历史`，最新版本等于最新 CHG target_version |
+| CHG 编号是否一致 | CHG 小节编号不与父章节错位，例如 `## 9` 下不得写 `## 8.1` |
+| CHECK ID 是否前缀化 | 正文和 manifest 不出现裸 `CHECK-001`，全部使用来源前缀 |
+| 是否避免产品事实漂移 | repair-run 未改变产品定位、需求、模块边界、业务规则 |

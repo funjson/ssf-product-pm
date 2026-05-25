@@ -10,12 +10,16 @@ alwaysApply: false
 When the user asks for product analysis or product design outputs, follow:
 
 - `SKILL.md`
+- `core/`
+- `flows/`
+- `registries/`
 - `references/workflow.md`
 - `references/action-commands.md`
 - `references/template-index.md`
 - `references/review-gates.md`
 - `references/id-conventions.md`
 - `references/quality-checklist.md`
+- `references/repair-run.md`
 - `templates/`
 
 Rules:
@@ -30,3 +34,5 @@ Rules:
 8. Run intake gate before regenerating, overwriting, skipping stages, or changing an existing instance.
 9. Every feature task and UI screen must keep the same full structure.
 10. Do not write technical implementation details in PM documents.
+11. Stage and sub-stage rules live in `flows/`; templates only define output structure.
+12. repair-run must satisfy `references/repair-run.md`.

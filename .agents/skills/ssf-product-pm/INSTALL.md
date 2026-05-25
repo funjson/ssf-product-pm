@@ -5,6 +5,9 @@
 本 Skill 的核心事实源只有一套：
 
 - `SKILL.md`
+- `core/`
+- `flows/`
+- `registries/`
 - `templates/`
 - `references/`
 
@@ -16,7 +19,7 @@
 
 ```bash
 mkdir -p .claude/skills/ssf-product-pm
-cp SKILL.md .claude/skills/ssf-product-pm/SKILL.md
+cp -R SKILL.md core flows registries references templates .claude/skills/ssf-product-pm/
 ```
 
 使用方式：
@@ -31,7 +34,7 @@ Codex Skill 位置建议：
 
 ```bash
 mkdir -p .agents/skills/ssf-product-pm
-cp SKILL.md .agents/skills/ssf-product-pm/SKILL.md
+cp -R SKILL.md AGENTS.md README.md core flows registries references templates .agents/skills/ssf-product-pm/
 ```
 
 同时保留仓库根目录的 `AGENTS.md`，用于稳定加载项目规则。

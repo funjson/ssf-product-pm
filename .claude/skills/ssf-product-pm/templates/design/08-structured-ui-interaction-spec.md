@@ -1,0 +1,137 @@
+# 08 结构化 UI/交互规格
+
+> 本文档回答“每个页面里有什么、组件如何展示、用户如何交互、状态如何变化”。它是 AI 原型生成、前端实现和 UI 测试的事实源。
+
+**强制规则**：每个 `SCR-xxx` 页面都必须完整重复“页面 UI 规格模板”的全部小节。即使某个页面暂无表单、权限差异或特殊状态，也必须保留对应小节并写明“无 / 暂无 / 待确认”。
+
+**反偷懒规则**：
+
+- 不允许把多个页面合并成“SCR-006 至 SCR-012 关键组件”之类的总表。
+- 不允许只详细描述前几个页面，后续页面用摘要替代。
+- 如果页面数量超过 6 个，必须分批生成或 repair-run 补齐，而不是压缩结构。
+- 生成完成后必须自检每个 `SCR` 是否都包含 2.1 至 2.9 的完整小节。
+
+## 0. 文档元信息
+
+**生成说明**：标记本 UI 规格基于哪些页面清单和功能任务。
+
+| 字段 | 内容 |
+|---|---|
+| document_id | UI-SPEC-001 |
+| instance_id | SPI-xxx |
+| version | v0.1 |
+| base_ui_ia | UI-IA-001 |
+| base_feature_spec | FEATURE-SPEC-001 |
+| base_product_architecture | PRODUCT-ARCH-001 |
+| generated_at |  |
+| review_gate | ui-spec-auto-review |
+| review_status | draft / ready_for_review / needs_rework |
+
+## 1. 全局 UI 约束
+
+**生成说明**：定义跨页面一致的风格和交互约束，不写具体技术框架。
+
+| 约束项 | 内容 |
+|---|---|
+| 端类型 | 移动端 / Web / 小程序 / 桌面端 |
+| 布局原则 |  |
+| 视觉风格 |  |
+| 文案风格 |  |
+| 可访问性要求 |  |
+| 禁止事项 |  |
+
+---
+
+## 2. 页面 UI 规格模板
+
+> 对每个页面重复使用本模板。
+
+# SCR-xxx 页面名称
+
+## 2.1 页面元信息
+
+**生成说明**：绑定页面、功能和用户目标。
+
+| 字段 | 内容 |
+|---|---|
+| screen_id | SCR-xxx |
+| screen_name |  |
+| screen_goal |  |
+| related_features | FEAT-xxx |
+| related_modules | MOD-xxx |
+| target_roles | ROLE-xxx |
+| entry_points |  |
+| exit_points |  |
+
+## 2.2 页面布局
+
+**生成说明**：用结构化方式描述布局区域，便于原型 AI 和前端 AI 理解。
+
+| region_id | 区域名称 | 区域目标 | 包含组件 | 布局说明 |
+|---|---|---|---|---|
+| REG-001 |  |  | CMP-xxx |  |
+
+## 2.3 组件清单
+
+**生成说明**：每个可见或可交互元素都应有 component_id，并关联功能、规则或验收。
+
+| component_id | 组件类型 | 展示文案 | 组件目标 | 数据绑定 | 关联功能 | 关联规则 | 关联验收 |
+|---|---|---|---|---|---|---|---|
+| CMP-001 | input / button / card / list / table / modal / tab / uploader |  |  |  | FEAT-xxx | BR-xxx | AC-xxx |
+
+## 2.4 交互行为
+
+**生成说明**：描述用户动作、系统响应和跳转结果。
+
+| interaction_id | component_id | 用户动作 | 前置条件 | 系统响应 | 结果页面 / 状态 | 关联流程 |
+|---|---|---|---|---|---|---|
+| INT-001 | CMP-xxx | 点击 / 输入 / 选择 / 上传 / 滑动 |  |  | SCR-xxx / STATE-xxx | FLOW-xxx |
+
+## 2.5 表单与校验
+
+**生成说明**：表单校验必须关联业务规则，避免前端和后端理解不一致。
+
+| component_id | 字段 | 校验规则 | 错误提示 | 触发时机 | 关联规则 |
+|---|---|---|---|---|---|
+| CMP-xxx |  |  |  | 输入时 / 提交时 / 失焦时 | BR-xxx |
+
+## 2.6 页面状态
+
+**生成说明**：显式描述正常态、加载态、空态、错误态、禁用态、无权限态。
+
+| state_id | 状态类型 | 触发条件 | 页面表现 | 可操作项 | 恢复路径 |
+|---|---|---|---|---|---|
+| STATE-001 | 正常 / 加载 / 空态 / 错误 / 禁用 / 无权限 |  |  |  |  |
+
+## 2.7 权限表现
+
+**生成说明**：不同角色的可见性和可操作性必须明确，避免前端 AI 默认所有人都可操作。
+
+| role_id | component_id | 可见 | 可操作 | 不可操作时表现 |
+|---|---|---|---|---|
+| ROLE-001 | CMP-xxx | 是 / 否 | 是 / 否 | 隐藏 / 禁用 / 提示无权限 |
+
+## 2.8 UI 测试断言
+
+**生成说明**：给测试 AI 提供 UI 层断言，不替代功能验收标准。
+
+| assertion_id | screen_id | component_id | 断言内容 | 关联验收 |
+|---|---|---|---|---|
+| UIA-001 | SCR-xxx | CMP-xxx |  | AC-xxx |
+
+## 2.9 待确认问题
+
+| question_id | 问题 | 影响组件 / 页面 | 建议处理 |
+|---|---|---|---|
+| Q-001 |  |  |  |
+
+## 3. UI Spec Auto Review
+
+**生成说明**：本节在整份结构化 UI/交互规格末尾只生成一次，不要在每个 SCR 内重复。必须使用 `CHECK-UISPEC-xxx`，并与 `manifest.md` 的自动检查记录保持一致。不得使用裸编号 `CHECK-001`。
+
+| check_id | 检查项 | 结果 | 问题 | 修复动作 |
+|---|---|---|---|---|
+| CHECK-UISPEC-001 | 每个 SCR 是否完整包含 2.1 至 2.9 | pass / fail / pending |  | 无 / repair-run |
+| CHECK-UISPEC-002 | 关键组件是否都有 CMP ID | pass / fail / pending |  | 无 / repair-run |
+| CHECK-UISPEC-003 | 页面状态是否覆盖正常、加载、空态、错误和权限表现 | pass / fail / pending |  | 无 / repair-run |
+| CHECK-UISPEC-004 | 页面、组件和断言是否关联 FEAT / MOD / AC | pass / fail / pending |  | 无 / repair-run |

@@ -41,7 +41,7 @@
 | CHG | 变更项 | CHG-001 | 产品基线与变更说明 |
 | DEC | 产品决策 | DEC-001 | 产品基线与变更说明 |
 | DEP | 废弃项 | DEP-001 | 产品基线与变更说明 |
-| CHECK | 自动检查项 | CHECK-001 | Review Gate |
+| CHECK | 自动检查项 | CHECK-PRD-001 / CHECK-FEAT-001 / CHECK-CHG-001-001 | Review Gate |
 
 ## 命名建议
 
@@ -52,6 +52,7 @@
 - 用户调研链路建议保持 `SRC -> RAW -> INS -> NEED -> REQ`，避免把用户原话直接写成功能。
 - 产品架构链路建议保持 `REQ -> MOD -> FEAT`，避免需求直接平铺成功能任务。
 - 功能任务是主执行维度，但必须归属到产品模块或明确标记“模块待补齐”。
+- 自动检查项必须带 Review Gate 来源前缀，不使用裸编号 `CHECK-001`。例如 PRD 使用 `CHECK-PRD-001`，功能任务使用 `CHECK-FEAT-001`，变更使用 `CHECK-CHG-002-001`。
 
 ## 示例链路
 

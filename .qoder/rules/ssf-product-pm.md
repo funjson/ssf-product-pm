@@ -5,12 +5,16 @@ Use this rule when generating, modifying, or reviewing product analysis and prod
 Read and follow:
 
 - `SKILL.md`
+- `core/`
+- `flows/`
+- `registries/`
 - `references/workflow.md`
 - `references/action-commands.md`
 - `references/template-index.md`
 - `references/review-gates.md`
 - `references/id-conventions.md`
 - `references/quality-checklist.md`
+- `references/repair-run.md`
 - `templates/`
 
 Core rules:
@@ -23,5 +27,7 @@ Core rules:
 - Before writing files, read `ssf-workspace/index.md`; do not overwrite unrelated instances.
 - Run intake gate for regeneration, overwrite, skip-stage, change, or unclear instance requests.
 - Every FEAT and SCR must keep the same full structure.
+- Stage and sub-stage rules live in `flows/`; templates only define output structure.
+- repair-run must satisfy `references/repair-run.md`.
 - Use stable IDs: SPI, INTAKE, IQ, FACT, ASM, SRC, RAW, NEED, INS, GOAL, REQ, CAP, MOD, OBJ, FEAT, FLOW, BR, SCR, CMP, AC, CHG.
 - Do not write database, API path, cache, queue, deployment, or other technical implementation details in PM documents.
