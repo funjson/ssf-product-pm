@@ -16,6 +16,7 @@
 - 人工评审通过必须有 `APR-xxx` 证据；自动评审通过只代表自检查通过。
 - 产品架构小改不改模块边界时走 `ARCH-DELTA-xxx` 和 `product-architecture-delta-review`，改模块边界才重新进入人工评审。
 - 原型工具输入通过 `prototype-run` 派生为 `prototype-input/`，不进入 PM 主流程，也不反向修改产品事实源。
+- 生成、修改、修复和 prototype-run 默认落盘；只读检查和只讨论必须由用户明确触发。
 
 ## 配置文件
 
@@ -101,6 +102,8 @@ ssf-workspace/
 ## 关键规则
 
 - 写文件前必须读取 `ssf-workspace/index.md` 和目标实例 `manifest.md`。
+- 用户要求生成 PM 产物时，即使没有明确说“落盘”，也必须按 `write_required` 写入文件并同步状态资产。
+- 用户明确要求读取、检查或复述现有文件时才使用 `inspect-only`；明确要求只讨论或不要修改文件时才使用 `discuss-only`。
 - 重新生成、覆盖、跳阶段、变更和实例不清时必须执行 `00-intake.md`。
 - Analysis 未通过人工评审，不得默认进入 Design。
 - 产品架构未通过人工评审，不得默认进入 PRD、功能任务和 UI。

@@ -25,6 +25,8 @@ Core rules:
 - Product architecture review is human-interactive and must stop for user confirmation.
 - PRD, feature specs, UI specs, prototype annotations, and baseline use auto review gates.
 - Before writing files, read `ssf-workspace/index.md`; do not overwrite unrelated instances.
+- Generation, modification, repair, and prototype-run tasks are `write_required` by default unless the user explicitly asks for read-only review or no file changes.
+- Use `inspect-only` only for explicit read/check/summarize requests, and `discuss-only` only for explicit no-write discussion requests.
 - Run intake gate for regeneration, overwrite, skip-stage, change, or unclear instance requests.
 - Every FEAT and SCR must keep the same full structure.
 - Stage and sub-stage rules live in `flows/`; templates only define output structure.

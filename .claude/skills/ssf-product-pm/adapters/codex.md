@@ -8,6 +8,8 @@ Codex 使用：
 
 安装或同步时必须复制完整 skill 目录，不得只复制 `SKILL.md`。
 
+生成、修改、修复和 prototype-run 默认必须落盘；只有用户明确要求只读、只讨论或不修改文件时，才使用 `inspect-only` 或 `discuss-only`。
+
 优先读取顺序：
 
 1. `SKILL.md`

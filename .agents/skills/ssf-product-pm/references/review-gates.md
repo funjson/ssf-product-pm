@@ -78,7 +78,7 @@
 
 | check_id | 检查项 | 结果 | 问题 | 修复动作 |
 |---|---|---|---|---|
-| CHECK-PRD-001 / CHECK-FEAT-001 / CHECK-UIIA-001 / CHECK-UISPEC-001 / CHECK-PROT-001 / CHECK-BASE-001 / CHECK-PINPUT-001 |  | pass / fail / pending |  | 无 / repair-run |
+| CHECK-PRD-001 / CHECK-FEAT-001 / CHECK-UIIA-001 / CHECK-UISPEC-001 / CHECK-PROT-001 / CHECK-BASE-001 / CHECK-PINPUT-001 / CHECK-RUNTIME-001 |  | pass / fail / pending |  | 无 / repair-run |
 
 如果任一核心检查为 `fail`，本次节点不得标记为完成，必须进入 `repair-run` 或把失败项写入 `manifest.md`。
 
@@ -100,6 +100,7 @@
 | 某次变更自检查 | CHECK-CHG-xxx-001 |
 | 原型输入包自检查 | CHECK-PINPUT-001 |
 | 真实原型生成后检查 | CHECK-PROTOTYPE-001 |
+| 运行时持久化检查 | CHECK-RUNTIME-001 |
 
 正文文档和 `manifest.md` 必须使用同一组检查 ID。
 

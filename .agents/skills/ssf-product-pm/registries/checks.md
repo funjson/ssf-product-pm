@@ -12,3 +12,4 @@
 | 变更自检查 | CHG | CHECK-CHG | `templates/design/10-product-baseline-change.md` |
 | 原型输入包自检查 | prototype-input | CHECK-PINPUT / CHECK-PROTOTYPE | `templates/prototype/07-prototype-review-checklist.md` |
 | repair-run 完成检查 | repair-run | CHECK-REPAIR | `references/repair-run.md` |
+| 运行时持久化检查 | action / runtime | CHECK-RUNTIME | `references/quality-checklist.md` |

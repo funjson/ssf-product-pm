@@ -39,6 +39,7 @@ description: Generate AI-ready product analysis and product design documents for
 12. 人工评审通过必须有 `APR-xxx` 人工确认记录；自动评审通过只代表自检查通过。
 13. 产品架构局部变更但不改变模块边界时，必须记录 `ARCH-DELTA-xxx` 并执行 `product-architecture-delta-review`。
 14. 原型输入包通过 `prototype-run` 派生生成，不进入 Analysis / Design 主流程，也不得反向修改产品事实源。
+15. 除非用户明确要求只讨论、只读取或不修改文件，所有 PM 产物生成、修改、修复和原型输入包任务默认必须落盘。
 
 ## 4. 默认文档树
 
@@ -113,13 +114,16 @@ ssf-workspace/
 当用户要求生成、修改、重新生成、续跑、跳阶段或变更产品文档时：
 
 1. 读取 `registries/actions.md` 和 `references/action-commands.md` 判断执行模式。
-2. 如果要落盘，先读取 `ssf-workspace/index.md`；不存在时创建工作区。
-3. 读取或创建目标实例的 `manifest.md`。
-4. 高风险指令先执行 `templates/common/00-intake.md`，记录写入策略。
-5. 按 `registries/documents.md` 找到节点协议、阶段模板和 Review Gate。
-6. 读取对应 `flows/` 节点规则，再按 `references/review-gates.md` 执行 review gate。
-7. 结束前更新 `index.md`、`manifest.md` 和必要的基线/变更说明。
-8. 如果执行 `repair-run`，必须读取 `references/repair-run.md`，并按其中的完成判定逐项自查。
+2. 根据 `registries/actions.md` 的 `persistence_policy` 判断写入策略：`write_required` 必须落盘，`read_only` 禁止修改文件，`write_forbidden` 禁止落盘。
+3. 对 `write_required` 动作，先读取 `ssf-workspace/index.md`；不存在时创建工作区。
+4. 对 `write_required` 动作，读取或创建目标实例的 `manifest.md`。
+5. 高风险指令先执行 `templates/common/00-intake.md`，记录写入策略。
+6. 按 `registries/documents.md` 找到节点协议、阶段模板和 Review Gate。
+7. 读取对应 `flows/` 节点规则，再按 `references/review-gates.md` 执行 review gate。
+8. 对 `write_required` 动作，结束前必须更新 `index.md`、`manifest.md` 和必要的基线/变更说明，并在最终回复列出写入路径。
+9. 如果执行 `repair-run`，必须读取 `references/repair-run.md`，并按其中的完成判定逐项自查。
+
+不得因为用户没有明确说“落盘”“生成文件”就把生成类任务改判为 `discuss-only`。只有用户明确表达“先别写文件”“只讨论”“不要修改”“只看一下/复述/检查”时，才允许进入 `discuss-only` 或 `inspect-only`。
 
 `manifest.md` 必须记录 `current_phase`、`active_gate`、`blocked`、`current_blocker`、`next_allowed_actions`、Review Gate 状态、人工确认记录和自动检查记录。
 
@@ -233,6 +237,7 @@ draft / ready_for_review / needs_rework
 - 不把 `00-intake.md` 当成产品事实源。
 - 不跳过 `ssf-workspace/index.md` 直接写入文件。
 - 不把新事项覆盖到旧实例。
+- 不把 PM 产物生成类请求当成纯聊天回答，除非用户明确要求只讨论或不写文件。
 - 不在 Analysis 未确认时假装已经通过。
 - 不在产品架构未确认时继续完整设计。
 - 不把产品架构写成技术架构。

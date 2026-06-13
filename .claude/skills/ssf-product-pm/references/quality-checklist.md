@@ -4,10 +4,14 @@
 
 | 检查项 | 通过标准 |
 |---|---|
+| 是否判断持久化策略 | 根据 `registries/actions.md` 判定 `write_required`、`read_only` 或 `write_forbidden` |
+| 生成类任务是否默认落盘 | full-run、analysis-run、design-run、flow-run、doc-run、change-run、prototype-run、repair-run 未明确禁止写文件时必须落盘 |
+| 只读/只讨论是否显式 | 只有用户明确要求不写文件、只讨论、只读取或只检查时，才使用 `discuss-only` 或 `inspect-only` |
 | 是否解析目标实例 | 生成或修改文件前读取 `ssf-workspace/index.md`，明确目标实例 |
 | 是否执行 Intake Gate | 重新生成、覆盖、跳阶段、变更或信息不清时先执行 intake |
 | 是否避免覆盖 | 新事项与旧实例不一致时新建实例或请求确认 |
 | 是否更新实例状态 | 生成或修改文件后更新 `index.md` 和实例 `manifest.md` |
+| 是否报告写入路径 | `write_required` 完成后最终回复列出实际创建或更新的文件路径 |
 | 是否读取工作流配置 | 执行前读取 workflow、action-commands、template-index、review-gates |
 | 是否记录流程阻塞点 | `index.md` 和 `manifest.md` 记录当前阶段、active_gate、blocked、next_allowed_actions |
 | 人工确认是否有证据 | 人工 Review Gate 写 approved 时必须引用 `APR-xxx` |

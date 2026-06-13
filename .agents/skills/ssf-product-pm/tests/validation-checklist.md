@@ -15,6 +15,9 @@
 
 - `SKILL.md` 是否指向新架构。
 - 每个动作是否能找到对应 flow。
+- `registries/actions.md` 是否为每个 action 标明 `persistence_policy`。
+- 生成类 action 是否为 `write_required`，且 `discuss-only` 不能由“用户没说落盘”触发。
+- 是否存在 `inspect-only` 只读执行模式，避免检查/复述类请求误写文件。
 - 每个文档是否能从 `registries/documents.md` 找到模板和 gate。
 - 每个 repair-run 是否执行 `CHECK-REPAIR`。
 - prototype-run 是否能找到 `flows/prototype/prototype-run.md` 和 `templates/prototype/00-07`。

@@ -25,8 +25,11 @@ Design 设计阶段
 - `references/template-index.md` 定义阶段到模板的映射。
 - `references/review-gates.md` 定义人工评审和自动评审规则。
 - `references/quality-checklist.md` 定义质量检查项。
+- `registries/actions.md` 的 `persistence_policy` 定义动作是否必须落盘、只读或禁止写入。
 
 Agent 执行前必须先读取以上配置，不得只凭文件名猜流程。
+
+默认持久化原则：生成、修改、修复、续跑、变更和 prototype-run 都是落盘动作。只有用户明确要求读取/检查/复述现有文件时才只读；只有用户明确要求只讨论或不修改文件时才禁止写入。
 
 ## 3. Analysis 分析阶段
 

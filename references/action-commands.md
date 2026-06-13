@@ -4,19 +4,34 @@
 
 ## 1. 执行模式
 
-| execution_mode | 触发语义 | 处理方式 |
-|---|---|---|
-| full-run | 完整生成、从头做一套、生成完整产品设计 | 先执行 intake，再执行 Analysis，人工评审通过后进入 Design |
-| analysis-run | 先分析、做调研、收集信息、需求分析 | 只执行 Analysis；结束于 `analysis-human-review` |
-| design-run | 做设计、生成 PRD/产品架构/功能/UI | 验证 Analysis 是否存在且通过；缺失则中断或基于假设标记风险 |
-| flow-run | 只跑某个阶段 | 检查该阶段依赖，允许跳阶段但必须标记缺失输入 |
-| doc-run | 只生成或修改某个文档 | 检查目标实例和上游依赖，只更新相关文档与 manifest |
-| change-run | 基于已有版本修改、迭代、追加需求 | 读取基线与产品架构，判断影响范围后局部更新 |
-| prototype-run | 输出 prototype-input、原型输入包、Figma Make prompt、Figma MCP prompt、原型验收清单 | 读取当前产品规格，派生 `prototype-input/`，不改变产品事实 |
-| repair-run | 补齐、修复、重新检查、格式不完整 | 不改变产品事实，按 `references/repair-run.md` 修复结构、追踪、状态、证据和模板一致性 |
-| discuss-only | 只讨论、不落盘 | 不写文件，可给流程建议 |
+| execution_mode | 触发语义 | persistence_policy | 处理方式 |
+|---|---|---|---|
+| full-run | 完整生成、从头做一套、生成完整产品设计 | write_required | 先执行 intake，再执行 Analysis，人工评审通过后进入 Design |
+| analysis-run | 先分析、做调研、收集信息、需求分析 | write_required | 只执行 Analysis；结束于 `analysis-human-review` |
+| design-run | 做设计、生成 PRD/产品架构/功能/UI | write_required | 验证 Analysis 是否存在且通过；缺失则中断或基于假设标记风险 |
+| flow-run | 只跑某个阶段 | write_required | 检查该阶段依赖，允许跳阶段但必须标记缺失输入 |
+| doc-run | 只生成或修改某个文档 | write_required | 检查目标实例和上游依赖，只更新相关文档与 manifest |
+| change-run | 基于已有版本修改、迭代、追加需求 | write_required | 读取基线与产品架构，判断影响范围后局部更新 |
+| prototype-run | 输出 prototype-input、原型输入包、Figma Make prompt、Figma MCP prompt、原型验收清单 | write_required | 读取当前产品规格，派生 `prototype-input/`，不改变产品事实 |
+| repair-run | 补齐、修复、重新检查、格式不完整 | write_required | 不改变产品事实，按 `references/repair-run.md` 修复结构、追踪、状态、证据和模板一致性 |
+| inspect-only | 读取、检查、复述、审阅现有文件，未要求生成或修改 | read_only | 只读文件并报告问题、共识或建议，不写文件 |
+| discuss-only | 只讨论、先讲方案、先别写文件、不要修改文件 | write_forbidden | 不写文件，可给流程建议 |
 
-## 2. 高风险指令
+## 2. 默认持久化规则
+
+生成类任务默认落盘：
+
+- 用户要求“生成 / 输出 / 完整做一套 / 写 PRD / 做需求分析 / 做产品架构 / 生成 UI 规格 / 生成原型输入包 / 修复文档 / 补齐文档 / 续跑 / 重跑 / 变更”时，即使没有明确说“落盘”或“生成文件”，也必须使用 `write_required`。
+- `write_required` 任务不得只在对话里给正文；必须创建或更新对应文件，并同步 `index.md` 与目标实例 `manifest.md`。
+- `write_required` 的最终回复必须列出实际写入路径。
+
+只读和只讨论必须显式：
+
+- 只有用户明确要求“读取文件内容并复述”“检查目录/内容有没有问题”“审阅但不要修改”“只看一下”时，才使用 `inspect-only`。
+- 只有用户明确要求“先不写文件”“只讨论”“先讲方案”“不要修改文件”时，才使用 `discuss-only`。
+- 用户没有说明是否落盘，不构成 `discuss-only` 的触发条件。
+
+## 3. 高风险指令
 
 遇到以下语义必须执行 intake gate，并记录写入策略：
 
@@ -26,7 +41,7 @@
 - 直接生成某个后续阶段
 - 用户输入明显像另一个产品或另一个事项
 
-## 3. 跳阶段规则
+## 4. 跳阶段规则
 
 跳阶段不是禁止项，但必须满足：
 
@@ -36,7 +51,7 @@
 4. 若跳过人工评审节点，不得把后续文档标记为 `approved`。
 5. 若跳到设计阶段，必须先验证产品架构是否存在；不存在时先生成或更新产品架构。
 
-## 4. 变更局部执行规则
+## 5. 变更局部执行规则
 
 功能迭代、小调整、局部 UI 修改不应全量重跑。默认流程：
 
@@ -72,7 +87,7 @@
 3. 在 `10-product-baseline-change.md` 的变更影响范围中说明是否改变模块边界。
 4. 不得只沿用旧 `APR-xxx`，让新架构内容看起来像旧人工确认的一部分。
 
-## 5. prototype-run 规则
+## 6. prototype-run 规则
 
 prototype-run 是 Design 之后的派生执行，不是默认主流程。
 
@@ -110,7 +125,7 @@ prototype-run 是 Design 之后的派生执行，不是默认主流程。
 5. 未生成真实原型前，原型生成后检查只能写 `pending`，不得写 `pass`。
 6. 如果发现 UI 标注覆盖不足，应在 `06-ui-annotation-handoff.md` 和 `07-prototype-review-checklist.md` 标记缺口，而不是偷改产品事实。
 
-## 6. repair-run 硬规则
+## 7. repair-run 硬规则
 
 repair-run 不是局部润色，而是结构一致性修复。执行 repair-run 时必须读取 `references/repair-run.md`。
 

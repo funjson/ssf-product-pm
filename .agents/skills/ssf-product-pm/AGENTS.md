@@ -62,10 +62,13 @@
 - 自动评审必须在 `manifest.md` 写入自动检查记录。
 - change-run 修改产品架构但不改变模块边界时，必须写入 `ARCH-DELTA-xxx` 和 `product-architecture-delta-review`。
 - prototype-run 只派生 `prototype-input/` 原型输入包，不修改 `product-spec/` 产品事实。
+- 除非用户明确要求只读、只讨论或不修改文件，生成、修改、修复和 prototype-run 默认必须落盘。
 
 ## 5. 关键规则
 
 - 生成或修改文件前必须读取 `ssf-workspace/index.md` 判断目标实例。
+- 不得因为用户没有明确说“落盘”就把生成类任务当成聊天回答；生成类 action 的 `persistence_policy` 默认为 `write_required`。
+- 只有用户明确要求“读取/检查/复述现有文件”时使用 `inspect-only`；只有明确要求“不写文件/只讨论”时使用 `discuss-only`。
 - 用户要求重新生成、覆盖、跳阶段或变更时，必须先执行 intake gate。
 - 不得把新事项覆盖到旧实例。
 - 未经用户确认，不得把文档状态写成 `approved / confirmed`。

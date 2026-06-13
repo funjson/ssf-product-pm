@@ -9,6 +9,8 @@
   ↓
 动作识别
   ↓
+持久化策略判断
+  ↓
 实例判断
   ↓
 工作流推进
@@ -74,7 +76,10 @@ Design 包含：
 - `change-run`：基于当前 baseline 做局部变更。
 - `prototype-run`：基于当前产品规格派生原型输入包，不改产品事实。
 - `repair-run`：修复结构、追踪、证据和状态，不改产品事实。
-- `discuss-only`：只讨论，不落盘。
+- `inspect-only`：只读取、检查、复述现有文件，不落盘。
+- `discuss-only`：用户明确要求只讨论或不修改文件时使用，不落盘。
+
+除 `inspect-only` 和 `discuss-only` 外，生成、修改、修复和 prototype-run 默认必须落盘。
 
 ## 4. 人工中断点
 

@@ -94,3 +94,28 @@
 - 样例数据标记为 prototype-only。
 - `SCR` 用于 frame 名称，`CMP` 用于 layer / annotation。
 - 未生成真实原型前，`CHECK-PROTOTYPE-xxx` 保持 pending。
+
+## 10. 生成类任务默认必须落盘
+
+用户只说“帮我做一个产品需求分析”或“帮我生成 PRD”，没有明确说“写入文件”。
+
+期望：
+
+- 不得判定为 `discuss-only`。
+- 执行模式为 `analysis-run`、`design-run`、`doc-run` 或对应生成类 action。
+- `persistence_policy` 为 `write_required`。
+- 读取或创建 `ssf-workspace/index.md`。
+- 读取或创建目标实例 `manifest.md`。
+- 生成或更新对应 `product-spec/` 文件。
+- 同步更新 `index.md` 与 `manifest.md`。
+- 最终回复列出实际写入路径。
+
+## 11. 只读和只讨论必须显式
+
+用户说“读取 handoff 文件夹并复述”或“先别写文件，只讨论方案”。
+
+期望：
+
+- “读取/复述/检查现有文件”判定为 `inspect-only`，只读不写。
+- “先别写文件/只讨论/不要修改”判定为 `discuss-only`，禁止写文件。
+- 不得因为 inspect-only 或 discuss-only 创建 `ssf-workspace/`、`SPI-xxx` 或修改 manifest。
