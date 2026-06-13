@@ -10,6 +10,12 @@
 - `instances/SPI-xxx/manifest.md`
 - `product-spec/10-product-baseline-change.md`
 
+派生执行资产：
+
+- `instances/SPI-xxx/prototype-input/`
+
+`prototype-input/` 是原型工具输入包，不是产品事实源。流程判断仍以 `index.md`、`manifest.md` 和 baseline 为准。
+
 ## 2. Workspace Index
 
 `index.md` 管理跨实例调度。

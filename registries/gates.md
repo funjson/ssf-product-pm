@@ -12,6 +12,7 @@
 | prototype-auto-review | auto_review | no | CHECK-PROT-xxx |
 | baseline-auto-review | auto_review | no | CHECK-BASE-xxx |
 | change-run-local-review | auto_review | no | CHECK-CHG-xxx-xxx |
+| prototype-input-auto-review | auto_review | no | CHECK-PINPUT-xxx / CHECK-PROTOTYPE-xxx |
 | repair-run-completion-check | auto_review | no | CHECK-REPAIR-xxx |
 
 详细规则见 `references/review-gates.md`。

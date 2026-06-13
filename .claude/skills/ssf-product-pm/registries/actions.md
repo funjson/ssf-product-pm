@@ -7,6 +7,7 @@
 | design-run | 生成产品设计 | `flows/design/flow.md` | yes | 视情况 |
 | doc-run | 单文档生成或修改 | 对应节点 flow | yes | 高风险时 yes |
 | change-run | 基于现有版本变更 | `flows/change/change-run.md` | yes | yes |
+| prototype-run | 基于当前产品规格生成原型输入包 | `flows/prototype/prototype-run.md` | yes | 视情况 |
 | repair-run | 修复结构、证据、状态 | `flows/repair/repair-run.md` | yes | no |
 | discuss-only | 只讨论 | 无 | no | no |
 

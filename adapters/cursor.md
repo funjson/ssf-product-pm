@@ -14,3 +14,8 @@ Cursor 规则应引用：
 - `registries/`
 - `references/`
 - `templates/`
+
+用户要求 prototype / Figma Make / 原型输入包时，应额外读取：
+
+- `flows/prototype/prototype-run.md`
+- `templates/prototype/`

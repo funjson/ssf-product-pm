@@ -10,4 +10,5 @@
 | 基线自检查 | Baseline | CHECK-BASE | `templates/design/10-product-baseline-change.md` |
 | 架构 Delta 自检查 | Product Architecture Delta | CHECK-ARCH-DELTA | `templates/design/04-product-architecture.md` |
 | 变更自检查 | CHG | CHECK-CHG | `templates/design/10-product-baseline-change.md` |
+| 原型输入包自检查 | prototype-input | CHECK-PINPUT / CHECK-PROTOTYPE | `templates/prototype/07-prototype-review-checklist.md` |
 | repair-run 完成检查 | repair-run | CHECK-REPAIR | `references/repair-run.md` |

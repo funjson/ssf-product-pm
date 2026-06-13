@@ -31,3 +31,5 @@ Rules:
 10. Do not write technical implementation details in PM documents.
 11. Stage and sub-stage rules live in `flows/`; templates only define output structure.
 12. repair-run must satisfy `references/repair-run.md`.
+13. For prototype input packages, use `prototype-run`, read `flows/prototype/prototype-run.md` and `templates/prototype/`, and write only to the target instance `prototype-input/`.
+14. Prototype sample data and generated prototype results must not overwrite product facts in `product-spec/`.

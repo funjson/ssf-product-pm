@@ -34,7 +34,22 @@
 
 产品架构评审是人工评审节点，必须中断流程。其他设计节点默认执行自动自检查，失败时进入 repair-run。
 
-## 4. Repair 模板要求
+## 4. Prototype 原型输入包
+
+| 阶段 | 模板 | Review Gate |
+|---|---|---|
+| 原型生成总控说明 | `templates/prototype/00-prototype-master-brief.md` | prototype-input-auto-review |
+| 原型级设计系统约束 | `templates/prototype/01-design-system-constraints.md` | prototype-input-auto-review |
+| 页面合同 | `templates/prototype/02-screen-contracts.md` | prototype-input-auto-review |
+| 流程合同 | `templates/prototype/03-flow-contracts.md` | prototype-input-auto-review |
+| 原型样例数据 | `templates/prototype/04-sample-data.md` | prototype-input-auto-review |
+| Figma Make / 原型工具 Prompt | `templates/prototype/05-figma-make-prompts.md` | prototype-input-auto-review |
+| UI 标注交付 | `templates/prototype/06-ui-annotation-handoff.md` | prototype-input-auto-review |
+| 原型输入包与原型验收清单 | `templates/prototype/07-prototype-review-checklist.md` | prototype-input-auto-review |
+
+prototype-run 只派生 `prototype-input/`，不修改 `product-spec/` 产品事实。未生成真实原型前，原型生成后检查必须保持 `pending`。
+
+## 5. Repair 模板要求
 
 repair-run 修复结构时，不得只修复用户指出的某一行，而必须对照对应模板进行结构迁移：
 

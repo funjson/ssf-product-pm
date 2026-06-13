@@ -129,3 +129,19 @@
 | CHG 编号是否一致 | CHG 小节编号不与父章节错位，例如 `## 9` 下不得写 `## 8.1` |
 | CHECK ID 是否前缀化 | 正文和 manifest 不出现裸 `CHECK-001`，全部使用来源前缀 |
 | 是否避免产品事实漂移 | repair-run 未改变产品定位、需求、模块边界、业务规则 |
+
+## 11. prototype-run 检查
+
+| 检查项 | 通过标准 |
+|---|---|
+| 是否读取目标实例 | 读取 `ssf-workspace/index.md` 和目标实例 `manifest.md` |
+| 是否读取产品规格 | 至少读取 `product-spec/04-10` |
+| 是否生成实例内输入包 | 输出到 `instances/SPI-xxx/prototype-input/`，不写到仓库根目录 |
+| 是否保持派生关系 | 明确 `prototype-input/` 不是产品事实源 |
+| 页面是否完整 | `02-screen-contracts.md` 覆盖 UI IA 中全部 SCR |
+| 组件是否可追踪 | 关键可交互、表单、数据绑定、规则约束和状态变化组件进入 `06-ui-annotation-handoff.md` |
+| 流程是否完整 | `03-flow-contracts.md` 覆盖核心导航和可点击路径 |
+| 是否有样例数据 | `04-sample-data.md` 覆盖核心页面，并标记 prototype-only |
+| Prompt 是否约束扩展 | `05-figma-make-prompts.md` 禁止新增规格外页面、按钮、功能和业务流程 |
+| ID 是否正确使用 | SCR/CMP 用于 frame/layer/annotation，不作为用户可见 UI 文案 |
+| 未生成原型时是否 pending | `CHECK-PROTOTYPE-xxx` 不得在没有真实原型时写 pass |

@@ -14,6 +14,7 @@ Analysis 分析阶段
 Design 设计阶段
   ↓ 产品架构人工评审，中断等待用户确认
 后续设计文档自动自检查
+  ↓ 可选 prototype-run 派生原型输入包
 ```
 
 ## 2. Workflow 配置化原则
@@ -195,6 +196,7 @@ Agent 判断新流程、旧流程、续跑、变更或 repair-run 时，必须�
 | 单个功能变化 | 更新对应 FEAT、相关 UI、基线和变更说明 |
 | 纯 UI 文案或展示变化 | 更新 UI 相关文档和基线，不全量重跑 Analysis |
 | 原型标注缺失 | repair-run 修复 UI 标注，不改变需求事实 |
+| 需要 Figma Make / Motiff / Uizard 输入 | prototype-run 派生 `prototype-input/`，不改产品事实 |
 
 ## 8. 实例与跳阶段规则
 
@@ -219,3 +221,15 @@ Agent 判断新流程、旧流程、续跑、变更或 repair-run 时，必须�
 - 功能任务规格和结构化 UI 规格必须逐个对象完整展开。
 - 不允许用“后续同上”“若干页面总表”“FEAT-006 至 FEAT-014 摘要”代替完整结构。
 - 输出过长时，分批生成或进入 repair-run 补齐，不得压缩结构。
+
+### 8.4 Prototype 输入包
+
+prototype-run 是基于 `product-spec/04-10` 的派生执行，用于生成 `instances/<instance-id>/prototype-input/`。
+
+它服务：
+
+- Figma Make / Motiff / Uizard 等 prompt-to-prototype 工具。
+- Figma MCP 执行 Prompt。
+- 前端 AI 和测试 AI 的 UI 标注交付。
+
+prototype-run 不修改 `product-spec/`，不新增规格外页面、功能、按钮或业务流程。真实原型生成前，原型结果检查必须保持 `pending`。

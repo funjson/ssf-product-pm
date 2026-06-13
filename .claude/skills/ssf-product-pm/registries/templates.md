@@ -13,6 +13,14 @@
 | `templates/design/08-structured-ui-interaction-spec.md` | design | 结构化 UI |
 | `templates/design/09-prototype-prompt-ui-annotation.md` | design | 原型 Prompt 与 UI 标注 |
 | `templates/design/10-product-baseline-change.md` | design/change | 产品基线与变更 |
+| `templates/prototype/00-prototype-master-brief.md` | prototype | 原型生成总控说明 |
+| `templates/prototype/01-design-system-constraints.md` | prototype | 原型级设计系统约束 |
+| `templates/prototype/02-screen-contracts.md` | prototype | 页面合同 |
+| `templates/prototype/03-flow-contracts.md` | prototype | 流程合同 |
+| `templates/prototype/04-sample-data.md` | prototype | 原型样例数据 |
+| `templates/prototype/05-figma-make-prompts.md` | prototype | Figma Make / 原型工具 Prompt |
+| `templates/prototype/06-ui-annotation-handoff.md` | prototype | UI 标注交付 |
+| `templates/prototype/07-prototype-review-checklist.md` | prototype | 原型输入包与原型验收清单 |
 | `templates/state/workspace-index.md` | state | 工作区实例索引 |
 | `templates/state/instance-manifest.md` | state | 单实例 Manifest |
 | `templates/state/workspace-readme.md` | state | 工作区 README |

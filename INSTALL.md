@@ -122,3 +122,13 @@ Analysis 阶段结束后停止等待人工评审；产品架构设计结束后�
 
 变更：...
 ```
+
+### 原型输入包
+
+```text
+使用 ssf-product-pm，基于当前实例生成 prototype-input 原型输入包。
+要求读取 product-spec/04-10，输出 00-prototype-master-brief.md 至 07-prototype-review-checklist.md。
+只派生原型工具输入，不修改 product-spec 产品事实。
+生成 Figma Make prompt、Figma MCP 执行 prompt、UI 标注交付和原型验收清单。
+未生成真实原型前，CHECK-PROTOTYPE-xxx 保持 pending，不得写 pass。
+```

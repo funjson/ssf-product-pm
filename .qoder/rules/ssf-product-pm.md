@@ -29,5 +29,7 @@ Core rules:
 - Every FEAT and SCR must keep the same full structure.
 - Stage and sub-stage rules live in `flows/`; templates only define output structure.
 - repair-run must satisfy `references/repair-run.md`.
+- prototype-run must read `flows/prototype/prototype-run.md` and `templates/prototype/`, then write only to `instances/SPI-xxx/prototype-input/`.
+- Do not turn prototype sample data, Figma prompts, or generated prototype results into product facts.
 - Use stable IDs: SPI, INTAKE, IQ, FACT, ASM, SRC, RAW, NEED, INS, GOAL, REQ, CAP, MOD, OBJ, FEAT, FLOW, BR, SCR, CMP, AC, CHG.
 - Do not write database, API path, cache, queue, deployment, or other technical implementation details in PM documents.

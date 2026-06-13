@@ -38,6 +38,9 @@
 | AC | 验收标准 | AC-001 | 功能任务规格 |
 | UIA | UI 断言 | UIA-001 | UI 规格 |
 | ANN | UI 标注 | ANN-001 | 原型生成 Prompt 与 UI 标注说明 |
+| PFLOW | 原型流程 | PFLOW-001 | prototype-input 流程合同 |
+| DATA | 原型样例数据 | DATA-001 | prototype-input 样例数据 |
+| PANN | 原型交付标注 | PANN-001 | prototype-input UI 标注交付 |
 | CHG | 变更项 | CHG-001 | 产品基线与变更说明 |
 | DEC | 产品决策 | DEC-001 | 产品基线与变更说明 |
 | DEP | 废弃项 | DEP-001 | 产品基线与变更说明 |
@@ -52,6 +55,7 @@
 - 用户调研链路建议保持 `SRC -> RAW -> INS -> NEED -> REQ`，避免把用户原话直接写成功能。
 - 产品架构链路建议保持 `REQ -> MOD -> FEAT`，避免需求直接平铺成功能任务。
 - 功能任务是主执行维度，但必须归属到产品模块或明确标记“模块待补齐”。
+- 原型输入包中的 `PFLOW / DATA / PANN` 是派生 ID，只服务原型工具输入、交付标注和验证，不得反向替代 `FEAT / SCR / CMP / BR / AC`。
 - 自动检查项必须带 Review Gate 来源前缀，不使用裸编号 `CHECK-001`。例如 PRD 使用 `CHECK-PRD-001`，功能任务使用 `CHECK-FEAT-001`，变更使用 `CHECK-CHG-002-001`。
 
 ## 示例链路

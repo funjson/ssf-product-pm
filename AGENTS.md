@@ -40,6 +40,14 @@
 - `templates/design/08-structured-ui-interaction-spec.md`
 - `templates/design/09-prototype-prompt-ui-annotation.md`
 - `templates/design/10-product-baseline-change.md`
+- `templates/prototype/00-prototype-master-brief.md`
+- `templates/prototype/01-design-system-constraints.md`
+- `templates/prototype/02-screen-contracts.md`
+- `templates/prototype/03-flow-contracts.md`
+- `templates/prototype/04-sample-data.md`
+- `templates/prototype/05-figma-make-prompts.md`
+- `templates/prototype/06-ui-annotation-handoff.md`
+- `templates/prototype/07-prototype-review-checklist.md`
 
 模板只定义输出结构；每个阶段和小阶段的执行规则必须读取 `flows/`。
 
@@ -53,6 +61,7 @@
 - 人工评审通过必须在 `manifest.md` 写入 `APR-xxx` 人工确认记录。
 - 自动评审必须在 `manifest.md` 写入自动检查记录。
 - change-run 修改产品架构但不改变模块边界时，必须写入 `ARCH-DELTA-xxx` 和 `product-architecture-delta-review`。
+- prototype-run 只派生 `prototype-input/` 原型输入包，不修改 `product-spec/` 产品事实。
 
 ## 5. 关键规则
 
@@ -66,6 +75,7 @@
 - 产品架构必须包含 `ARCH-DEC-xxx` 决策表，支持接受、合并、拆分、重命名、重新生成和其他输入。
 - 产品架构局部变更不得直接沿用旧 `APR-xxx`，必须记录 delta 或升级人工评审。
 - repair-run 必须按 `references/repair-run.md` 判定完成；`index.md` 旧版短表、baseline 缺少 `previous_version` 或版本历史、正文裸 `CHECK-001` 都必须判定为未完成。
+- prototype-run 必须输出到目标实例 `prototype-input/`；未生成真实原型时，`CHECK-PROTOTYPE-xxx` 不得写 pass。
 - 不要在 PM 阶段输出数据库表、接口路径、缓存方案、消息队列方案等技术实现细节。
 
 ## 6. ID 关联

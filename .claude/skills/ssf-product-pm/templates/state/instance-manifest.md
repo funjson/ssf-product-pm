@@ -48,6 +48,7 @@
 | 08 结构化 UI/交互规格 | product-spec/08-structured-ui-interaction-spec.md | missing / draft / ready_for_review / needs_rework |  | ui-spec-auto-review |
 | 09 原型生成 Prompt 与 UI 标注说明 | product-spec/09-prototype-prompt-ui-annotation.md | missing / draft / ready_for_review / needs_rework |  | prototype-auto-review |
 | 10 产品基线与变更说明 | product-spec/10-product-baseline-change.md | missing / draft / ready_for_review / needs_rework |  | baseline-auto-review |
+| Prototype Input 原型输入包 | prototype-input/ | missing / draft / ready_for_review / needs_rework |  | prototype-input-auto-review |
 
 ## 4. Review Gate 状态
 
@@ -65,6 +66,7 @@
 | prototype-auto-review | auto_review | pending / pass / fail | no | yes / no | CHECK-xxx / 无 |  |  |
 | baseline-auto-review | auto_review | pending / pass / fail | no | yes / no | CHECK-xxx / 无 |  |  |
 | change-run-local-review | auto_review | pending / pass / fail / escalated | no | yes / no | CHECK-CHG-xxx-xxx / 无 |  |  |
+| prototype-input-auto-review | auto_review | pending / pass / fail | no | yes / no | CHECK-PINPUT-xxx / CHECK-PROTOTYPE-xxx / 无 |  |  |
 
 ## 5. 人工确认记录
 
@@ -103,6 +105,7 @@
 | NEXT-004 | 执行 repair-run | 任一 auto_review fail | 是 |
 | NEXT-005 | 执行 change-run | 用户提出基于当前基线变更 | 需先判断影响范围 |
 | NEXT-006 | 执行 product-architecture-delta-review | 局部变更修改产品架构但不改变模块边界 | 是 |
+| NEXT-007 | 执行 prototype-run | 用户要求输出原型输入包、Figma Make prompt 或原型验证材料 | 是 |
 
 ## 10. 待确认问题
 

@@ -39,6 +39,7 @@
 | prototype-auto-review | 原型 Prompt 与标注自检查 | auto_review | 是 | repair-run 补齐 Prompt、标注和追踪关系 |
 | baseline-auto-review | 基线与变更自检查 | auto_review | 是 | repair-run 补齐变更前后、影响范围和回归关注点 |
 | change-run-local-review | 局部变更自检查 | auto_review | 是 | repair-run 修复受影响文档；若发现模块边界变化则升级人工评审 |
+| prototype-input-auto-review | 原型输入包自检查 | auto_review | 是 | repair-run 或补充输入包；未生成真实原型前原型结果检查保持 pending |
 
 ## 4. 人工评审输出格式
 
@@ -77,7 +78,7 @@
 
 | check_id | 检查项 | 结果 | 问题 | 修复动作 |
 |---|---|---|---|---|
-| CHECK-PRD-001 / CHECK-FEAT-001 / CHECK-UIIA-001 / CHECK-UISPEC-001 / CHECK-PROT-001 / CHECK-BASE-001 |  | pass / fail / pending |  | 无 / repair-run |
+| CHECK-PRD-001 / CHECK-FEAT-001 / CHECK-UIIA-001 / CHECK-UISPEC-001 / CHECK-PROT-001 / CHECK-BASE-001 / CHECK-PINPUT-001 |  | pass / fail / pending |  | 无 / repair-run |
 
 如果任一核心检查为 `fail`，本次节点不得标记为完成，必须进入 `repair-run` 或把失败项写入 `manifest.md`。
 
@@ -97,6 +98,8 @@
 | 基线自检查 | CHECK-BASE-001 |
 | 产品架构局部变更自检查 | CHECK-ARCH-DELTA-001 |
 | 某次变更自检查 | CHECK-CHG-xxx-001 |
+| 原型输入包自检查 | CHECK-PINPUT-001 |
+| 真实原型生成后检查 | CHECK-PROTOTYPE-001 |
 
 正文文档和 `manifest.md` 必须使用同一组检查 ID。
 
@@ -116,7 +119,26 @@
 - 必须进入 `product-architecture-human-review`。
 - `blocked = yes`，`next_allowed_actions = wait-user-review`。
 
-## 7. Manifest 写入要求
+## 7. prototype-input-auto-review 规则
+
+`prototype-input-auto-review` 只检查输入包是否适合原型工具消费。
+
+允许写 `pass` 的对象：
+
+- `prototype-input/` 文件结构是否完整。
+- 页面、组件、流程、样例数据、ID 约束是否完整。
+- Prompt 是否禁止新增规格外内容。
+
+必须保持 `pending` 的对象：
+
+- 真实 Figma / Motiff / Uizard 原型是否已经生成。
+- 真实原型 Frame 是否完整。
+- 真实原型 layer 是否保留 `CMP`。
+- 真实原型可点击流程是否可用。
+
+没有真实原型证据时，不得把 `CHECK-PROTOTYPE-xxx` 写成 `pass`。
+
+## 8. Manifest 写入要求
 
 每次执行 Review Gate 后，必须同步更新目标实例 `manifest.md`：
 

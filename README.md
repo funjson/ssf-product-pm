@@ -15,6 +15,7 @@
 - `manifest.md` 是单实例流程控制中心，记录当前阶段、阻塞点、Review Gate、人工确认和自动检查。
 - 人工评审通过必须有 `APR-xxx` 证据；自动评审通过只代表自检查通过。
 - 产品架构小改不改模块边界时走 `ARCH-DELTA-xxx` 和 `product-architecture-delta-review`，改模块边界才重新进入人工评审。
+- 原型工具输入通过 `prototype-run` 派生为 `prototype-input/`，不进入 PM 主流程，也不反向修改产品事实源。
 
 ## 配置文件
 
@@ -30,6 +31,7 @@ flows/
   analysis/
   design/
   change/
+  prototype/
   repair/
 
 registries/
@@ -58,6 +60,7 @@ templates/
   common/
   analysis/
   design/
+  prototype/
   state/
 ```
 
@@ -84,6 +87,15 @@ ssf-workspace/
         08-structured-ui-interaction-spec.md
         09-prototype-prompt-ui-annotation.md
         10-product-baseline-change.md
+      prototype-input/
+        00-prototype-master-brief.md
+        01-design-system-constraints.md
+        02-screen-contracts.md
+        03-flow-contracts.md
+        04-sample-data.md
+        05-figma-make-prompts.md
+        06-ui-annotation-handoff.md
+        07-prototype-review-checklist.md
 ```
 
 ## 关键规则
@@ -96,5 +108,6 @@ ssf-workspace/
 - 功能任务和 UI 页面必须同构完整展开，不得用摘要或总表压缩。
 - 未经用户确认，文档状态不得写 `approved / confirmed`。
 - 变更后的 baseline 版本、变更记录、自动检查 ID 必须保持一致。
+- `prototype-run` 只生成实例内 `prototype-input/`，不得把样例数据、Figma prompt 或原型结果写回产品事实。
 - `repair-run` 必须按 `references/repair-run.md` 完成结构修复；`index.md` 旧版短表、baseline 缺版本历史、正文裸 `CHECK-001` 都不能判定为完成。
 - 每个阶段和小阶段的规则放在 `flows/`；模板只定义输出结构，不承载流程判断。

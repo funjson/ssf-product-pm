@@ -45,6 +45,7 @@ Design
 Auto Review 文档
   ↓
 Baseline
+  ↓ 可选 prototype-run，派生 prototype-input
 ```
 
 Analysis 包含：
@@ -71,6 +72,7 @@ Design 包含：
 - `design-run`：从产品架构开始，验证 Analysis 是否存在和是否通过。
 - `doc-run`：只生成或修复单个文档。
 - `change-run`：基于当前 baseline 做局部变更。
+- `prototype-run`：基于当前产品规格派生原型输入包，不改产品事实。
 - `repair-run`：修复结构、追踪、证据和状态，不改产品事实。
 - `discuss-only`：只讨论，不落盘。
 
@@ -102,4 +104,5 @@ Design 包含：
 | 模块边界错误 | 产品架构人工评审 |
 | 功能任务结构缺失 | 功能任务 repair-run |
 | UI 页面结构压缩 | UI repair-run |
+| 原型输入缺少样例数据或 ID 约束 | prototype-run repair / 补齐 prototype-input |
 | 变更证据缺失 | baseline / manifest repair-run |

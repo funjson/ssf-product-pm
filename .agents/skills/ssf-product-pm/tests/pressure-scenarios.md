@@ -80,3 +80,17 @@
 - baseline 补版本历史。
 - 写入 `CHECK-REPAIR-001` 至 `CHECK-REPAIR-005`。
 - 任一失败不得写 complete。
+
+## 9. prototype-run 不得污染产品事实
+
+用户要求“基于当前规格生成 Figma Make 原型输入包”。
+
+期望：
+
+- 读取 `index.md` 和目标实例 `manifest.md`。
+- 读取 `product-spec/04-10`。
+- 输出到 `instances/SPI-xxx/prototype-input/`。
+- 不修改 `product-spec/` 产品事实。
+- 样例数据标记为 prototype-only。
+- `SCR` 用于 frame 名称，`CMP` 用于 layer / annotation。
+- 未生成真实原型前，`CHECK-PROTOTYPE-xxx` 保持 pending。

@@ -16,10 +16,10 @@ description: Generate AI-ready product analysis and product design documents for
 执行任务前，不要只凭 `SKILL.md` 里的记忆生成。必须按分层读取配置：
 
 1. 运行协议：`core/workflow.md`、`core/runtime-protocol.md`、`core/state-protocol.md`
-2. 注册表：`registries/actions.md`、`registries/documents.md`、`registries/gates.md`、`registries/templates.md`
-3. 当前节点规则：按执行阶段读取 `flows/analysis/`、`flows/design/`、`flows/change/` 或 `flows/repair/`
+2. 注册表：`registries/actions.md`、`registries/documents.md`、`registries/gates.md`、`registries/checks.md`、`registries/templates.md`
+3. 当前节点规则：按执行阶段读取 `flows/analysis/`、`flows/design/`、`flows/change/`、`flows/prototype/` 或 `flows/repair/`
 4. 详细规则：`references/review-gates.md`、`references/id-conventions.md`、`references/quality-checklist.md`、`references/repair-run.md`
-5. 输出模板：只从 `templates/common/`、`templates/analysis/`、`templates/design/`、`templates/state/` 读取
+5. 输出模板：只从 `templates/common/`、`templates/analysis/`、`templates/design/`、`templates/prototype/`、`templates/state/` 读取
 
 `references/` 保留详细规则与兼容说明；运行时优先使用 `core/`、`flows/` 和 `registries/` 进行判断。
 
@@ -38,6 +38,7 @@ description: Generate AI-ready product analysis and product design documents for
 11. `index.md` 和 `manifest.md` 是流程判断依据；不得只更新正文文档而不更新过程资产。
 12. 人工评审通过必须有 `APR-xxx` 人工确认记录；自动评审通过只代表自检查通过。
 13. 产品架构局部变更但不改变模块边界时，必须记录 `ARCH-DELTA-xxx` 并执行 `product-architecture-delta-review`。
+14. 原型输入包通过 `prototype-run` 派生生成，不进入 Analysis / Design 主流程，也不得反向修改产品事实源。
 
 ## 4. 默认文档树
 
@@ -60,6 +61,18 @@ Design 设计阶段：
 8. `flows/design/08-structured-ui-spec.md` + `templates/design/08-structured-ui-interaction-spec.md`
 9. `flows/design/09-prototype-annotation.md` + `templates/design/09-prototype-prompt-ui-annotation.md`
 10. `flows/design/10-baseline-change.md` + `templates/design/10-product-baseline-change.md`
+
+Prototype 原型输入包派生：
+
+- `flows/prototype/prototype-run.md`
+- `templates/prototype/00-prototype-master-brief.md`
+- `templates/prototype/01-design-system-constraints.md`
+- `templates/prototype/02-screen-contracts.md`
+- `templates/prototype/03-flow-contracts.md`
+- `templates/prototype/04-sample-data.md`
+- `templates/prototype/05-figma-make-prompts.md`
+- `templates/prototype/06-ui-annotation-handoff.md`
+- `templates/prototype/07-prototype-review-checklist.md`
 
 默认输出目录：
 
@@ -84,6 +97,15 @@ ssf-workspace/
         08-structured-ui-interaction-spec.md
         09-prototype-prompt-ui-annotation.md
         10-product-baseline-change.md
+      prototype-input/
+        00-prototype-master-brief.md
+        01-design-system-constraints.md
+        02-screen-contracts.md
+        03-flow-contracts.md
+        04-sample-data.md
+        05-figma-make-prompts.md
+        06-ui-annotation-handoff.md
+        07-prototype-review-checklist.md
 ```
 
 ## 5. 执行入口
@@ -150,7 +172,28 @@ change-run 修改产品架构时：
 - 如果只是在既有模块内补充对象、规则、决策或说明，必须记录 `ARCH-DELTA-xxx`，执行 `product-architecture-delta-review`，并同步 `manifest.md` 与 `10-product-baseline-change.md`。
 - 不得用旧 `APR-xxx` 直接覆盖解释新增加的产品架构内容。
 
-## 8. 同构与追踪规则
+## 8. Prototype-run 规则
+
+当用户要求“输出 prototype”“生成原型输入包”“生成 Figma Make prompt”“基于当前规格做原型验证”时，执行 `prototype-run`。
+
+prototype-run 必须：
+
+1. 读取 `ssf-workspace/index.md` 和目标实例 `manifest.md`。
+2. 读取 `product-spec/04-10`。
+3. 输出到目标实例 `prototype-input/`。
+4. 生成 `00-prototype-master-brief.md` 至 `07-prototype-review-checklist.md`。
+5. 执行 `prototype-input-auto-review`。
+6. 更新 `manifest.md` 运行记录。
+
+prototype-run 禁止：
+
+- 把 `prototype-input/` 当产品事实源。
+- 修改 `product-spec/` 产品事实。
+- 新增规格外页面、功能、按钮或业务流程。
+- 把 `SCR / CMP / FEAT / BR / AC` 作为用户可见 UI 文案。
+- 在没有真实 Figma / Motiff / Uizard 原型时，把 `CHECK-PROTOTYPE-xxx` 写成 `pass`。
+
+## 9. 同构与追踪规则
 
 功能任务与 UI 是高风险输出，必须防止模型偷懒：
 
@@ -167,7 +210,7 @@ change-run 修改产品架构时：
 SRC -> RAW -> INS -> NEED -> REQ -> MOD -> FEAT -> SCR -> CMP -> AC -> CHG
 ```
 
-## 9. 状态与评审规则
+## 10. 状态与评审规则
 
 文档默认状态不得写成 `approved / confirmed`。除非用户明确确认，否则默认使用：
 
@@ -185,7 +228,7 @@ draft / ready_for_review / needs_rework
 
 人工评审通过时，必须把用户原话写入 `manifest.md` 的人工确认记录，并生成 `APR-xxx`。没有 `APR-xxx` 时，不得把 `analysis-human-review` 或 `product-architecture-human-review` 写成 `approved`。
 
-## 10. 禁止事项
+## 11. 禁止事项
 
 - 不把 `00-intake.md` 当成产品事实源。
 - 不跳过 `ssf-workspace/index.md` 直接写入文件。
@@ -194,4 +237,5 @@ draft / ready_for_review / needs_rework
 - 不在产品架构未确认时继续完整设计。
 - 不把产品架构写成技术架构。
 - 不把功能任务和 UI 页面压缩成总表。
+- 不把原型工具生成结果反向当成产品事实。
 - 不输出传统需求池、优先级矩阵、MVP Roadmap、下一期规划，除非用户明确要求。

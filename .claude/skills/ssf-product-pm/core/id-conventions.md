@@ -24,4 +24,10 @@ REQ -> CAP -> MOD -> OBJ -> FEAT -> SCR -> CMP -> AC
 CHG -> ARCH-DELTA / FEAT / SCR / CMP / AC / REG
 ```
 
-6. 自动检查必须带来源前缀，不使用裸 `CHECK-001`。
+6. 原型输入包派生链路建议保持：
+
+```text
+SCR / CMP / FEAT / BR / AC -> PFLOW / DATA / PANN
+```
+
+7. 自动检查必须带来源前缀，不使用裸 `CHECK-001`。

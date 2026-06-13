@@ -13,5 +13,13 @@
 | UI-SPEC | `product-spec/08-structured-ui-interaction-spec.md` | Design | `flows/design/08-structured-ui-spec.md` | `templates/design/08-structured-ui-interaction-spec.md` | ui-spec-auto-review |
 | PROTOTYPE | `product-spec/09-prototype-prompt-ui-annotation.md` | Design | `flows/design/09-prototype-annotation.md` | `templates/design/09-prototype-prompt-ui-annotation.md` | prototype-auto-review |
 | BASELINE | `product-spec/10-product-baseline-change.md` | Design / Change | `flows/design/10-baseline-change.md` | `templates/design/10-product-baseline-change.md` | baseline-auto-review |
+| PROTO-MASTER-BRIEF | `prototype-input/00-prototype-master-brief.md` | Prototype | `flows/prototype/prototype-run.md` | `templates/prototype/00-prototype-master-brief.md` | prototype-input-auto-review |
+| PROTO-DESIGN-SYSTEM | `prototype-input/01-design-system-constraints.md` | Prototype | `flows/prototype/prototype-run.md` | `templates/prototype/01-design-system-constraints.md` | prototype-input-auto-review |
+| PROTO-SCREEN-CONTRACTS | `prototype-input/02-screen-contracts.md` | Prototype | `flows/prototype/prototype-run.md` | `templates/prototype/02-screen-contracts.md` | prototype-input-auto-review |
+| PROTO-FLOW-CONTRACTS | `prototype-input/03-flow-contracts.md` | Prototype | `flows/prototype/prototype-run.md` | `templates/prototype/03-flow-contracts.md` | prototype-input-auto-review |
+| PROTO-SAMPLE-DATA | `prototype-input/04-sample-data.md` | Prototype | `flows/prototype/prototype-run.md` | `templates/prototype/04-sample-data.md` | prototype-input-auto-review |
+| PROTO-FIGMA-PROMPTS | `prototype-input/05-figma-make-prompts.md` | Prototype | `flows/prototype/prototype-run.md` | `templates/prototype/05-figma-make-prompts.md` | prototype-input-auto-review |
+| PROTO-ANNOTATION-HANDOFF | `prototype-input/06-ui-annotation-handoff.md` | Prototype | `flows/prototype/prototype-run.md` | `templates/prototype/06-ui-annotation-handoff.md` | prototype-input-auto-review |
+| PROTO-REVIEW-CHECKLIST | `prototype-input/07-prototype-review-checklist.md` | Prototype | `flows/prototype/prototype-run.md` | `templates/prototype/07-prototype-review-checklist.md` | prototype-input-auto-review |
 | WORKSPACE-INDEX | `ssf-workspace/index.md` | State | `core/state-protocol.md` | `templates/state/workspace-index.md` | repair-run-completion-check |
 | MANIFEST | `instances/SPI-xxx/manifest.md` | State | `core/state-protocol.md` | `templates/state/instance-manifest.md` | repair-run-completion-check |

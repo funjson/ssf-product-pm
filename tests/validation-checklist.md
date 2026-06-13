@@ -6,6 +6,8 @@
 - 是否存在 `flows/`。
 - 是否存在 `registries/`。
 - 是否存在 `templates/common`、`templates/analysis`、`templates/design`、`templates/state`。
+- 是否存在 `templates/prototype`。
+- 是否存在 `flows/prototype`。
 - 是否存在 `adapters/`。
 - 是否存在 `tests/`。
 
@@ -15,6 +17,8 @@
 - 每个动作是否能找到对应 flow。
 - 每个文档是否能从 `registries/documents.md` 找到模板和 gate。
 - 每个 repair-run 是否执行 `CHECK-REPAIR`。
+- prototype-run 是否能找到 `flows/prototype/prototype-run.md` 和 `templates/prototype/00-07`。
+- prototype-run 是否执行 `CHECK-PINPUT`，并让未生成真实原型的 `CHECK-PROTOTYPE` 保持 pending。
 
 ## 3. 漂移检查
 

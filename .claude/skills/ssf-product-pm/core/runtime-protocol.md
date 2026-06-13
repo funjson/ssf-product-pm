@@ -52,3 +52,15 @@
 - 必要时更新 `10-product-baseline-change.md`
 
 只改正文不改状态资产，视为未完成。
+
+## 6. prototype-run 规则
+
+prototype-run 写入 `instances/SPI-xxx/prototype-input/`。
+
+执行时必须：
+
+- 读取目标实例 `manifest.md`。
+- 读取 `product-spec/04-10`。
+- 不修改 `product-spec/` 产品事实。
+- 不把样例数据写回 baseline。
+- 未生成真实原型时，真实原型检查保持 `pending`。

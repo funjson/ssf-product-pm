@@ -16,3 +16,5 @@ Codex 使用：
 4. `registries/documents.md`
 5. 对应 `flows/`
 6. 对应模板
+
+当用户要求输出原型输入包、Figma Make prompt 或 Figma MCP prompt 时，使用 `prototype-run`，读取 `flows/prototype/prototype-run.md` 和 `templates/prototype/`。
