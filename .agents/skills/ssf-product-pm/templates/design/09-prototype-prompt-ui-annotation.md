@@ -16,7 +16,7 @@
 | base_product_architecture | PRODUCT-ARCH-001 |
 | generated_at |  |
 | review_gate | prototype-auto-review |
-| review_status | draft / ready_for_review / needs_rework |
+| review_status | draft / auto_checked / needs_rework |
 
 ## 1. 原型生成总约束
 

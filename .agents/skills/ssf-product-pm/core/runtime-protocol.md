@@ -11,6 +11,8 @@
 5. 是否触发 intake gate。
 6. 是否存在人工评审阻塞。
 
+只有 `analysis-human-review` 和 `product-architecture-human-review` 能形成用户确认阻塞。auto_review 通过后不得阻塞等待用户确认；auto_review 失败时进入 repair-run。
+
 ## 2. 持久化策略
 
 默认规则：

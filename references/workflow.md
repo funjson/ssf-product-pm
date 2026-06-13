@@ -139,10 +139,11 @@ UI 文档必须基于产品架构和功能任务生成。每个 `SCR` 必须关�
 
 ## 5. Review 规则
 
-- 分析阶段评审：人工评审，必须中断。
+- 分析阶段评审：阶段级人工评审，必须在 01-03 全部生成后中断一次。
 - 产品架构评审：人工评审，必须中断。
-- 其他节点评审：自动自检查，失败时进入 repair-run。
+- 其他节点评审：自动自检查，通过时自动继续，失败时进入 repair-run。
 - 任何自动评审通过都不等于用户确认，不得把文档写成 `approved / confirmed`。
+- 自动评审通过的文档可写 `auto_checked`，不得停下来要求用户逐文件确认。
 - 人工评审通过必须在实例 `manifest.md` 中写入 `APR-xxx` 人工确认记录，并由 Review Gate 状态引用该证据。
 - 自动评审必须在实例 `manifest.md` 中写入自动检查记录；失败时必须设置 `blocked = yes` 和 `next_allowed_actions = repair-run`。
 - 产品架构局部变更但不改变模块边界时，必须记录 `ARCH-DELTA-xxx`，并执行 `product-architecture-delta-review`。

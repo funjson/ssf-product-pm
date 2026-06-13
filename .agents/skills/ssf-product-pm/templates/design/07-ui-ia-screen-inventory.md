@@ -16,7 +16,7 @@
 | base_feature_spec | FEATURE-SPEC-001 |
 | generated_at |  |
 | review_gate | ui-ia-auto-review |
-| review_status | draft / ready_for_review / needs_rework |
+| review_status | draft / auto_checked / needs_rework |
 
 ## 1. UI 设计目标
 

@@ -25,7 +25,7 @@
 | base_product_architecture | PRODUCT-ARCH-001 |
 | generated_at |  |
 | review_gate | ui-spec-auto-review |
-| review_status | draft / ready_for_review / needs_rework |
+| review_status | draft / auto_checked / needs_rework |
 
 ## 1. 全局 UI 约束
 

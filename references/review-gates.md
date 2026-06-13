@@ -4,42 +4,47 @@
 
 ## 1. 评审类型
 
-| review_type | 含义 | 是否中断流程 | 处理方式 |
-|---|---|---|---|
-| human_review | 人机交互评审 | 是 | 必须停止继续生成，等待用户确认、修改或驳回 |
-| auto_review | 自动自检查 | 否 | 模型根据检查项自检；失败时进入 repair-run |
+| review_type | 含义 | 是否中断流程 | continue_on_pass | 处理方式 |
+|---|---|---|---|---|
+| human_review | 人机交互评审 | 是 | 否 | 必须停止继续生成，等待用户确认、修改或驳回 |
+| auto_review | 自动自检查 | 否 | 是 | 模型根据检查项自检；通过则自动继续，失败时进入 repair-run |
 
 ## 2. 状态枚举
 
 | 字段 | 可选值 |
 |---|---|
-| review_status | draft / ready_for_review / ready_for_review_delta / approved / approved_with_delta / rejected / needs_rework |
+| review_status | draft / ready_for_review / auto_checked / ready_for_review_delta / approved / approved_with_delta / rejected / needs_rework |
 | review_result | pass / fail / pending |
 | blocking_level | none / warning / blocking |
 | evidence_id | APR-xxx / CHECK-xxx / 无 |
 
 默认规则：
 
-- 新生成文档默认 `review_status = ready_for_review`，不得默认写 `approved` 或 `confirmed`。
+- `ready_for_review` 只表示 human_review 等待用户确认，不得用于要求用户逐个确认 auto_review 文档。
+- Analysis 的 `analysis-human-review` 是阶段级 gate，覆盖 `01-analysis-input.md`、`02-research-insight.md` 和 `03-requirement-analysis.md`，只在 01-03 全部生成后中断一次。
+- 产品架构的 `product-architecture-human-review` 是文档级 gate，只在 `04-product-architecture.md` 完成后中断一次。
+- auto_review 文档生成后，若自检查通过，文档 `review_status = auto_checked`，gate `status = pass`，`blocked = no`，并自动继续下一节点。
+- auto_review 文档自检查失败时，文档 `review_status = needs_rework`，gate `status = fail`，`blocked = yes`，下一步进入 `repair-run`。
 - 只有用户明确确认并写入 `manifest.md` 的人工确认记录 `APR-xxx` 后，人工评审节点才可写 `approved`。
 - 自动评审通过只能说明结构和一致性检查通过，不代表用户已确认。
 - 自动评审失败时，必须把失败检查写入 `manifest.md` 的 Review Gate 状态和自动检查记录。
+- 不得因为 auto_review 文档状态为 `auto_checked` 或存在待确认问题，就向用户逐文档索要确认；待确认问题进入文档和 manifest，流程仍按 gate 规则继续。
 
 ## 3. Gate 清单
 
-| gate_id | 节点 | 类型 | 是否允许自动继续 | 失败处理 |
-|---|---|---|---|---|
-| analysis-human-review | 分析阶段评审 | human_review | 否 | 停止流程，列出缺失信息和建议补充项 |
-| product-architecture-human-review | 产品架构评审 | human_review | 否 | 停止流程，要求用户确认模块划分、边界和对象 |
-| product-architecture-delta-review | 产品架构局部变更自检查 | auto_review | 是 | 如果改变模块边界，升级为 product-architecture-human-review |
-| prd-auto-review | PRD 自检查 | auto_review | 是 | repair-run 修复目标、范围、角色、约束缺失 |
-| feature-spec-auto-review | 功能任务自检查 | auto_review | 是 | repair-run 补齐缺失 FEAT 小节和模块边界 |
-| ui-ia-auto-review | UI 信息架构自检查 | auto_review | 是 | repair-run 补齐页面、导航、页面到功能映射 |
-| ui-spec-auto-review | UI 规格自检查 | auto_review | 是 | repair-run 补齐 SCR 小节、组件和状态 |
-| prototype-auto-review | 原型 Prompt 与标注自检查 | auto_review | 是 | repair-run 补齐 Prompt、标注和追踪关系 |
-| baseline-auto-review | 基线与变更自检查 | auto_review | 是 | repair-run 补齐变更前后、影响范围和回归关注点 |
-| change-run-local-review | 局部变更自检查 | auto_review | 是 | repair-run 修复受影响文档；若发现模块边界变化则升级人工评审 |
-| prototype-input-auto-review | 原型输入包自检查 | auto_review | 是 | repair-run 或补充输入包；未生成真实原型前原型结果检查保持 pending |
+| gate_id | 节点 | 类型 | gate_scope | must_stop | continue_on_pass | 失败处理 |
+|---|---|---|---|---|---|---|
+| analysis-human-review | 分析阶段评审 | human_review | stage:analysis，覆盖 01-03 | yes | no | 停止流程，列出缺失信息和建议补充项 |
+| product-architecture-human-review | 产品架构评审 | human_review | document:04-product-architecture | yes | no | 停止流程，要求用户确认模块划分、边界和对象 |
+| product-architecture-delta-review | 产品架构局部变更自检查 | auto_review | change:architecture-delta | no | yes | 如果改变模块边界，升级为 product-architecture-human-review |
+| prd-auto-review | PRD 自检查 | auto_review | document:05-prd | no | yes | repair-run 修复目标、范围、角色、约束缺失 |
+| feature-spec-auto-review | 功能任务自检查 | auto_review | document:06-feature-task-spec | no | yes | repair-run 补齐缺失 FEAT 小节和模块边界 |
+| ui-ia-auto-review | UI 信息架构自检查 | auto_review | document:07-ui-ia-screen-inventory | no | yes | repair-run 补齐页面、导航、页面到功能映射 |
+| ui-spec-auto-review | UI 规格自检查 | auto_review | document:08-structured-ui-interaction-spec | no | yes | repair-run 补齐 SCR 小节、组件和状态 |
+| prototype-auto-review | 原型 Prompt 与标注自检查 | auto_review | document:09-prototype-prompt-ui-annotation | no | yes | repair-run 补齐 Prompt、标注和追踪关系 |
+| baseline-auto-review | 基线与变更自检查 | auto_review | document:10-product-baseline-change | no | yes | repair-run 补齐变更前后、影响范围和回归关注点 |
+| change-run-local-review | 局部变更自检查 | auto_review | change:local | no | yes | repair-run 修复受影响文档；若发现模块边界变化则升级人工评审 |
+| prototype-input-auto-review | 原型输入包自检查 | auto_review | package:prototype-input | no | yes | repair-run 或补充输入包；未生成真实原型前原型结果检查保持 pending |
 
 ## 4. 人工评审输出格式
 
@@ -54,6 +59,11 @@
 | user_decision_required | yes |
 | approval_evidence | APR-xxx / 无 |
 | suggested_decisions | 接受 / 修改 / 补充信息 / 重新生成 / 其他 |
+
+阶段级人工评审规则：
+
+- `analysis-human-review` 只能在 01-03 全部生成后触发一次，不能在每个 Analysis 文档后分别询问用户。
+- `approved_scope` 必须覆盖 `01-analysis-input.md / 02-research-insight.md / 03-requirement-analysis.md`。
 
 人工评审未获得用户明确确认时：
 
@@ -76,9 +86,20 @@
 
 自动评审节点必须在文档末尾输出：
 
+| 字段 | 内容 |
+|---|---|
+| review_gate | gate_id |
+| review_type | auto_review |
+| review_status | auto_checked / needs_rework |
+| must_stop | no |
+| user_decision_required | no |
+| continue_on_pass | yes |
+
 | check_id | 检查项 | 结果 | 问题 | 修复动作 |
 |---|---|---|---|---|
 | CHECK-PRD-001 / CHECK-FEAT-001 / CHECK-UIIA-001 / CHECK-UISPEC-001 / CHECK-PROT-001 / CHECK-BASE-001 / CHECK-PINPUT-001 / CHECK-RUNTIME-001 |  | pass / fail / pending |  | 无 / repair-run |
+
+如果所有核心检查为 `pass`，本次节点不得停下来要求用户确认，必须自动继续下一节点。
 
 如果任一核心检查为 `fail`，本次节点不得标记为完成，必须进入 `repair-run` 或把失败项写入 `manifest.md`。
 

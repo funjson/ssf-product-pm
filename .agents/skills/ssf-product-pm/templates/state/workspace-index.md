@@ -36,6 +36,7 @@
 - 若无法判断是否同一实例，先列出候选实例并请用户确认。
 - 若实例阻塞在人工评审节点，不得默认继续后续阶段。
 - 若实例阻塞在自动评审失败节点，应优先 repair-run，不应重跑全量流程。
+- 自动评审通过不属于用户确认阻塞，不得把 `auto-review` pass 后的实例写成 `wait-user-review`。
 - 若用户只是局部变更，先读取目标实例 `manifest.md` 和 `10-product-baseline-change.md` 判断影响范围。
 - 如果局部变更修改产品架构但不改变模块边界，阻塞 Review Gate 写 `无`，最近运行模式写 `change-run`，并在摘要中说明 `ARCH-DELTA-xxx`。
 

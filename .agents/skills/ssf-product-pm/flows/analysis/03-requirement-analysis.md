@@ -28,3 +28,5 @@
 - 建议功能任务 `FEAT`
 
 Analysis 阶段结束后必须触发 `analysis-human-review`。
+
+`analysis-human-review` 是阶段级 gate，只在 01、02、03 全部完成后触发一次，不得回头要求用户分别确认 01 或 02。

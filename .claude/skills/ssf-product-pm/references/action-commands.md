@@ -6,8 +6,8 @@
 
 | execution_mode | 触发语义 | persistence_policy | 处理方式 |
 |---|---|---|---|
-| full-run | 完整生成、从头做一套、生成完整产品设计 | write_required | 先执行 intake，再执行 Analysis，人工评审通过后进入 Design |
-| analysis-run | 先分析、做调研、收集信息、需求分析 | write_required | 只执行 Analysis；结束于 `analysis-human-review` |
+| full-run | 完整生成、从头做一套、生成完整产品设计 | write_required | 先执行 intake，再执行 Analysis；01-03 完成后统一人工评审一次，通过后进入 Design |
+| analysis-run | 先分析、做调研、收集信息、需求分析 | write_required | 只执行 Analysis；01-03 完成后结束于一次 `analysis-human-review` |
 | design-run | 做设计、生成 PRD/产品架构/功能/UI | write_required | 验证 Analysis 是否存在且通过；缺失则中断或基于假设标记风险 |
 | flow-run | 只跑某个阶段 | write_required | 检查该阶段依赖，允许跳阶段但必须标记缺失输入 |
 | doc-run | 只生成或修改某个文档 | write_required | 检查目标实例和上游依赖，只更新相关文档与 manifest |

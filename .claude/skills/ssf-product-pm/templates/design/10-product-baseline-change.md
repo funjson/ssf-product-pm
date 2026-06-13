@@ -1,6 +1,7 @@
 # 10 产品基线与变更说明
 
 > 本文档解决需求变更时 AI 不知道旧系统是什么的问题。它记录当前产品基线、关键决策、已确认规格和每次变更的影响范围。
+> 本文档使用 `baseline-auto-review`，自动检查通过后不得要求用户确认。下文模块、功能、页面和规则表中的 `approved` 只能来自既有人工确认或历史基线，不得为获取该状态逐项询问用户。
 
 ## 0. 文档元信息
 
@@ -15,7 +16,7 @@
 | related_documents | REQ-ANALYSIS-001 / PRD-001 / PRODUCT-ARCH-001 / FEATURE-SPEC-001 / UI-IA-001 / UI-SPEC-001 / PROTOTYPE-ANNOTATION-001 |
 | generated_at |  |
 | review_gate | baseline-auto-review |
-| review_status | draft / ready_for_review / needs_rework |
+| review_status | draft / auto_checked / needs_rework |
 
 ## 1. 当前产品基线摘要
 

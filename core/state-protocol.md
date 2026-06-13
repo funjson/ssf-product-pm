@@ -86,3 +86,9 @@ baseline
 ```
 
 如果状态资产与正文冲突，必须进入 repair-run，而不是自行猜测。
+
+状态阻塞规则：
+
+- `analysis-human-review` 和 `product-architecture-human-review` pending / needs_rework 时，允许写 `blocked = yes` 和 `next_allowed_actions = wait-user-review`。
+- auto_review pass 时不得写 `wait-user-review`，必须写入自动检查记录并继续流程。
+- auto_review fail 时写 `blocked = yes`，`next_allowed_actions = repair-run`。

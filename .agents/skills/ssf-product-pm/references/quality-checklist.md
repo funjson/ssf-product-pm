@@ -12,6 +12,7 @@
 | 是否避免覆盖 | 新事项与旧实例不一致时新建实例或请求确认 |
 | 是否更新实例状态 | 生成或修改文件后更新 `index.md` 和实例 `manifest.md` |
 | 是否报告写入路径 | `write_required` 完成后最终回复列出实际创建或更新的文件路径 |
+| 是否遵守中断策略 | 只在 `analysis-human-review` 和 `product-architecture-human-review` 中断；auto_review pass 不询问用户 |
 | 是否读取工作流配置 | 执行前读取 workflow、action-commands、template-index、review-gates |
 | 是否记录流程阻塞点 | `index.md` 和 `manifest.md` 记录当前阶段、active_gate、blocked、next_allowed_actions |
 | 人工确认是否有证据 | 人工 Review Gate 写 approved 时必须引用 `APR-xxx` |
@@ -53,7 +54,7 @@
 | 是否有用户需求归纳 | 原始需求、真实问题、关联角色和场景明确 |
 | 是否说明需求边界 | 每个核心 REQ 有包含内容、不包含内容和边界原因 |
 | 是否映射后续产物 | REQ 能映射到建议 MOD、GOAL 和 FEAT |
-| 是否触发人工评审 | 分析阶段结束后必须进入 analysis-human-review |
+| 是否触发人工评审 | 01-03 全部完成后统一进入一次 analysis-human-review，不得逐文档确认 |
 
 ## 5. 产品架构检查
 

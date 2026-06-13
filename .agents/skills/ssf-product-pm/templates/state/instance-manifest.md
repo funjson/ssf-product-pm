@@ -42,13 +42,13 @@
 | 02 产品调研与洞察报告 | product-spec/02-research-insight.md | missing / draft / ready_for_review / approved / needs_rework |  | analysis-human-review |
 | 03 需求分析说明 | product-spec/03-requirement-analysis.md | missing / draft / ready_for_review / approved / needs_rework |  | analysis-human-review |
 | 04 产品架构设计 | product-spec/04-product-architecture.md | missing / draft / ready_for_review / ready_for_review_delta / approved / approved_with_delta / needs_rework |  | product-architecture-human-review / product-architecture-delta-review |
-| 05 PRD 产品需求文档 | product-spec/05-prd.md | missing / draft / ready_for_review / needs_rework |  | prd-auto-review |
-| 06 功能任务规格文档 | product-spec/06-feature-task-spec.md | missing / draft / ready_for_review / needs_rework |  | feature-spec-auto-review |
-| 07 UI 信息架构与页面清单 | product-spec/07-ui-ia-screen-inventory.md | missing / draft / ready_for_review / needs_rework |  | ui-ia-auto-review |
-| 08 结构化 UI/交互规格 | product-spec/08-structured-ui-interaction-spec.md | missing / draft / ready_for_review / needs_rework |  | ui-spec-auto-review |
-| 09 原型生成 Prompt 与 UI 标注说明 | product-spec/09-prototype-prompt-ui-annotation.md | missing / draft / ready_for_review / needs_rework |  | prototype-auto-review |
-| 10 产品基线与变更说明 | product-spec/10-product-baseline-change.md | missing / draft / ready_for_review / needs_rework |  | baseline-auto-review |
-| Prototype Input 原型输入包 | prototype-input/ | missing / draft / ready_for_review / needs_rework |  | prototype-input-auto-review |
+| 05 PRD 产品需求文档 | product-spec/05-prd.md | missing / draft / auto_checked / needs_rework |  | prd-auto-review |
+| 06 功能任务规格文档 | product-spec/06-feature-task-spec.md | missing / draft / auto_checked / needs_rework |  | feature-spec-auto-review |
+| 07 UI 信息架构与页面清单 | product-spec/07-ui-ia-screen-inventory.md | missing / draft / auto_checked / needs_rework |  | ui-ia-auto-review |
+| 08 结构化 UI/交互规格 | product-spec/08-structured-ui-interaction-spec.md | missing / draft / auto_checked / needs_rework |  | ui-spec-auto-review |
+| 09 原型生成 Prompt 与 UI 标注说明 | product-spec/09-prototype-prompt-ui-annotation.md | missing / draft / auto_checked / needs_rework |  | prototype-auto-review |
+| 10 产品基线与变更说明 | product-spec/10-product-baseline-change.md | missing / draft / auto_checked / needs_rework |  | baseline-auto-review |
+| Prototype Input 原型输入包 | prototype-input/ | missing / draft / auto_checked / needs_rework |  | prototype-input-auto-review |
 
 ## 4. Review Gate 状态
 
@@ -56,7 +56,7 @@
 
 | gate_id | gate_type | status | must_stop | blocked | evidence_id | updated_at | blocking_issues |
 |---|---|---|---|---|---|---|---|
-| analysis-human-review | human_review | pending / approved / rejected / needs_rework | yes | yes / no | APR-xxx / 无 |  |  |
+| analysis-human-review | human_review | pending / approved / rejected / needs_rework | yes | yes / no | APR-xxx / 无 |  | 阶段级 gate，覆盖 01-03，只触发一次 |
 | product-architecture-human-review | human_review | pending / approved / rejected / needs_rework | yes | yes / no | APR-xxx / 无 |  |  |
 | product-architecture-delta-review | auto_review | pending / pass / fail / escalated | no | yes / no | ARCH-DELTA-xxx / CHECK-ARCH-DELTA-xxx / 无 |  |  |
 | prd-auto-review | auto_review | pending / pass / fail | no | yes / no | CHECK-xxx / 无 |  |  |
@@ -106,6 +106,7 @@
 | NEXT-005 | 执行 change-run | 用户提出基于当前基线变更 | 需先判断影响范围 |
 | NEXT-006 | 执行 product-architecture-delta-review | 局部变更修改产品架构但不改变模块边界 | 是 |
 | NEXT-007 | 执行 prototype-run | 用户要求输出原型输入包、Figma Make prompt 或原型验证材料 | 是 |
+| NEXT-008 | 自动继续下一设计节点 | 任一 auto_review pass 且仍有后续节点 | 是 |
 
 ## 10. 待确认问题
 

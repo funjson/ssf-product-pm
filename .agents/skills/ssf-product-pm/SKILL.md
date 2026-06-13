@@ -30,16 +30,18 @@ description: Generate AI-ready product analysis and product design documents for
 3. Design 必须在 Analysis 之后执行；设计阶段第一节点必须是产品架构。
 4. 分析阶段评审和产品架构评审是人工评审，必须中断流程等待用户确认。
 5. 其他节点评审是自动自检查，失败时进入 `repair-run`。
-6. 写文件前必须判断目标实例；不得把新事项覆盖到旧实例。
-7. 支持完整流程、续跑流程、局部变更、单文档执行、跳阶段执行和 repair-run。
-8. 局部变更不得默认全量重跑，应先判断影响范围。
-9. 每个关键对象必须使用稳定 ID，保证跨文档追踪。
-10. PM 阶段不写数据库表、接口路径、缓存、消息队列、部署方案等技术实现细节。
-11. `index.md` 和 `manifest.md` 是流程判断依据；不得只更新正文文档而不更新过程资产。
-12. 人工评审通过必须有 `APR-xxx` 人工确认记录；自动评审通过只代表自检查通过。
-13. 产品架构局部变更但不改变模块边界时，必须记录 `ARCH-DELTA-xxx` 并执行 `product-architecture-delta-review`。
-14. 原型输入包通过 `prototype-run` 派生生成，不进入 Analysis / Design 主流程，也不得反向修改产品事实源。
-15. 除非用户明确要求只讨论、只读取或不修改文件，所有 PM 产物生成、修改、修复和原型输入包任务默认必须落盘。
+6. `analysis-human-review` 是阶段级 gate：必须在 01-03 全部生成后只中断一次，不得逐个 Analysis 文档确认。
+7. 产品架构之后的 PRD、功能任务、UI、原型标注、baseline 和 prototype-input 都是自动评审；自动评审通过必须继续下一节点，不得逐文件询问用户。
+8. 写文件前必须判断目标实例；不得把新事项覆盖到旧实例。
+9. 支持完整流程、续跑流程、局部变更、单文档执行、跳阶段执行和 repair-run。
+10. 局部变更不得默认全量重跑，应先判断影响范围。
+11. 每个关键对象必须使用稳定 ID，保证跨文档追踪。
+12. PM 阶段不写数据库表、接口路径、缓存、消息队列、部署方案等技术实现细节。
+13. `index.md` 和 `manifest.md` 是流程判断依据；不得只更新正文文档而不更新过程资产。
+14. 人工评审通过必须有 `APR-xxx` 人工确认记录；自动评审通过只代表自检查通过。
+15. 产品架构局部变更但不改变模块边界时，必须记录 `ARCH-DELTA-xxx` 并执行 `product-architecture-delta-review`。
+16. 原型输入包通过 `prototype-run` 派生生成，不进入 Analysis / Design 主流程，也不得反向修改产品事实源。
+17. 除非用户明确要求只讨论、只读取或不修改文件，所有 PM 产物生成、修改、修复和原型输入包任务默认必须落盘。
 
 ## 4. 默认文档树
 
@@ -147,6 +149,8 @@ Analysis 阶段强调与用户强交互。必须尽量收集：
 
 Analysis 结束后必须进入 `analysis-human-review`，中断流程等待用户确认。未确认前，不得默认继续 Design。
 
+`analysis-human-review` 只在 01、02、03 三份 Analysis 文档全部完成后触发一次。不得在 `01-analysis-input.md`、`02-research-insight.md` 或 `03-requirement-analysis.md` 单个文档完成后分别中断询问用户。
+
 ## 7. Design 阶段规则
 
 Design 阶段必须先做产品架构，再做 PRD、功能任务、UI 和基线。
@@ -169,6 +173,8 @@ Design 阶段必须先做产品架构，再做 PRD、功能任务、UI 和基线
 - 产品基线与变更：`baseline-auto-review`
 
 自动检查失败时，不得压缩或忽略问题，必须进入 `repair-run`。
+
+自动检查通过时必须继续后续节点，不得把 `auto_review` 当成人工确认入口。不得在 PRD、功能任务规格、UI 信息架构、结构化 UI、原型标注或 baseline 后逐文件请求用户确认。
 
 change-run 修改产品架构时：
 
@@ -216,11 +222,19 @@ SRC -> RAW -> INS -> NEED -> REQ -> MOD -> FEAT -> SCR -> CMP -> AC -> CHG
 
 ## 10. 状态与评审规则
 
-文档默认状态不得写成 `approved / confirmed`。除非用户明确确认，否则默认使用：
+文档默认状态不得写成 `approved / confirmed`。除非用户明确确认，否则人工评审文档默认使用：
 
 ```text
 draft / ready_for_review / needs_rework
 ```
+
+自动评审文档默认使用：
+
+```text
+draft / auto_checked / needs_rework
+```
+
+`ready_for_review` 只表示 human_review 等待用户确认；`auto_checked` 表示自动检查通过并可继续流程。
 
 人工评审节点必须停下来，向用户给出决策项：
 

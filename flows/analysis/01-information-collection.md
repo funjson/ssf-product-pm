@@ -25,3 +25,5 @@
 ## 状态更新
 
 生成后更新 `manifest.md` 文档状态；Analysis 未评审前保持 `ready_for_review`。
+
+本节点完成后不得单独中断等待用户确认。继续执行 02、03，直到 Analysis 三份文档全部完成后统一触发 `analysis-human-review`。

@@ -56,6 +56,8 @@ Analysis 包含：
 2. 产品调研与洞察
 3. 需求分析
 
+Analysis 的人工评审是阶段级 gate。必须先生成 01-03，再统一进入 `analysis-human-review`，不得 01、02、03 每个文档各停一次。
+
 Design 包含：
 
 1. 产品架构设计
@@ -97,6 +99,13 @@ Design 包含：
 - 写入 `manifest.md`。
 - 设置阻塞状态。
 - 进入 `repair-run`。
+
+自动检查通过时：
+
+- 写入 `manifest.md` 自动检查记录。
+- 文档状态可写 `auto_checked`。
+- 不得向用户逐文件索要确认。
+- 按流程自动继续下一节点。
 
 ## 6. 回退规则
 

@@ -15,7 +15,7 @@
 | base_prototype_annotation | PROTOTYPE-ANNOTATION-001 |
 | generated_at |  |
 | review_gate | prototype-input-auto-review |
-| review_status | draft / ready_for_review / needs_rework |
+| review_status | draft / auto_checked / needs_rework |
 
 ## 1. 产品压缩背景
 

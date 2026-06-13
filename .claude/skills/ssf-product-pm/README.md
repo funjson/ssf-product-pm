@@ -7,8 +7,8 @@
 - 工作流分为 `Analysis 分析阶段` 和 `Design 设计阶段`。
 - Analysis 包含信息收集、市场/竞品调研、客户现场/用户需求调研、需求分析。
 - Design 必须先做产品架构，再做 PRD、功能任务、UI 和基线。
-- 分析阶段评审和产品架构评审是人工评审，必须中断流程等待用户确认。
-- 其他设计节点使用自动自检查，失败时进入 `repair-run`。
+- 分析阶段评审和产品架构评审是人工评审；Analysis 只在 01-03 全部完成后统一中断一次，产品架构完成后中断一次。
+- 其他设计节点使用自动自检查，通过自动继续，失败时进入 `repair-run`。
 - 使用 `ssf-workspace/index.md` 管理多个隔离实例，避免新事项覆盖旧事项。
 - 流程、动作指令、模板索引、Review Gate 和质量规则都独立管理，便于后续调整。
 - 运行协议、阶段规则、注册表和模板已分层：`core/`、`flows/`、`registries/`、`templates/`。
@@ -107,6 +107,7 @@ ssf-workspace/
 - 重新生成、覆盖、跳阶段、变更和实例不清时必须执行 `00-intake.md`。
 - Analysis 未通过人工评审，不得默认进入 Design。
 - 产品架构未通过人工评审，不得默认进入 PRD、功能任务和 UI。
+- PRD、功能任务、UI、原型标注、baseline 和 prototype-input 的 auto review 通过后不得逐文件询问用户。
 - `index.md` 和 `manifest.md` 必须同步更新，后续判断新旧流程、跳阶段和 repair-run 都依赖它们。
 - 功能任务和 UI 页面必须同构完整展开，不得用摘要或总表压缩。
 - 未经用户确认，文档状态不得写 `approved / confirmed`。

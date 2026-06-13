@@ -15,7 +15,7 @@
 | base_sample_data | PROTO-SAMPLE-DATA-001 |
 | generated_at |  |
 | review_gate | prototype-input-auto-review |
-| review_status | draft / ready_for_review / needs_rework |
+| review_status | draft / auto_checked / needs_rework |
 
 ## 1. 第一段：总控 Prompt
 

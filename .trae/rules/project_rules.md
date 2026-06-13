@@ -21,10 +21,10 @@ Rules:
 
 1. Split work into Analysis and Design.
 2. Analysis includes information collection, market/competitor/customer research, and requirement analysis.
-3. Analysis review is a human review gate and must interrupt the flow.
+3. Analysis review is a human review gate and must interrupt the flow only once after documents 01-03 are complete.
 4. Design starts with product architecture.
 5. Product architecture review is a human review gate and must interrupt the flow.
-6. Other design reviews are automatic self-check gates; failed checks require repair-run.
+6. Other design reviews are automatic self-check gates; pass continues automatically, failed checks require repair-run.
 7. Before writing files, read `ssf-workspace/index.md` and resolve the target instance.
 8. Generation, modification, repair, and prototype-run tasks are `write_required` by default unless the user explicitly asks for read-only review or no file changes.
 9. Use `inspect-only` only for explicit read/check/summarize requests, and `discuss-only` only for explicit no-write discussion requests.

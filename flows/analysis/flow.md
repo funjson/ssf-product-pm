@@ -43,4 +43,6 @@ analysis-human-review
 
 Analysis 结束必须中断，等待用户确认。
 
+`analysis-human-review` 是阶段级 gate：必须在 01、02、03 三份 Analysis 文档全部生成后统一触发一次，不得在 01 或 02 后分别要求用户确认。
+
 未通过前不得继续 Design；如果用户强制跳过，后续文档必须标记风险。

@@ -29,14 +29,15 @@ Rules:
 3. Analysis review is a human review gate; stop and wait for user confirmation.
 4. Design starts with product architecture, before PRD and feature task specs.
 5. Product architecture review is a human review gate; stop and wait for user confirmation.
-6. Other review gates are auto checks; failures must enter repair-run.
-7. Before writing files, read `ssf-workspace/index.md` and resolve the target instance.
-8. Generation, modification, repair, and prototype-run tasks are `write_required` by default unless the user explicitly asks for read-only review or no file changes.
-9. Use `inspect-only` only for explicit read/check/summarize requests, and `discuss-only` only for explicit no-write discussion requests.
-10. Run intake gate before regenerating, overwriting, skipping stages, or changing an existing instance.
-11. Every feature task and UI screen must keep the same full structure.
-12. Do not write technical implementation details in PM documents.
-13. Stage and sub-stage rules live in `flows/`; templates only define output structure.
-14. repair-run must satisfy `references/repair-run.md`.
-15. For prototype input packages, use `prototype-run`, read `flows/prototype/prototype-run.md` and `templates/prototype/`, and write only to the target instance `prototype-input/`.
-16. Do not write prototype sample data, Figma prompts, or generated prototype results back into `product-spec/`.
+6. Analysis review is stage-scoped and must interrupt only once after documents 01-03 are complete.
+7. Other review gates are auto checks; pass continues automatically, failures must enter repair-run.
+8. Before writing files, read `ssf-workspace/index.md` and resolve the target instance.
+9. Generation, modification, repair, and prototype-run tasks are `write_required` by default unless the user explicitly asks for read-only review or no file changes.
+10. Use `inspect-only` only for explicit read/check/summarize requests, and `discuss-only` only for explicit no-write discussion requests.
+11. Run intake gate before regenerating, overwriting, skipping stages, or changing an existing instance.
+12. Every feature task and UI screen must keep the same full structure.
+13. Do not write technical implementation details in PM documents.
+14. Stage and sub-stage rules live in `flows/`; templates only define output structure.
+15. repair-run must satisfy `references/repair-run.md`.
+16. For prototype input packages, use `prototype-run`, read `flows/prototype/prototype-run.md` and `templates/prototype/`, and write only to the target instance `prototype-input/`.
+17. Do not write prototype sample data, Figma prompts, or generated prototype results back into `product-spec/`.

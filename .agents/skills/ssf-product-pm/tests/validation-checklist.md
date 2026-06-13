@@ -18,6 +18,9 @@
 - `registries/actions.md` 是否为每个 action 标明 `persistence_policy`。
 - 生成类 action 是否为 `write_required`，且 `discuss-only` 不能由“用户没说落盘”触发。
 - 是否存在 `inspect-only` 只读执行模式，避免检查/复述类请求误写文件。
+- `registries/gates.md` 是否为每个 gate 标明 `gate_scope`、`must_stop` 和 `continue_on_pass`。
+- `analysis-human-review` 是否是阶段级 gate，只在 01-03 全部完成后中断一次。
+- 产品架构之后的 auto_review 是否通过后自动继续，不逐文件请求用户确认。
 - 每个文档是否能从 `registries/documents.md` 找到模板和 gate。
 - 每个 repair-run 是否执行 `CHECK-REPAIR`。
 - prototype-run 是否能找到 `flows/prototype/prototype-run.md` 和 `templates/prototype/00-07`。

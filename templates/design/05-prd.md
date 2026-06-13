@@ -19,7 +19,7 @@
 | related_baseline | BASELINE-001 |
 | generated_at |  |
 | review_gate | prd-auto-review |
-| review_status | draft / ready_for_review / needs_rework |
+| review_status | draft / auto_checked / needs_rework |
 
 ## 1. 产品背景
 
