@@ -1,28 +1,29 @@
-# 模板注册表
+# 模板兼容索引
 
-| 模板 | 类型 | 用途 |
+`registries/documents.md` 是运行时权威来源，已经同时声明：
+
+- 输出文件路径
+- 阶段
+- 节点 flow
+- 输出 template
+- Review Gate
+- 是否中断
+
+本文件仅保留给旧适配器或人工快速查阅，不参与运行时决策。Agent 需要选择模板时，应读取 `registries/documents.md`，不要在本文件和 `references/template-index.md` 之间做二次推断。
+
+## 模板目录
+
+| 类型 | 目录 | 用途 |
 |---|---|---|
-| `templates/common/00-intake.md` | common | 运行入口、实例判断、写入策略 |
-| `templates/analysis/01-analysis-input.md` | analysis | 分析输入与信息收集 |
-| `templates/analysis/02-product-research-insight.md` | analysis | 产品调研与洞察 |
-| `templates/analysis/03-requirement-analysis.md` | analysis | 需求分析 |
-| `templates/design/04-product-architecture.md` | design | 产品架构 |
-| `templates/design/05-prd.md` | design | PRD |
-| `templates/design/06-feature-task-spec.md` | design | 功能任务规格 |
-| `templates/design/07-ui-ia-screen-inventory.md` | design | UI 信息架构 |
-| `templates/design/08-structured-ui-interaction-spec.md` | design | 结构化 UI |
-| `templates/design/09-prototype-prompt-ui-annotation.md` | design | 原型 Prompt 与 UI 标注 |
-| `templates/design/10-product-baseline-change.md` | design/change | 产品基线与变更 |
-| `templates/prototype/00-prototype-master-brief.md` | prototype | 原型生成总控说明 |
-| `templates/prototype/01-design-system-constraints.md` | prototype | 原型级设计系统约束 |
-| `templates/prototype/02-screen-contracts.md` | prototype | 页面合同 |
-| `templates/prototype/03-flow-contracts.md` | prototype | 流程合同 |
-| `templates/prototype/04-sample-data.md` | prototype | 原型样例数据 |
-| `templates/prototype/05-figma-make-prompts.md` | prototype | Figma Make / 原型工具 Prompt |
-| `templates/prototype/06-ui-annotation-handoff.md` | prototype | UI 标注交付 |
-| `templates/prototype/07-prototype-review-checklist.md` | prototype | 原型输入包与原型验收清单 |
-| `templates/state/workspace-index.md` | state | 工作区实例索引 |
-| `templates/state/instance-manifest.md` | state | 单实例 Manifest |
-| `templates/state/workspace-readme.md` | state | 工作区 README |
-| `templates/state/instances-readme.md` | state | instances README |
-| `templates/state/product-spec-readme.md` | state | product-spec README |
+| common | `templates/common/` | intake 和运行入口 |
+| analysis | `templates/analysis/` | 01-03 分析阶段文档 |
+| design | `templates/design/` | 04-10 设计阶段与基线文档 |
+| prototype | `templates/prototype/` | prototype-input 派生产物 |
+| state | `templates/state/` | workspace index、instance manifest 和 README |
+
+## 使用规则
+
+1. 先用 `registries/documents.md` 根据目标 doc_id 找到模板。
+2. 只读取当前输出需要的模板。
+3. 不要默认读取整个 `templates/` 目录。
+4. repair-run 需要结构迁移时，再读取对应旧文档的新模板。

@@ -2,36 +2,20 @@
 
 Use this rule when generating, modifying, or reviewing product analysis and product design documents for an AI-driven software development workflow.
 
-Read and follow:
+Read `SKILL.md` first and follow its runtime load path. Do not load all references or templates by default.
 
-- `SKILL.md`
-- `core/`
-- `flows/`
-- `registries/`
-- `references/workflow.md`
-- `references/action-commands.md`
-- `references/template-index.md`
-- `references/review-gates.md`
-- `references/id-conventions.md`
-- `references/quality-checklist.md`
-- `references/repair-run.md`
-- `templates/`
+Load only:
 
-Core rules:
+- Required core and registry files named in `SKILL.md`.
+- The current action/document flow.
+- The current output template.
+- Reference files needed by the current gate, repair, ID, or QA task.
 
-- Analysis includes information collection, research insight, and requirement analysis.
-- Analysis review is human-interactive and must stop once after documents 01-03 are complete.
-- Design starts with product architecture.
-- Product architecture review is human-interactive and must stop for user confirmation.
-- PRD, feature specs, UI specs, prototype annotations, and baseline use auto review gates; pass continues automatically, fail enters repair-run.
-- Before writing files, read `ssf-workspace/index.md`; do not overwrite unrelated instances.
-- Generation, modification, repair, and prototype-run tasks are `write_required` by default unless the user explicitly asks for read-only review or no file changes.
-- Use `inspect-only` only for explicit read/check/summarize requests, and `discuss-only` only for explicit no-write discussion requests.
-- Run intake gate for regeneration, overwrite, skip-stage, change, or unclear instance requests.
-- Every FEAT and SCR must keep the same full structure.
-- Stage and sub-stage rules live in `flows/`; templates only define output structure.
-- repair-run must satisfy `references/repair-run.md`.
-- prototype-run must read `flows/prototype/prototype-run.md` and `templates/prototype/`, then write only to `instances/SPI-xxx/prototype-input/`.
-- Do not turn prototype sample data, Figma prompts, or generated prototype results into product facts.
-- Use stable IDs: SPI, INTAKE, IQ, FACT, ASM, SRC, RAW, NEED, INS, GOAL, REQ, CAP, MOD, OBJ, FEAT, FLOW, BR, SCR, CMP, AC, CHG.
-- Do not write database, API path, cache, queue, deployment, or other technical implementation details in PM documents.
+Core invariants:
+
+- Generation, modification, repair, continuation, rerun, change, and prototype-run tasks are `write_required` unless the user explicitly asks for read-only review or no file changes.
+- Only `analysis-human-review` and `product-architecture-human-review` may stop for user confirmation.
+- Other gates are auto reviews: pass continues automatically; fail enters repair-run.
+- `registries/documents.md` is the runtime authority for document path, flow, template, gate, and interrupt behavior.
+- `prototype-run` writes only to target instance `prototype-input/` and does not modify `product-spec/`.
+- PM documents must not include database, API path, cache, queue, deployment, or other technical implementation details.

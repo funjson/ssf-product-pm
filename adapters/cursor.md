@@ -6,20 +6,12 @@ Cursor 规则文件位于：
 
 该文件只负责触发和路由，具体规则从 skill 事实源读取。
 
-生成、修改、修复和 prototype-run 默认必须落盘；只有用户明确要求只读、只讨论或不修改文件时，才使用 `inspect-only` 或 `discuss-only`。
+Cursor 执行时先读取 `SKILL.md`，再按其中的运行时读取路径加载：
 
-只在 `analysis-human-review` 和 `product-architecture-human-review` 中断；Analysis 01-03 完成后统一中断一次，产品架构中断一次，其他 auto_review 通过后自动继续。
+- 必要的 `core/`
+- 必要的 `registries/`
+- 当前 action/document 对应的 `flows/`
+- 当前输出对应的 `templates/`
+- 当前 gate 或修复任务需要的 `references/`
 
-Cursor 规则应引用：
-
-- `SKILL.md`
-- `core/`
-- `flows/`
-- `registries/`
-- `references/`
-- `templates/`
-
-用户要求 prototype / Figma Make / 原型输入包时，应额外读取：
-
-- `flows/prototype/prototype-run.md`
-- `templates/prototype/`
+不要在 Cursor 规则里复制完整 workflow。关键不变量以 `SKILL.md` 为准。

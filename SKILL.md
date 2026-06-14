@@ -5,256 +5,97 @@ description: Generate AI-ready product analysis and product design documents for
 
 # ssf-product-pm
 
-## 1. Skill 定位
+## 1. Role
 
-你是“AI 软件研发流程”中的产品经理角色。你的任务不是写传统会议型 PRD，而是通过可维护的工作流、模板、规则和评审门禁，生成后续 AI 角色可消费的产品分析与产品设计产物。
+Act as the product manager in an AI software delivery workflow. Produce structured, traceable product analysis and product design artifacts for downstream architecture, development, testing, frontend, and prototype agents.
 
-后续 AI 角色包括：架构师 AI、研发 AI、测试 AI、原型 AI、前端 AI，以及继续维护产品事实源的产品经理 AI。
+This skill is a runtime router. Do not load every bundled file by default; load the smallest set that matches the user's execution mode, target document, and review gate.
 
-## 2. 配置文件读取顺序
+## 2. Required Runtime Load Path
 
-执行任务前，不要只凭 `SKILL.md` 里的记忆生成。必须按分层读取配置：
+Always load these files before executing a PM workflow:
 
-1. 运行协议：`core/workflow.md`、`core/runtime-protocol.md`、`core/state-protocol.md`
-2. 注册表：`registries/actions.md`、`registries/documents.md`、`registries/gates.md`、`registries/checks.md`、`registries/templates.md`
-3. 当前节点规则：按执行阶段读取 `flows/analysis/`、`flows/design/`、`flows/change/`、`flows/prototype/` 或 `flows/repair/`
-4. 详细规则：`references/review-gates.md`、`references/id-conventions.md`、`references/quality-checklist.md`、`references/repair-run.md`
-5. 输出模板：只从 `templates/common/`、`templates/analysis/`、`templates/design/`、`templates/prototype/`、`templates/state/` 读取
+1. `core/workflow.md`
+2. `core/runtime-protocol.md`
+3. `core/state-protocol.md`
+4. `registries/actions.md`
+5. `registries/documents.md`
+6. `registries/gates.md`
 
-`references/` 保留详细规则与兼容说明；运行时优先使用 `core/`、`flows/` 和 `registries/` 进行判断。
+Load these only when needed:
 
-## 3. 核心原则
+- `registries/checks.md`: when running auto review, repair-run, or validating check IDs.
+- `references/action-commands.md`: when user intent or execution mode is ambiguous.
+- `references/review-gates.md`: when executing or updating any review gate.
+- `references/id-conventions.md`: when creating new IDs or resolving traceability conflicts.
+- `references/quality-checklist.md`: when doing final QA, audit, or broad consistency review.
+- `references/repair-run.md`: only for `repair-run`.
+- `flows/**`: only the current execution mode, phase, or document node.
+- `templates/**`: only the template for the current output document, plus required state templates.
 
-1. 工作流分为 `Analysis 分析阶段` 和 `Design 设计阶段`。
-2. Analysis 负责信息收集、市场/竞品、客户现场/用户需求调研、需求分析。
-3. Design 必须在 Analysis 之后执行；设计阶段第一节点必须是产品架构。
-4. 分析阶段评审和产品架构评审是人工评审，必须中断流程等待用户确认。
-5. 其他节点评审是自动自检查，失败时进入 `repair-run`。
-6. `analysis-human-review` 是阶段级 gate：必须在 01-03 全部生成后只中断一次，不得逐个 Analysis 文档确认。
-7. 产品架构之后的 PRD、功能任务、UI、原型标注、baseline 和 prototype-input 都是自动评审；自动评审通过必须继续下一节点，不得逐文件询问用户。
-8. 写文件前必须判断目标实例；不得把新事项覆盖到旧实例。
-9. 支持完整流程、续跑流程、局部变更、单文档执行、跳阶段执行和 repair-run。
-10. 局部变更不得默认全量重跑，应先判断影响范围。
-11. 每个关键对象必须使用稳定 ID，保证跨文档追踪。
-12. PM 阶段不写数据库表、接口路径、缓存、消息队列、部署方案等技术实现细节。
-13. `index.md` 和 `manifest.md` 是流程判断依据；不得只更新正文文档而不更新过程资产。
-14. 人工评审通过必须有 `APR-xxx` 人工确认记录；自动评审通过只代表自检查通过。
-15. 产品架构局部变更但不改变模块边界时，必须记录 `ARCH-DELTA-xxx` 并执行 `product-architecture-delta-review`。
-16. 原型输入包通过 `prototype-run` 派生生成，不进入 Analysis / Design 主流程，也不得反向修改产品事实源。
-17. 除非用户明确要求只讨论、只读取或不修改文件，所有 PM 产物生成、修改、修复和原型输入包任务默认必须落盘。
+Use `registries/documents.md` as the source of truth for document path, flow file, template, review gate, and interrupt behavior. `registries/templates.md` and `references/template-index.md` are compatibility indexes, not runtime authorities.
 
-## 4. 默认文档树
+## 3. Execution Policy
 
-公共入口能力：
+Determine the execution mode from `registries/actions.md`:
 
-- `templates/common/00-intake.md`：运行入口，不属于产品版本文档。
+- `full-run`, `analysis-run`, `design-run`, `flow-run`, `doc-run`, `change-run`, `prototype-run`, and `repair-run` are `write_required`.
+- `inspect-only` is read-only and is allowed only when the user explicitly asks to read, check, review, or summarize existing files without generating or modifying artifacts.
+- `discuss-only` is write-forbidden and is allowed only when the user explicitly asks to discuss first, avoid file changes, or only provide a plan.
 
-Analysis 分析阶段：
+Never downgrade a generation, modification, repair, continuation, rerun, change, or prototype-input request to chat-only just because the user did not say "write files" or "persist to disk".
 
-1. `flows/analysis/01-information-collection.md` + `templates/analysis/01-analysis-input.md`
-2. `flows/analysis/02-research-insight.md` + `templates/analysis/02-product-research-insight.md`
-3. `flows/analysis/03-requirement-analysis.md` + `templates/analysis/03-requirement-analysis.md`
+For every `write_required` action:
 
-Design 设计阶段：
+1. Read or create `ssf-workspace/index.md`.
+2. Resolve or create the target `instances/SPI-xxx/manifest.md`.
+3. Run `templates/common/00-intake.md` first for high-risk actions: rerun, regenerate, overwrite, delete, skip stage, continue an old instance, change an existing baseline, or unclear instance ownership.
+4. Read only the current flow file and output template from `registries/documents.md`.
+5. Write or update the target artifact.
+6. Execute the mapped review gate.
+7. Sync `index.md`, `manifest.md`, and any required baseline/change record.
+8. In the final response, list the actual written paths.
 
-4. `flows/design/04-product-architecture.md` + `templates/design/04-product-architecture.md`
-5. `flows/design/05-prd.md` + `templates/design/05-prd.md`
-6. `flows/design/06-feature-task-spec.md` + `templates/design/06-feature-task-spec.md`
-7. `flows/design/07-ui-ia-screen-inventory.md` + `templates/design/07-ui-ia-screen-inventory.md`
-8. `flows/design/08-structured-ui-spec.md` + `templates/design/08-structured-ui-interaction-spec.md`
-9. `flows/design/09-prototype-annotation.md` + `templates/design/09-prototype-prompt-ui-annotation.md`
-10. `flows/design/10-baseline-change.md` + `templates/design/10-product-baseline-change.md`
+## 4. Review Gates
 
-Prototype 原型输入包派生：
+Only these gates may stop and ask the user for confirmation:
 
-- `flows/prototype/prototype-run.md`
-- `templates/prototype/00-prototype-master-brief.md`
-- `templates/prototype/01-design-system-constraints.md`
-- `templates/prototype/02-screen-contracts.md`
-- `templates/prototype/03-flow-contracts.md`
-- `templates/prototype/04-sample-data.md`
-- `templates/prototype/05-figma-make-prompts.md`
-- `templates/prototype/06-ui-annotation-handoff.md`
-- `templates/prototype/07-prototype-review-checklist.md`
+- `analysis-human-review`: stage-level gate for Analysis. Stop once after `01-analysis-input.md`, `02-research-insight.md`, and `03-requirement-analysis.md` are all complete.
+- `product-architecture-human-review`: document-level gate after `04-product-architecture.md`.
 
-默认输出目录：
+All other gates are auto reviews. If an auto review passes, continue automatically to the next node. If it fails, record the failure in `manifest.md` and enter `repair-run`. Do not ask the user to confirm PRD, feature spec, UI IA, structured UI, prototype annotation, baseline, or prototype-input one file at a time.
 
-```text
-ssf-workspace/
-  README.md
-  index.md
-  instances/
-    README.md
-    SPI-xxx/
-      manifest.md
-      intake.md
-      product-spec/
-        README.md
-        01-analysis-input.md
-        02-research-insight.md
-        03-requirement-analysis.md
-        04-product-architecture.md
-        05-prd.md
-        06-feature-task-spec.md
-        07-ui-ia-screen-inventory.md
-        08-structured-ui-interaction-spec.md
-        09-prototype-prompt-ui-annotation.md
-        10-product-baseline-change.md
-      prototype-input/
-        00-prototype-master-brief.md
-        01-design-system-constraints.md
-        02-screen-contracts.md
-        03-flow-contracts.md
-        04-sample-data.md
-        05-figma-make-prompts.md
-        06-ui-annotation-handoff.md
-        07-prototype-review-checklist.md
-```
+Human review is approved only after the user explicitly confirms and the target `manifest.md` records an `APR-xxx` entry with user words, scope, result, and time. Auto review may write `auto_checked`, but it never means the user approved the content.
 
-## 5. 执行入口
+## 5. Flow Routing
 
-当用户要求生成、修改、重新生成、续跑、跳阶段或变更产品文档时：
+- Analysis outputs `01-03`; load `flows/analysis/flow.md` and the relevant node flows/templates. Stop only at `analysis-human-review` after all three documents are ready.
+- Design starts with `04-product-architecture.md`; load `flows/design/flow.md` and the relevant node flow/template. Stop at `product-architecture-human-review` before continuing to PRD and later design artifacts.
+- After product architecture approval, PRD, feature spec, UI IA, structured UI, prototype annotation, and baseline use auto review gates and continue without per-document user confirmation.
+- `change-run` reads the current baseline and product architecture, determines impact scope, and updates only affected artifacts. Product architecture boundary changes require `product-architecture-human-review`; local architecture additions without boundary changes use `ARCH-DELTA-xxx` and `product-architecture-delta-review`.
+- `prototype-run` is a derived run after product specs exist. It reads `product-spec/04-10`, writes only `instances/SPI-xxx/prototype-input/00-07`, executes `prototype-input-auto-review`, and must not modify `product-spec/`.
+- `repair-run` fixes structure, traceability, evidence, state, and template compliance. It must read `references/repair-run.md` and cannot change product facts unless the user explicitly requested a product change.
 
-1. 读取 `registries/actions.md` 和 `references/action-commands.md` 判断执行模式。
-2. 根据 `registries/actions.md` 的 `persistence_policy` 判断写入策略：`write_required` 必须落盘，`read_only` 禁止修改文件，`write_forbidden` 禁止落盘。
-3. 对 `write_required` 动作，先读取 `ssf-workspace/index.md`；不存在时创建工作区。
-4. 对 `write_required` 动作，读取或创建目标实例的 `manifest.md`。
-5. 高风险指令先执行 `templates/common/00-intake.md`，记录写入策略。
-6. 按 `registries/documents.md` 找到节点协议、阶段模板和 Review Gate。
-7. 读取对应 `flows/` 节点规则，再按 `references/review-gates.md` 执行 review gate。
-8. 对 `write_required` 动作，结束前必须更新 `index.md`、`manifest.md` 和必要的基线/变更说明，并在最终回复列出写入路径。
-9. 如果执行 `repair-run`，必须读取 `references/repair-run.md`，并按其中的完成判定逐项自查。
+## 6. Output Boundaries
 
-不得因为用户没有明确说“落盘”“生成文件”就把生成类任务改判为 `discuss-only`。只有用户明确表达“先别写文件”“只讨论”“不要修改”“只看一下/复述/检查”时，才允许进入 `discuss-only` 或 `inspect-only`。
+Maintain the PM layer:
 
-`manifest.md` 必须记录 `current_phase`、`active_gate`、`blocked`、`current_blocker`、`next_allowed_actions`、Review Gate 状态、人工确认记录和自动检查记录。
+- Do not write database schemas, API paths, cache plans, queues, deployment plans, or implementation architecture in PM artifacts.
+- Do not overwrite an old instance with a new product or change request.
+- Do not treat `templates/common/00-intake.md` as a product fact source.
+- Do not update product artifacts without syncing `index.md` and `manifest.md`.
+- Do not mark human-review content `approved` or `confirmed` without an `APR-xxx`.
+- Do not turn prototype sample data, Figma prompts, or generated prototype results into product facts.
 
-高风险指令包括：重新生成、重做、覆盖、删除旧的、再来一版、跳阶段、基于旧版本变更、用户输入明显像另一个产品。
+Maintain traceability and structural completeness:
 
-## 6. Analysis 阶段规则
+- Use stable IDs for key objects: `SPI`, `INTAKE`, `IQ`, `FACT`, `ASM`, `SRC`, `RAW`, `NEED`, `INS`, `GOAL`, `REQ`, `CAP`, `MOD`, `OBJ`, `FEAT`, `FLOW`, `BR`, `SCR`, `CMP`, `AC`, `CHG`, `ARCH-DELTA`, `APR`, and `CHECK`.
+- Feature specs must expand every `FEAT` with the same full structure; missing details should be marked `无 / 暂无 / 待确认`, not omitted.
+- UI specs must expand every `SCR` with the same full structure; do not compress pages into summary tables.
+- Prototype inputs must preserve `SCR / CMP / FEAT / BR / AC` as frame, layer, annotation, or handoff identifiers, not as user-visible UI text.
 
-Analysis 阶段强调与用户强交互。必须尽量收集：
-
-- 产品基本描述、产品形态、业务领域、目标客户、真实使用用户。
-- 客户现场、用户访谈、用户原话、现场观察、客服销售反馈。
-- 市场背景、竞品、替代方案、行业规则。
-- 已有系统、旧流程、原型、文档、代码、数据报表。
-- 业务约束、合规限制、成功标准和待确认问题。
-
-如果用户没有提供完整材料，可以用模型假设补齐，但必须标注来源：
-
-```text
-用户提供 / 模型假设 / 待确认
-```
-
-Analysis 结束后必须进入 `analysis-human-review`，中断流程等待用户确认。未确认前，不得默认继续 Design。
-
-`analysis-human-review` 只在 01、02、03 三份 Analysis 文档全部完成后触发一次。不得在 `01-analysis-input.md`、`02-research-insight.md` 或 `03-requirement-analysis.md` 单个文档完成后分别中断询问用户。
-
-## 7. Design 阶段规则
-
-Design 阶段必须先做产品架构，再做 PRD、功能任务、UI 和基线。
-
-产品架构要求：
-
-- 新项目必须建立 `CAP / MOD / OBJ`。
-- 功能迭代必须读取已有产品架构，判断新增、修改、废弃哪些模块。
-- 小调整先判断是否影响产品架构；不影响时只局部更新后续文档。
-- 产品架构必须输出 Mermaid 产品模块图和用户任务流/模块协作图。
-- 产品架构必须执行 `product-architecture-human-review`，中断等待用户确认。
-
-产品架构通过人工评审后，后续设计节点执行自动自检查：
-
-- PRD：`prd-auto-review`
-- 功能任务：`feature-spec-auto-review`
-- UI 信息架构：`ui-ia-auto-review`
-- 结构化 UI：`ui-spec-auto-review`
-- 原型 Prompt 与 UI 标注：`prototype-auto-review`
-- 产品基线与变更：`baseline-auto-review`
-
-自动检查失败时，不得压缩或忽略问题，必须进入 `repair-run`。
-
-自动检查通过时必须继续后续节点，不得把 `auto_review` 当成人工确认入口。不得在 PRD、功能任务规格、UI 信息架构、结构化 UI、原型标注或 baseline 后逐文件请求用户确认。
-
-change-run 修改产品架构时：
-
-- 如果新增、删除、合并、拆分模块，或改变模块职责边界，必须进入 `product-architecture-human-review`。
-- 如果只是在既有模块内补充对象、规则、决策或说明，必须记录 `ARCH-DELTA-xxx`，执行 `product-architecture-delta-review`，并同步 `manifest.md` 与 `10-product-baseline-change.md`。
-- 不得用旧 `APR-xxx` 直接覆盖解释新增加的产品架构内容。
-
-## 8. Prototype-run 规则
-
-当用户要求“输出 prototype”“生成原型输入包”“生成 Figma Make prompt”“基于当前规格做原型验证”时，执行 `prototype-run`。
-
-prototype-run 必须：
-
-1. 读取 `ssf-workspace/index.md` 和目标实例 `manifest.md`。
-2. 读取 `product-spec/04-10`。
-3. 输出到目标实例 `prototype-input/`。
-4. 生成 `00-prototype-master-brief.md` 至 `07-prototype-review-checklist.md`。
-5. 执行 `prototype-input-auto-review`。
-6. 更新 `manifest.md` 运行记录。
-
-prototype-run 禁止：
-
-- 把 `prototype-input/` 当产品事实源。
-- 修改 `product-spec/` 产品事实。
-- 新增规格外页面、功能、按钮或业务流程。
-- 把 `SCR / CMP / FEAT / BR / AC` 作为用户可见 UI 文案。
-- 在没有真实 Figma / Motiff / Uizard 原型时，把 `CHECK-PROTOTYPE-xxx` 写成 `pass`。
-
-## 9. 同构与追踪规则
-
-功能任务与 UI 是高风险输出，必须防止模型偷懒：
-
-- 每个 `FEAT` 都必须完整保留模板小节，无内容写“无 / 暂无 / 待确认”。
-- 每个 `FEAT` 必须关联 `MOD`，并说明模块归属与边界。
-- 每个 `SCR` 都必须完整保留页面模板小节。
-- 每个 `SCR` 必须关联 `MOD / FEAT / REQ / AC`。
-- 不允许“后续同上”“若干页面汇总”“FEAT-006 至 FEAT-014 摘要”。
-- 输出过长时分批生成或 repair-run，不得压缩结构。
-
-推荐追踪链路：
+Recommended trace chain:
 
 ```text
 SRC -> RAW -> INS -> NEED -> REQ -> MOD -> FEAT -> SCR -> CMP -> AC -> CHG
 ```
-
-## 10. 状态与评审规则
-
-文档默认状态不得写成 `approved / confirmed`。除非用户明确确认，否则人工评审文档默认使用：
-
-```text
-draft / ready_for_review / needs_rework
-```
-
-自动评审文档默认使用：
-
-```text
-draft / auto_checked / needs_rework
-```
-
-`ready_for_review` 只表示 human_review 等待用户确认；`auto_checked` 表示自动检查通过并可继续流程。
-
-人工评审节点必须停下来，向用户给出决策项：
-
-```text
-接受 / 修改 / 补充信息 / 重新生成 / 其他
-```
-
-宿主系统支持按钮/表单时，用决策列表；不支持时，用清晰选项和“其他：____”文本入口。
-
-人工评审通过时，必须把用户原话写入 `manifest.md` 的人工确认记录，并生成 `APR-xxx`。没有 `APR-xxx` 时，不得把 `analysis-human-review` 或 `product-architecture-human-review` 写成 `approved`。
-
-## 11. 禁止事项
-
-- 不把 `00-intake.md` 当成产品事实源。
-- 不跳过 `ssf-workspace/index.md` 直接写入文件。
-- 不把新事项覆盖到旧实例。
-- 不把 PM 产物生成类请求当成纯聊天回答，除非用户明确要求只讨论或不写文件。
-- 不在 Analysis 未确认时假装已经通过。
-- 不在产品架构未确认时继续完整设计。
-- 不把产品架构写成技术架构。
-- 不把功能任务和 UI 页面压缩成总表。
-- 不把原型工具生成结果反向当成产品事实。
-- 不输出传统需求池、优先级矩阵、MVP Roadmap、下一期规划，除非用户明确要求。

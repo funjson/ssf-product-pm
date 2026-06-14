@@ -19,15 +19,16 @@ Design 设计阶段
 
 ## 2. Workflow 配置化原则
 
-- `SKILL.md` 只保留入口规则和读取顺序。
-- 本文件定义主工作流。
+- `SKILL.md` 只保留入口规则和按需读取路径。
+- 本文件定义主工作流说明，不是运行时唯一入口。
 - `references/action-commands.md` 定义动作指令。
-- `references/template-index.md` 定义阶段到模板的映射。
+- `registries/documents.md` 定义文档、flow、模板、Review Gate 和中断行为的运行时映射。
+- `references/template-index.md` 仅作为历史兼容索引。
 - `references/review-gates.md` 定义人工评审和自动评审规则。
 - `references/quality-checklist.md` 定义质量检查项。
 - `registries/actions.md` 的 `persistence_policy` 定义动作是否必须落盘、只读或禁止写入。
 
-Agent 执行前必须先读取以上配置，不得只凭文件名猜流程。
+Agent 执行前必须先按 `SKILL.md` 的运行时读取路径加载配置，不得默认读取全部 references，也不得只凭文件名猜流程。
 
 默认持久化原则：生成、修改、修复、续跑、变更和 prototype-run 都是落盘动作。只有用户明确要求读取/检查/复述现有文件时才只读；只有用户明确要求只讨论或不修改文件时才禁止写入。
 

@@ -3,6 +3,7 @@
 Claude Code 项目级 skill 应包含完整目录：
 
 - `SKILL.md`
+- `AGENTS.md`
 - `core/`
 - `flows/`
 - `registries/`
@@ -11,10 +12,6 @@ Claude Code 项目级 skill 应包含完整目录：
 
 不要只复制入口文件。
 
-Claude Code 执行时应遵守人工评审中断点，不得在 Analysis 或产品架构未确认时继续完整设计。
+Claude Code 执行时只做路由，不复制完整 workflow。先读取 `SKILL.md`，再按其中的运行时读取路径加载 core、registries、当前 flow、当前 template 和必要 reference。
 
-生成、修改、修复和 prototype-run 默认必须落盘；只有用户明确要求只读、只讨论或不修改文件时，才使用 `inspect-only` 或 `discuss-only`。
-
-只在 `analysis-human-review` 和 `product-architecture-human-review` 中断；Analysis 01-03 完成后统一中断一次，产品架构中断一次，其他 auto_review 通过后自动继续。
-
-生成原型输入包时使用 `prototype-run`。该流程只输出实例内 `prototype-input/`，不修改 `product-spec/` 产品事实。
+关键不变量以 `SKILL.md` 为准：生成/修改/修复/prototype-run 默认落盘；只有 `analysis-human-review` 和 `product-architecture-human-review` 能中断；prototype-run 只写入目标实例 `prototype-input/`，不修改 `product-spec/`。

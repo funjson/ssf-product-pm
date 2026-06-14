@@ -28,6 +28,7 @@
 
 ## 3. 漂移检查
 
-- 平台规则是否引用 `core/flows/registries/references/templates`。
+- 平台规则是否只做触发和按需路由，不复制完整 workflow。
+- 平台规则是否要求先读 `SKILL.md`，再按当前 action/document/gate 读取必要的 `core/flows/registries/references/templates`。
 - `.agents` 和 `.claude` 是否与主事实源同步。
 - `.cursor/.qoder/.trae` 是否只做路由。

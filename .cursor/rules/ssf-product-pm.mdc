@@ -1,5 +1,5 @@
 ---
-description: Use ssf-product-pm when generating AI-ready product analysis, product architecture, PRD, feature task specs, UI specs, prototype prompts, UI annotations, baselines, or change specs for AI-driven software development.
+description: Use ssf-product-pm when generating AI-ready product analysis, product architecture, PRD, feature task specs, UI specs, prototype prompts, UI annotations, baselines, prototype-input packages, or change specs for AI-driven software development.
 globs:
   - "**/*.md"
 alwaysApply: false
@@ -7,37 +7,19 @@ alwaysApply: false
 
 # ssf-product-pm Cursor Rule
 
-When the user asks for product analysis or product design outputs, follow:
+When this rule applies, read `SKILL.md` first and follow its runtime load path.
 
-- `SKILL.md`
-- `core/`
-- `flows/`
-- `registries/`
-- `references/workflow.md`
-- `references/action-commands.md`
-- `references/template-index.md`
-- `references/review-gates.md`
-- `references/id-conventions.md`
-- `references/quality-checklist.md`
-- `references/repair-run.md`
-- `templates/`
+Do not load all references or all templates by default. Load:
 
-Rules:
+1. Required core and registry files named in `SKILL.md`.
+2. The current action/document flow.
+3. The current output template.
+4. Only the reference files needed by the current review, repair, ID, or QA task.
 
-1. Split the workflow into Analysis and Design.
-2. Analysis includes information collection, research insight, and requirement analysis.
-3. Analysis review is a human review gate; stop and wait for user confirmation.
-4. Design starts with product architecture, before PRD and feature task specs.
-5. Product architecture review is a human review gate; stop and wait for user confirmation.
-6. Analysis review is stage-scoped and must interrupt only once after documents 01-03 are complete.
-7. Other review gates are auto checks; pass continues automatically, failures must enter repair-run.
-8. Before writing files, read `ssf-workspace/index.md` and resolve the target instance.
-9. Generation, modification, repair, and prototype-run tasks are `write_required` by default unless the user explicitly asks for read-only review or no file changes.
-10. Use `inspect-only` only for explicit read/check/summarize requests, and `discuss-only` only for explicit no-write discussion requests.
-11. Run intake gate before regenerating, overwriting, skipping stages, or changing an existing instance.
-12. Every feature task and UI screen must keep the same full structure.
-13. Do not write technical implementation details in PM documents.
-14. Stage and sub-stage rules live in `flows/`; templates only define output structure.
-15. repair-run must satisfy `references/repair-run.md`.
-16. For prototype input packages, use `prototype-run`, read `flows/prototype/prototype-run.md` and `templates/prototype/`, and write only to the target instance `prototype-input/`.
-17. Do not write prototype sample data, Figma prompts, or generated prototype results back into `product-spec/`.
+Runtime invariants:
+
+- Generation, modification, repair, continuation, rerun, change, and prototype-run tasks are write-required unless the user explicitly asks for read-only review or no file changes.
+- Only `analysis-human-review` and `product-architecture-human-review` may stop for user confirmation.
+- Other review gates are automatic: pass continues; fail enters repair-run.
+- `registries/documents.md` is the source of truth for document path, flow, template, gate, and interrupt behavior.
+- `prototype-run` writes only to target instance `prototype-input/` and must not modify `product-spec/`.

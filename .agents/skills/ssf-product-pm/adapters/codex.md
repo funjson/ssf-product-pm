@@ -1,24 +1,21 @@
 # Codex 适配说明
 
-Codex 使用：
+Codex 使用根目录 `AGENTS.md` 作为项目规则，使用 `SKILL.md` 作为 Skill 入口。
 
-- 根目录 `AGENTS.md` 作为项目规则。
-- `SKILL.md` 作为 skill 入口。
-- `core/`、`flows/`、`registries/`、`references/`、`templates/` 作为事实源。
+安装或同步时必须复制完整 skill 目录，不得只复制入口文件：
 
-安装或同步时必须复制完整 skill 目录，不得只复制 `SKILL.md`。
+- `SKILL.md`
+- `AGENTS.md`
+- `core/`
+- `flows/`
+- `registries/`
+- `references/`
+- `templates/`
 
-生成、修改、修复和 prototype-run 默认必须落盘；只有用户明确要求只读、只讨论或不修改文件时，才使用 `inspect-only` 或 `discuss-only`。
+执行时按 `SKILL.md` 的运行时读取路径加载配置：
 
-只在 `analysis-human-review` 和 `product-architecture-human-review` 中断；Analysis 01-03 完成后统一中断一次，产品架构中断一次，其他 auto_review 通过后自动继续。
+1. 先读 core runtime、state 和 actions/documents/gates registry。
+2. 再按当前 action、document、gate 读取对应 flow、template 和必要 reference。
+3. 不要默认读取全部 references 或全部 templates。
 
-优先读取顺序：
-
-1. `SKILL.md`
-2. `core/workflow.md`
-3. `core/runtime-protocol.md`
-4. `registries/documents.md`
-5. 对应 `flows/`
-6. 对应模板
-
-当用户要求输出原型输入包、Figma Make prompt 或 Figma MCP prompt 时，使用 `prototype-run`，读取 `flows/prototype/prototype-run.md` 和 `templates/prototype/`。
+关键不变量以 `SKILL.md` 为准：生成/修改/修复/prototype-run 默认落盘；只有 `analysis-human-review` 和 `product-architecture-human-review` 能中断；prototype-run 只写入目标实例 `prototype-input/`。

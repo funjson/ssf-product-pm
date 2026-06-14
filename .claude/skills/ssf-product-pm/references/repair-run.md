@@ -23,17 +23,21 @@ repair-run 只修复结构、追踪、状态、证据和模板一致性，默认
 
 执行 repair-run 前必须读取：
 
-1. `references/workflow.md`
-2. `references/action-commands.md`
-3. `references/template-index.md`
-4. `references/review-gates.md`
-5. `references/id-conventions.md`
-6. `references/quality-checklist.md`
-7. `references/repair-run.md`
-8. 目标工作区 `ssf-workspace/index.md`
-9. 目标实例 `manifest.md`
+1. `SKILL.md`
+2. `core/runtime-protocol.md`
+3. `core/state-protocol.md`
+4. `registries/actions.md`
+5. `registries/documents.md`
+6. `registries/gates.md`
+7. `registries/checks.md`
+8. `references/review-gates.md`
+9. `references/id-conventions.md`
+10. `references/quality-checklist.md`
+11. `references/repair-run.md`
+12. 目标工作区 `ssf-workspace/index.md`
+13. 目标实例 `manifest.md`
 
-如果 repair-run 涉及某个正文文档，还必须读取对应 `templates/` 模板。
+如果 repair-run 涉及某个正文文档，必须先从 `registries/documents.md` 找到对应 flow、template 和 Review Gate，再读取对应 `flows/` 与 `templates/` 文件。不要从 `references/template-index.md` 推断模板。
 
 ## 3. 结构迁移优先级
 
